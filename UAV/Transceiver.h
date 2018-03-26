@@ -10,23 +10,23 @@
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * typedef: Transceiver_RESULT
+ * @typedef: Transceiver_RESULT
  *
  * @brief: Used for results (described below) returned from Transceiver methods
  *
 */
 typedef uint32 Transceiver_RESULT;
 
-#define Transceiver_ERROR			0x00000000UL	// Some types of error: rx/tx_buffer from config could not be used
-#define Transceiver_INTERRUPTED		0x00000001UL	// if receiving was interrupted
-#define Transceiver_TXFRS			0x00000100UL	// Transmit Frame Sent
-#define Transceiver_RXFCG			0x00010000UL	// Receiver FCS Good (data frame ready) 
-#define Transceiver_RXRFTO			0x00020000UL	// Receive Frame Wait Timeout
-#define Transceiver_RXPRD			0x01000000UL	// Receiver Preamble Detected
-#define Transceiver_RXPTO			0x02000000UL	// Preamble detection timeout
+#define Transceiver_ERROR			0x00000000UL		// Some types of error: rx/tx_buffer from config could not be used
+#define Transceiver_INTERRUPTED		0x00000001UL		// if receiving was interrupted
+#define Transceiver_TXFRS			SYS_STATUS_TXFRS	// Transmit Frame Sent
+#define Transceiver_RXFCG			SYS_STATUS_RXFCG	// Receiver FCS Good (data frame ready) 
+#define Transceiver_RXRFTO			SYS_STATUS_RXRFTO	// Receive Frame Wait Timeout
+#define Transceiver_RXPRD			SYS_STATUS_RXPRD	// Receiver Preamble Detected
+#define Transceiver_RXPTO			SYS_STATUS_RXPTO	// Preamble detection timeout
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * typedef: Transceiver_Interrupt
+ * @typedef: Transceiver_Interrupt
  *
  * @brief: Used for interrupt receiving from Transceiver_Receive method; contained in Transceiver_RxConfig,
  * described below.
@@ -44,7 +44,7 @@ typedef uint32 Transceiver_RESULT;
 typedef uint8_t (*Transceiver_Interrupt)(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * Structure typedef: Transceiver_TxConfig
+ * @typedef: Transceiver_TxConfig struct
  *
  * @brief: Used as input parameter in Transceiver_Transmit method; content described below
  *
@@ -62,7 +62,7 @@ typedef struct {
 } Transceiver_TxConfig;
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * Structure typedef: Transceiver_RxConfig
+ * @typedef: Transceiver_RxConfig struct
  *
  * @brief: Used as input parameter in Transceiver_Receive method; content described below
  *

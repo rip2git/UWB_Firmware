@@ -5,68 +5,18 @@
 
 
 #define rcc_init(x)				RCC_Configuration(x)
-#define systick_init(x)			SysTick_Configuration(x)
 #define rtc_init(x)				RTC_Configuration(x)
 #define interrupt_init(x)		IRQ_Configuration(x)
 #define spi_init(x)				SPI_Configuration(x)
-#define timer_init(x)			BaseTimer_Initialization(x)
-
-
-/* DW1000 IRQ handler definition. */
-port_deca_isr_t port_deca_isr = 0;
+#define systick_init(x)			SystemTimer_Initialization(x)
+#define base_timer_init(x)		BaseTimer_Initialization(x)
+#define general_timer_init(x)	GeneralTimer_Initialization(x)
 
 
 
 int No_Configuration(void)
 {
 	return -1;
-}
-
-
-
-int SysTick_Configuration(void)
-{
-	if (SysTick_Config(SystemCoreClock / CLOCKS_PER_SEC))
-	{
-		/* Capture error */
-		while (1);
-	}
-	NVIC_SetPriority (SysTick_IRQn, 3);
-
-	return 0;
-}
-
-
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn port_set_deca_isr()
- *
- * @brief This function is used to install the handling function for DW1000 IRQ.
- *
- * NOTE:
- *   - As EXTI9_5_IRQHandler does not check that port_deca_isr is not null, the user application must ensure that a
- *     proper handler is set by calling this function before any DW1000 IRQ occurs!
- *   - This function makes sure the DW1000 IRQ line is deactivated while the handler is installed.
- *
- * @param deca_isr function pointer to DW1000 interrupt handler to install
- *
- * @return none
- */
-void port_set_deca_isr(port_deca_isr_t deca_isr)
-{
-    /* Check DW1000 IRQ activation status. */
-    ITStatus en = port_GetEXT_IRQStatus();
-
-    /* If needed, deactivate DW1000 IRQ during the installation of the new handler. */
-    if (en)
-    {
-        port_DisableEXT_IRQ();
-    }
-    port_deca_isr = deca_isr;
-    if (en)
-    {
-        port_EnableEXT_IRQ();
-    }
 }
 
 
@@ -86,7 +36,9 @@ int NVIC_DisableDECAIRQ(void)
 }
 
 
-
+/*!
+ * DECA IRQ Configuration
+*/
 int IRQ_Configuration(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -133,21 +85,21 @@ int IRQ_Configuration(void)
   */
 ITStatus EXTI_GetITEnStatus(uint32_t EXTI_Line)
 {
-        ITStatus bitstatus = RESET;
-        uint32_t enablestatus = 0;
-        /* Check the parameters */
-        assert_param(IS_GET_EXTI_LINE(EXTI_Line));
+	ITStatus bitstatus = RESET;
+	uint32_t enablestatus = 0;
+	/* Check the parameters */
+	assert_param(IS_GET_EXTI_LINE(EXTI_Line));
 
-        enablestatus =  EXTI->IMR & EXTI_Line;
-        if (enablestatus != (uint32_t)RESET)
-        {
-          bitstatus = SET;
-        }
-        else
-        {
-          bitstatus = RESET;
-        }
-        return bitstatus;
+	enablestatus =  EXTI->IMR & EXTI_Line;
+	if (enablestatus != (uint32_t)RESET)
+	{
+		bitstatus = SET;
+	}
+	else
+	{
+		bitstatus = RESET;
+	}
+	return bitstatus;
 }
 
 
@@ -191,8 +143,7 @@ int RCC_Configuration(void)
 
 
 
-
-void SPI_ChangeRate(uint16_t scalingfactor)
+static void SPI_ChangeRate(uint16_t scalingfactor)
 {
 	uint16_t tmpreg = 0;
 
@@ -264,6 +215,8 @@ int SPI_Configuration(void)
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
 
 	SPI_Init(SPIx, &SPI_InitStructure);
+	
+	SPIx->CR2 |= SPI_CR2_FRXTH; // RXNE is up then 8 bit is received (defaul = 16 bit)
 
 	// SPIx SCK and MOSI pin setup
     GPIO_PinAFConfig(SPIx_GPIO, SPIx_SCK_SOURCE, GPIO_AF_0);
@@ -326,7 +279,7 @@ void reset_DW1000(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_Init(DW1000_RSTn_GPIO, &GPIO_InitStructure);
 	
-    sleep_10ms(1); 
+    deca_sleep(1); 
 }
 
 
@@ -335,13 +288,6 @@ int is_IRQ_enabled(void)
 {
 	return ((   NVIC->ISER[((uint32_t)(DECAIRQ_EXTI_IRQn) >> 5)]
 	           & (uint32_t)0x01 << (DECAIRQ_EXTI_IRQn & (uint8_t)0x1F)  ) ? 1 : 0) ;
-}
-
-
-
-unsigned long portGetTickCnt(void)
-{
-	return time32_incr;
 }
 
 
@@ -361,5 +307,6 @@ void peripherals_init (void)
 	interrupt_init();
 	systick_init();
     spi_init();	
-	timer_init();
+	base_timer_init();
+	general_timer_init();
 }

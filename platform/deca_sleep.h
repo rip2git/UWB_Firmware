@@ -14,11 +14,6 @@
 #ifndef _SLEEP_H_
 #define _SLEEP_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 /*! ------------------------------------------------------------------------------------------------------------------
  * Function: sleep_ms()
  *
@@ -27,10 +22,6 @@ extern "C" {
  *
  * param  time_ms  time to wait in milliseconds
  */
-void sleep_10ms(unsigned int time_10ms);
-
-#ifdef __cplusplus
-}
-#endif
+extern inline void deca_sleep(unsigned int time_ms);
 
 #endif /* _SLEEP_H_ */

@@ -12,6 +12,13 @@
 */
 
 
+// Timestamps of frames transmission/reception.
+// As they are 40-bit wide, we need to define a 64-bit int type to handle them.
+typedef unsigned long long uint64;
+typedef signed long long int64;
+
+
+
 // Default antenna delay values for 64 MHz PRF. See NOTE 1 below.
 #define TX_ANT_DELAY 16476 //16436
 #define RX_ANT_DELAY 16476 //16436
@@ -27,26 +34,27 @@
 // init->resp:  rx after tx
 #define INIT_TX_TO_RESP_RX_DELAY_UUS 		150 	//150
 // init->resp:  rx timeout
-#define RESP_RX_TIMEOUT_UUS 				1500 	//2700
+#define RESP_RX_TIMEOUT_UUS 				750 	//2700
 // resp->init:  tx delay
-#define INIT_RX_TO_RESP_TX_DELAY_UUS 		1300 // 570	 //1100 	//2600		(before resp)  <---
+#define INIT_RX_TO_RESP_TX_DELAY_UUS 		500 	//500	//570	 //750 	//2600		(before resp)  <---
 // resp->init:  rx after tx
 #define RESP_TX_TO_FINAL_RX_DELAY_UUS		250 	//500
 // init->resp:  tx delay
-#define RESP_RX_TO_FINAL_TX_DELAY_UUS 		1600 // 600	 //1400 	//3100		(before final) <---
+#define RESP_RX_TO_FINAL_TX_DELAY_UUS 		530 	//530	//600	 //800 	//3100		(before final) <---
 // resp->init:  rx timeout
-#define FINAL_RX_TIMEOUT_UUS 				1800 	//3300
+#define FINAL_RX_TIMEOUT_UUS 				800 	//3300
 
-// Timestamps of frames transmission/reception.
-// As they are 40-bit wide, we need to define a 64-bit int type to handle them.
-typedef unsigned long long uint64;
-typedef signed long long int64;
+
 
 #define RESP_IDENTIFIER_SIZE			2
 static const uint8 resp_identifier[RESP_IDENTIFIER_SIZE] = {0xAA, 0x55};
 
+
+
 #define FINAL_IDENTIFIER_SIZE			2
 static const uint8 final_identifier[FINAL_IDENTIFIER_SIZE] = {0x55, 0xAA};
+
+
 
 // Indexes to access some of the fields in the frames defined above.
 #define FINAL_MSG_TS_LEN 				4
@@ -55,11 +63,15 @@ static const uint8 final_identifier[FINAL_IDENTIFIER_SIZE] = {0x55, 0xAA};
 #define FINAL_MSG_FINAL_TS_OFFSET 		(FINAL_MSG_RESP_TS_OFFSET + FINAL_MSG_TS_LEN)
 #define FINAL_MSG_ALL_TS_SIZE			(FINAL_MSG_TS_LEN * 3)
 
+			
+			
 // Declaration of static functions.
 static uint64 _Ranging_GetTxTs64(void);
 static uint64 _Ranging_GetRxTs64(void);
 static void _Ranging_FinalMsgGetTs(const uint8 *ts_field, uint32 *ts);
 static inline uint16_t _Ranging_ConvertDistanceToCm(double distance);
+
+			
 
 static void _Ranging_SetInitMsg(
 	MACHeader_Typedef *header,
@@ -281,7 +293,7 @@ static void _Ranging_SetInitMsg(
 	msg[i++] = (uint8)(header->SourceID >> 8);
 	msg[i++] = (uint8)(header->Flags);	
 	// payload
-	for (uint8 j = 0; j < RESP_IDENTIFIER_SIZE; ++j)
+	for (uint8 j = 0; j < Ranging_PAYLOAD_SIZE; ++j)
 		msg[i++] = payload[j];
 	// FCS
 	msg[i++] = 0;

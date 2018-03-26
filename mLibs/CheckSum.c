@@ -1,10 +1,6 @@
 #include "CheckSum.h"
 
 
-//#define CRC8
-#define CRC16
-
-
 #ifdef CRC8
 	static uint8_t crc8table[256];
 	
@@ -41,6 +37,9 @@
 		return crc;
 	}
 #endif
+	
+	
+	
 #ifdef CRC16
 	static uint16_t crc16table[256];
 	
@@ -77,10 +76,6 @@
 		return crc;
 	}
 #endif
-
-
-
-
 
 
 

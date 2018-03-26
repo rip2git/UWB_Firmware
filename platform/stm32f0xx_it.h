@@ -47,16 +47,6 @@ void SVC_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn EXTI0_1_IRQHandler()
- *
- * @brief Handler for DW1000 IRQ.
- *
- * @param none
- *
- * @return none
- */
-extern void EXTI0_1_IRQHandler(void);
 
 #ifdef __cplusplus
 }

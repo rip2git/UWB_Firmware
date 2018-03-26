@@ -1,41 +1,34 @@
-/*! ----------------------------------------------------------------------------
- * @file	port.h
- * @brief	HW specific definitions and functions for portability
- *
- * @attention
- *
- * Copyright 2013 (c) DecaWave Ltd, Dublin, Ireland.
- *
- * All rights reserved.
- *
- * @author DecaWave
- */
-
-
 #ifndef PORT_H_
 #define PORT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "stm32f0xx.h"	
 	
+#include "SystemTimer.h"
 #include "mBaseTimer.h"
+#include "mGeneralTimer.h"
   
 	  
 /* Define our wanted value of CLOCKS_PER_SEC so that we have a 10 millisecond
  * tick timer. */
 #undef CLOCKS_PER_SEC
-#define CLOCKS_PER_SEC 100
+#define CLOCKS_PER_SEC 1000
 	
-	
-  
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 #define DW1000_RSTn					GPIO_Pin_11
 #define DW1000_RSTn_GPIO			GPIOA   
   
-    
-
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 #define SPIx_PRESCALER				SPI_BaudRatePrescaler_2 //SPI_BaudRatePrescaler_8
 #define SPIx				        SPI1
 #define SPIx_GPIO					GPIOA
@@ -48,8 +41,12 @@ extern "C" {
 #define SPIx_MOSI_SOURCE			GPIO_PinSource7
 #define SPIx_MISO_SOURCE			GPIO_PinSource6
   
-  
-
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 #define DECAIRQ                     GPIO_Pin_0
 #define DECAIRQ_GPIO                GPIOB
 #define DECAIRQ_CLK                	RCC_AHBPeriph_GPIOB
@@ -59,9 +56,13 @@ extern "C" {
 #define DECAIRQ_EXTI_IRQn           EXTI0_1_IRQn
 #define DECAIRQ_EXTI_USEIRQ         ENABLE
 #define DECAIRQ_EXTI_NOIRQ          DISABLE
-	 
 
-
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 #define port_SPIx_busy_sending()		(SPI_I2S_GetFlagStatus((SPIx),(SPI_I2S_FLAG_TXE))==(RESET))
 #define port_SPIx_no_data()				(SPI_I2S_GetFlagStatus((SPIx),(SPI_I2S_FLAG_RXNE))==(RESET))
 #define port_SPIx_send_data(x)			SPI_I2S_SendData((SPIx),(x))
@@ -71,25 +72,48 @@ extern "C" {
 #define port_SPIx_set_chip_select()		GPIO_SetBits(SPIx_CS_GPIO,SPIx_CS)
 #define port_SPIx_clear_chip_select()	GPIO_ResetBits(SPIx_CS_GPIO,SPIx_CS)
 
-  
-  
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 ITStatus EXTI_GetITEnStatus(uint32_t x);
 
-
-
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 #define port_GetEXT_IRQStatus()             EXTI_GetITEnStatus(DECAIRQ_EXTI_IRQn)
 #define port_DisableEXT_IRQ()               NVIC_DisableIRQ(DECAIRQ_EXTI_IRQn)
 #define port_EnableEXT_IRQ()                NVIC_EnableIRQ(DECAIRQ_EXTI_IRQn)
 #define port_CheckEXT_IRQ()                 GPIO_ReadInputDataBit(DECAIRQ_GPIO, DECAIRQ)
-int NVIC_DisableDECAIRQ(void);
 
-
-
-/* DW1000 IRQ handler type. */
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @typedef: 
+ *
+ * @brief: 
+ *
+*/  
 typedef void (*port_deca_isr_t)(void);
 
-/* DW1000 IRQ handler declaration. */
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: 
+ *
+ * @brief: 
+ *
+*/  
 extern port_deca_isr_t port_deca_isr;
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn: 
+ *
+ * @brief: 
+ *
+*/ 
+int NVIC_DisableDECAIRQ(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn peripherals_init()
@@ -117,8 +141,6 @@ void peripherals_init (void);
  * @return none
  */
 void port_set_deca_isr(port_deca_isr_t deca_isr);
-
-void SPI_ChangeRate(uint16_t scalingfactor);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn spi_set_rate_low()
@@ -153,19 +175,5 @@ void spi_set_rate_high (void);
  */
 void reset_DW1000(void);
 
-
-
-/* System tick 32 bit variable defined by the platform */
-extern volatile unsigned long time32_incr;
-
-	
-unsigned long portGetTickCnt(void);
-#define portGetTickCount() portGetTickCnt()
-
-
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* PORT_H_ */

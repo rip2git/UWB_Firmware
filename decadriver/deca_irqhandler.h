@@ -8,40 +8,63 @@
 
 #ifndef DECA_STD_HANDLERS
 
-
 #include "deca_types.h"
 
-
-// Call-back type for all events
-typedef void (*dwt_cb_t)(uint32);
-
-
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn dwt_setcallbacks()
- *
- * @brief This function is used to register the different callbacks called when one of the corresponding event occurs.
- *
- * NOTE: Callbacks can be undefined (set to NULL). In this case, dwt_isr() will process the event as usual but the 'null'
- * callback will not be called.
- *
- * input parameters
- * @param cbRxOk - the pointer to the RX good frame event callback function
- * @param cbTxDone - the pointer to the TX confirmation event callback function
- * @param cbRxTo - the pointer to the RX timeout events callback function
- * @param cbPreDet - the pointer to the preamble detect event callback function
- * @param cbPreTo - the pointer to the preamble timeout event callback function
- *
- * output parameters
- *
- * no return value
- */
-extern void dwt_setcallbacks(
-	dwt_cb_t cbRxOk, 
-	dwt_cb_t cbTxDone, 	
-	dwt_cb_t cbRxTo, 
-	dwt_cb_t cbPreDet, 
-	dwt_cb_t cbPreTo
-);
+ * @def USE_FASTER_CALLBACKS
+ * 
+ * @brief If defined then one volatile variable is used as callback against heavyweight functions 
+ * (see description below).
+*/
+#define USE_FASTER_CALLBACKS
+
+
+#ifdef USE_FASTER_CALLBACKS
+	/*! ------------------------------------------------------------------------------------------------------------------
+     * @var_callback decairq_callBackResult
+	 * 
+	 * @brief Returns SYSTEM STATUS flag of corresponding event:
+	 *          - RXFCG
+	 *          - TXFRS
+	 *          - RXRFTO
+	 *			- RXPRD
+	 *			- RXPTO
+	*/
+	extern volatile uint32 decairq_callBackResult;
+
+	#define dwt_isr(x) EXTI0_1_IRQHandler(x)
+#else	
+	// Call-back type for all events
+	typedef void (*dwt_cb_t)(uint32);
+	
+	/*! ------------------------------------------------------------------------------------------------------------------
+	 * @fn dwt_setcallbacks()
+	 *
+	 * @brief This function is used to register the different callbacks called when one of the corresponding event occurs.
+	 *
+	 * NOTE: Callbacks can be undefined (set to NULL). In this case, dwt_isr() will process the event as usual but the 'null'
+	 * callback will not be called.
+	 *
+	 * input parameters
+	 * @param cbRxOk - the pointer to the RX good frame event callback function
+	 * @param cbTxDone - the pointer to the TX confirmation event callback function
+	 * @param cbRxTo - the pointer to the RX timeout events callback function
+	 * @param cbPreDet - the pointer to the preamble detect event callback function
+	 * @param cbPreTo - the pointer to the preamble timeout event callback function
+	 *
+	 * output parameters
+	 *
+	 * no return value
+	 */
+	extern void dwt_setcallbacks(
+		dwt_cb_t cbRxOk, 
+		dwt_cb_t cbTxDone, 	
+		dwt_cb_t cbRxTo, 
+		dwt_cb_t cbPreDet, 
+		dwt_cb_t cbPreTo
+	);	
+
+#endif
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_checkirq()
@@ -60,11 +83,11 @@ extern uint8 dwt_checkirq(void);
  * @fn dwt_isr()
  *
  * @brief This is the DW1000's general Interrupt Service Routine. It will process/report the following events:
- *          - RXFCG (through cbRxOk callback)
- *          - TXFRS (through cbTxDone callback)
- *          - RXRFTO (through cbRxTo callback)
- *			- RXPRD (through cbPreDet callback)
- *			- RXPTO (hrough cbPreTo callback)
+ *          - RXFCG (through cbRxOk callback / decairq_callBackResult)
+ *          - TXFRS (through cbTxDone callback / decairq_callBackResult)
+ *          - RXRFTO (through cbRxTo callback / decairq_callBackResult)
+ *			- RXPRD (through cbPreDet callback / decairq_callBackResult)
+ *			- RXPTO (through cbPreTo callback / decairq_callBackResult)
  *        For all events, corresponding interrupts are cleared and necessary resets are performed.
  *
  * NOTE: There is expected 1 interrupt, so others would be ignored. Priority of expected interrupts is presented 

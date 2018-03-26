@@ -40,16 +40,17 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 	cnt = UserPack_SERVICE_INFO_SIZE;
 	while (cnt--) {
 		buffer[it] = USART_GetByte();
-		if (USART_GetErrorStatus() == USART_OVERFLOW_RESET) {
+		if (USART_GetErrorStatus() == USART_NO_ERROR) {			
 			if (it == UserPack_TOTAL_SIZE_OFFSET) {
 				pack->TotalSize = buffer[it];
-				cnt += pack->TotalSize;
+				cnt += pack->TotalSize + UserPack_FCS_SIZE;
 			}
 			it++;
-		} else {
+		} else {			
 			USART_ResetErrorStatus();
+			USART_ResetRxBuffer();
 			buffer[0] = UserPack_Cmd_Status;
-			buffer[1] = UserPack_STATUS_Distance;
+			buffer[1] = UserPack_STATUS_Distance; // ??
 			buffer[2] = it;
 			USART_SendBuffer(buffer, 3);
 			return USARTHandler_ERROR;
@@ -72,6 +73,6 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 
 uint8_t USARTHandler_isAvailableToReceive(void)
 {
-	return (USART_GetRxStatus() != USART_RX_EMPTY)? 1 : 0;
+	return (USART_GetRxCounter() >= UserPack_SERVICE_INFO_SIZE)? USARTHandler_TRUE : USARTHandler_FALSE;
 }
 

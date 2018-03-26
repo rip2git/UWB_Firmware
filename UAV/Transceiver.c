@@ -1,18 +1,12 @@
 
 #include "Transceiver.h"
-#include "port.h"
-#include "deca_sleep.h"
 
 
 // callbacks result (defines IRQ event)
-static volatile Transceiver_RESULT cbRes;
+#define cbRes 	decairq_callBackResult
 
-// IRQ callbacks
-static void _Transceiver_cbRxOk(uint32 status);
-static void _Transceiver_cbTxDone(uint32 status);
-static void _Transceiver_cbPreDet(uint32 status);
-static void _Transceiver_cbRxTo(uint32 status);
-static void _Transceiver_cbPreTo(uint32 status);
+
+
 // For handling MC sleep mode
 static void MC_GoToSleep(void);
 static void _Transceiver_PeriphConfig(void);
@@ -34,30 +28,18 @@ void Transceiver_Initialization(void)
 		DWT_PHRMODE_STD, /* PHY header mode. */
 		(129 + 8 - 8)    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
 	};
-
 	
 	// Config controllers periptherals
-	_Transceiver_PeriphConfig();
+	_Transceiver_PeriphConfig();	
 	
 	do {
-		sleep_10ms(100);
+		deca_sleep(500);
 		reset_DW1000();	
 		spi_set_rate_low();
 	} while ( dwt_initialise(DWT_LOADUCODE) == DWT_ERROR );
     
 	spi_set_rate_high();    
     dwt_configure(&config);	
-	
-	dwt_setcallbacks(
-		&_Transceiver_cbRxOk,
-		&_Transceiver_cbTxDone,		
-		&_Transceiver_cbRxTo,
-		&_Transceiver_cbPreDet,
-		&_Transceiver_cbPreTo
-	);
-	
-	// Sets IRQ handler
-	port_set_deca_isr(dwt_isr);	
 }
 
 
@@ -74,20 +56,23 @@ static inline void _Transceiver_rxoff(void)
 Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 {
 	uint32 frame_len;
-	uint32 IRQ_MASK;
 	uint8 flags = DWT_START_TX_IMMEDIATE; // 0
+	
+	decamutexon();
 	
 	// Disable current events
 	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
-	if (config->rx_aftertx_delay) // Response expected -> Enable transceiver events - receive, rx TO		
-		IRQ_MASK = SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO;	
-	else // Enable transceiver events - sent, receive, rx TO		
-		IRQ_MASK = SYS_MASK_MTXFRS; 
-	dwt_setinterrupt(IRQ_MASK, 1);
+	if (config->rx_aftertx_delay) // Response expected -> Enable transceiver events - receive, rx TO
+		dwt_setinterrupt(SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO, 1);
+	else // Enable transceiver events - sent, receive, rx TO	
+		dwt_setinterrupt(SYS_MASK_MTXFRS, 1);
 	
 	cbRes = 0;
 	
+	decamutexoff();
+	
 	if (config->rx_aftertx_delay) {
+		dwt_receiverautoreenabled(1);
 		dwt_setrxaftertxdelay(config->rx_aftertx_delay);		
 		dwt_setrxtimeout(config->rx_timeout);
 		flags |= DWT_RESPONSE_EXPECTED;
@@ -110,12 +95,11 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 	MC_GoToSleep();
 	
 	if (config->rx_aftertx_delay) { // Response expected
-		dwt_receiverautoreenabled(1);
-		
 		while ( !(cbRes & (Transceiver_RXFCG | Transceiver_RXRFTO)) ) 
 		{
 			;			
 		}
+		_Transceiver_rxoff(); // reset state
 		
 		if (cbRes == Transceiver_RXFCG) {
 			// A frame has been received, read it into the buffer
@@ -145,12 +129,16 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 	uint32 frame_len;
 	uint16 rxTO_ms, rxTO_us;
 	
+	decamutexon();
+	
 	// Disable current events
 	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
 	// Enable transceiver events - receive, rx TO
 	dwt_setinterrupt(SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO, 1);
 	
 	cbRes = 0;
+	
+	decamutexoff();
 	
 	dwt_receiverautoreenabled(1);	
 	
@@ -195,7 +183,8 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 				break;
 			}			
 		}
-	}		
+	}	
+	_Transceiver_rxoff(); // reset state
 	
 
 	if (cbRes == Transceiver_RXFCG) {
@@ -216,12 +205,16 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 
 Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
 {	
+	decamutexon();
+	
 	// Disable current events
 	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
 	// Enable preamble events
 	dwt_setinterrupt(SYS_MASK_MRXPRD | SYS_MASK_MRXPTO, 1);
 	
 	cbRes = 0;
+	
+	decamutexoff();
 	
 	dwt_setpreambledetecttimeout(timeout);
 	dwt_rxenable(DWT_START_RX_IMMEDIATE);
@@ -230,6 +223,7 @@ Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
 
 	while ( !(cbRes & (Transceiver_RXPRD | Transceiver_RXPTO)) )
 		;
+	_Transceiver_rxoff(); // reset state
 		
 	dwt_setpreambledetecttimeout(0); // reset
 	return cbRes;
@@ -271,49 +265,14 @@ inline Transceiver_RESULT Transceiver_GetReceptionResult(void)
 uint8 Transceiver_GetAvailableData(uint8 *buffer)
 {
 	if ( cbRes == Transceiver_RXFCG ) {
-		cbRes = 0; // reset
+		_Transceiver_rxoff(); // reset state
+		cbRes = 0; // reset		
 		
 		uint32 frame_len = dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXFL_MASK_1023;
 		dwt_readrxdata(buffer, frame_len, 0);
 		return (uint8)frame_len;
 	}
 	return 0;
-}
-
-
-
-static void _Transceiver_cbRxOk(uint32 status)
-{
-	cbRes = Transceiver_RXFCG;
-	_Transceiver_rxoff();
-}
-
-
-static void _Transceiver_cbTxDone(uint32 status)
-{
-	cbRes = Transceiver_TXFRS;
-}
-
-
-static void _Transceiver_cbPreDet(uint32 status)
-{
-	cbRes = Transceiver_RXPRD;
-	_Transceiver_rxoff();
-	
-}
-
-
-static void _Transceiver_cbRxTo(uint32 status)
-{
-	cbRes = Transceiver_RXRFTO;
-	_Transceiver_rxoff();
-}
-
-
-static void _Transceiver_cbPreTo(uint32 status)
-{
-	cbRes = Transceiver_RXPTO;
-	_Transceiver_rxoff();
 }
 
 				

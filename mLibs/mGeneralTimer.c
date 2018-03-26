@@ -1,28 +1,29 @@
-#include "mBaseTimer.h"
+#include "mGeneralTimer.h"
 #include "stm32f0xx.h"
 
 
-#define mTIMx		TIM6
-#define mTIMx_CLK	RCC_APB1Periph_TIM6
-#define mTIMx_IRQ	TIM6_DAC_IRQn
+#define mTIMx		TIM14
+#define mTIMx_CLK	RCC_APB1Periph_TIM14
+#define mTIMx_IRQ	TIM14_IRQn
 
 
 
-static volatile uint8_t BaseTimer_Event = 0;
+static volatile uint8_t GeneralTimer_Event = 0;
 
 
 
-void BaseTimer_IRQHandler(void)
+void GeneralTimer_IRQHandler(void)
 {
-	if ( mTIMx->SR & TIM_IT_Update ) {
+	if ( mTIMx->SR & TIM_IT_Update )
+	{
 		mTIMx->SR = (uint16_t)~TIM_IT_Update;
-		BaseTimer_Event++;		
+		GeneralTimer_Event++;		
 	}
 }
 
 
 
-void BaseTimer_Initialization(void)
+void GeneralTimer_Initialization(void)
 {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -41,20 +42,20 @@ void BaseTimer_Initialization(void)
 	
 	TIM_ITConfig(mTIMx, TIM_IT_Update, ENABLE);	// by overrun
 	
-	BaseTimer_Disable();
+	GeneralTimer_Disable();
 }
 
 
 
-BaseTimer_STATE BaseTimer_GetState(void)
+GeneralTimer_STATE GeneralTimer_GetState(void)
 {
-	return (BaseTimer_Event == 0)? BaseTimer_RESET : BaseTimer_SET;
+	return (GeneralTimer_Event == 0)? GeneralTimer_RESET : GeneralTimer_SET;
 		
 }
 
 
 
-inline void BaseTimer_SetPrescaler(uint16_t prescaler)
+inline void GeneralTimer_SetPrescaler(uint16_t prescaler)
 {
 	mTIMx->PSC = prescaler - 1; 
   	mTIMx->EGR = TIM_PSCReloadMode_Immediate;
@@ -62,41 +63,41 @@ inline void BaseTimer_SetPrescaler(uint16_t prescaler)
 
 
 
-inline void BaseTimer_SetPeriod(uint16_t period)
+inline void GeneralTimer_SetPeriod(uint16_t period)
 {
 	mTIMx->ARR = period;
 }
 
 
 
-inline void BaseTimer_Enable(void)
+inline void GeneralTimer_Enable(void)
 {
 	mTIMx->CR1 |= (uint16_t)TIM_CR1_CEN;
 }
 
 
 
-inline void BaseTimer_Disable(void)
+inline void GeneralTimer_Disable(void)
 {
 	mTIMx->CR1 &= (uint16_t)~TIM_CR1_CEN;
 }
 
 
-void BaseTimer_Reset(void)
+void GeneralTimer_Reset(void)
 {
-	BaseTimer_Event = 0;
+	GeneralTimer_Event = 0;
 	mTIMx->CNT = 0;
 }
 
 
 
-inline void BaseTimer_Set(uint16_t cnt)
+inline void GeneralTimer_Set(uint16_t cnt)
 {
 	mTIMx->CNT = cnt;
 }
 
 
-inline uint16_t BaseTimer_Get(void)
+inline uint16_t GeneralTimer_Get(void)
 {
 	return mTIMx->CNT;
 }

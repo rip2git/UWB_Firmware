@@ -16,6 +16,8 @@
 #include "deca_device_api.h"
 #include "port.h"
 
+volatile uint8 dummyVola;
+
 /*! ------------------------------------------------------------------------------------------------------------------
  * Function: openspi()
  *
@@ -55,38 +57,31 @@ int closespi(void)
  */
 int writetospi(uint16 headerLength, const uint8 *headerBuffer, uint32 bodylength, const uint8 *bodyBuffer)
 {
-    int i = 0;
-    decaIrqStatus_t stat;
+    int i;
 
-    stat = decamutexon();      
-    GPIO_ResetBits(SPIx_CS_GPIO, SPIx_CS);
-    
+    decamutexon();	
+	SPIx_CS_GPIO->BRR = SPIx_CS;    
 
     for(i = 0; i < headerLength; ++i) {
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_TXE) == RESET)
-          ;     	
-        SPI_SendData8(SPIx, headerBuffer[i]); 
-                      
+		*(uint8_t *)&(SPIx->DR) = headerBuffer[i];                            
 
-        // Dummy read as we write the header 
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_BSY) != RESET)
-          ;
-        SPI_ReceiveData8(SPIx);
+        // Dummy read from rxfifo
+		while ( !(SPIx->SR & SPI_I2S_FLAG_RXNE) )
+        	;
+		dummyVola = *(__IO uint8_t *)(&(SPIx->DR));      
     }
 
     for (i = 0; i < bodylength; ++i) {
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_TXE) == RESET)
-          ;
-        SPI_SendData8(SPIx, bodyBuffer[i]);
+		*(uint8_t *)&(SPIx->DR) = bodyBuffer[i];
     	
-        // Dummy read
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_BSY) != RESET)
-          ; 
-        SPI_ReceiveData8(SPIx);
+        // Dummy read from rxfifo
+		while ( !(SPIx->SR & SPI_I2S_FLAG_RXNE) )	
+        	; 
+		dummyVola = *(__IO uint8_t *)(&(SPIx->DR));  
     }
 
-    GPIO_SetBits(SPIx_CS_GPIO, SPIx_CS);
-    decamutexoff(stat) ;
+	SPIx_CS_GPIO->BSRR = SPIx_CS;	
+    decamutexoff();
 
     return 0;
 }
@@ -102,37 +97,31 @@ int writetospi(uint16 headerLength, const uint8 *headerBuffer, uint32 bodylength
  */
 int readfromspi(uint16 headerLength, const uint8 *headerBuffer, uint32 readlength, uint8 *readBuffer)
 {
-    int i = 0;
-    decaIrqStatus_t stat;
+    int i;
 
-    stat = decamutexon();    
-    GPIO_ResetBits(SPIx_CS_GPIO, SPIx_CS);  
+    decamutexon();	
+	SPIx_CS_GPIO->BRR = SPIx_CS;	
 
     for (i = 0; i < headerLength; ++i) {      
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_TXE) == RESET)
-          ;     	
-        SPI_SendData8(SPIx, headerBuffer[i]); 
-                      
-
-        // Dummy read as we write the header 
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_BSY) != RESET)
-          ;
-        SPI_ReceiveData8(SPIx);
-    }  
-
-    for (i = 0; i < readlength; ++i) {
-    	// Dummy write as we read the message body    
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_TXE) == RESET)
-          ;
-        SPI_SendData8(SPIx, 0);
-
-        while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_BSY) != RESET)
-          ; 	
-        readBuffer[i] = SPI_ReceiveData8(SPIx);
+		*(__IO uint8_t *)(&(SPIx->DR)) = (uint8_t)headerBuffer[i]; 				
+		
+        // Dummy read from rxfifo
+		while ( !(SPIx->SR & SPI_I2S_FLAG_RXNE) )
+        	;
+		dummyVola = *(__IO uint8_t *)(&(SPIx->DR));
     }
-   
-    GPIO_SetBits(SPIx_CS_GPIO, SPIx_CS);
-    decamutexoff(stat) ;
+	
+    for (i = 0; i < readlength; ++i) {
+    	// Dummy write as we read the message body   
+		*(__IO uint8_t *)(&(SPIx->DR)) = (uint8_t)0;	
+		
+		while ( !(SPIx->SR & SPI_I2S_FLAG_RXNE) )	
+        	; 	
+		readBuffer[i] = *(__IO uint8_t *)(&(SPIx->DR));	
+    }
+	
+	SPIx_CS_GPIO->BSRR = SPIx_CS;	
+    decamutexoff();
 
     return 0;
 }

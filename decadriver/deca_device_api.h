@@ -19,8 +19,10 @@ extern "C" {
 	
 
 // not standart IRQ handler
-// use DECA_STD_HANDLER inside to switch handlers
+// use DECA_STD_HANDLERS inside to switch handlers
+#ifndef	DECA_STD_HANDLERS
 #include "deca_irqhandler.h"
+#endif
 
 
 #ifndef uint8
@@ -611,7 +613,7 @@ void dwt_setdelayedtrxtime(uint32 starttime) ;
  *
  * no return value
  */
-void dwt_readtxtimestamp(uint8 * timestamp);
+extern inline void dwt_readtxtimestamp(uint8 * timestamp);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_readtxtimestamphi32()
@@ -651,7 +653,7 @@ uint32 dwt_readtxtimestamplo32(void);
  *
  * no return value
  */
-void dwt_readrxtimestamp(uint8 * timestamp);
+extern inline void dwt_readrxtimestamp(uint8 * timestamp);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_readrxtimestamphi32()
@@ -1269,7 +1271,7 @@ void dwt_softreset(void) ;
  *
  * no return value
  */
-void dwt_readrxdata(uint8 *buffer, uint16 length, uint16 rxBufferOffset);
+extern inline void dwt_readrxdata(uint8 *buffer, uint16 length, uint16 rxBufferOffset);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_readaccdata()
@@ -1813,7 +1815,7 @@ typedef int decaIrqStatus_t ; // Type for remembering IRQ status
  *
  * returns the state of the DW1000 interrupt
  */
-decaIrqStatus_t decamutexon(void) ;
+void decamutexon(void) ;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn decamutexoff()
@@ -1830,7 +1832,7 @@ decaIrqStatus_t decamutexon(void) ;
  *
  * returns the state of the DW1000 interrupt
  */
-void decamutexoff(decaIrqStatus_t s) ;
+void decamutexoff(void) ;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn deca_sleep()
@@ -1845,7 +1847,7 @@ void decamutexoff(decaIrqStatus_t s) ;
  *
  * no return value
  */
-void deca_sleep(unsigned int time_ms);
+extern inline void deca_sleep(unsigned int time_ms);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_receiverautoreenabled()

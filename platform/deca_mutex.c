@@ -46,36 +46,27 @@
  *
  * output parameters
  *
- * returns the state of the DW1000 interrupt
+ * no return value
  */
-decaIrqStatus_t decamutexon(void)           
+inline void decamutexon(void)           
 {
-	decaIrqStatus_t s = port_GetEXT_IRQStatus();
-
-	if(s) {
-		port_DisableEXT_IRQ(); //disable the external interrupt line
-	}
-	return s ;   // return state before disable, value is used to re-enable in decamutexoff call
+	NVIC->ICER[0] = (1 << ((uint32_t)(DECAIRQ_EXTI_IRQn) & 0x1F));
 }
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * Function: decamutexoff()
  *
- * Description: This function should re-enable interrupts, or at least restore their state as returned(&saved) by decamutexon 
- * This is called at the end of a critical section
+ * Description: This function should re-enable interrupts. This is called at the end of a critical section
  *
  * Note: The body of this function is defined in deca_mutex.c and is platform specific
  *
  * input parameters:	
- * @param s - the state of the DW1000 interrupt as returned by decamutexon
  *
  * output parameters
  *
- * returns the state of the DW1000 interrupt
+ * no return value
  */
-void decamutexoff(decaIrqStatus_t s)        // put a function here that re-enables the interrupt at the end of the critical section
+inline void decamutexoff(void)
 {
-	if(s) { //need to check the port state as we can't use level sensitive interrupt on the STM ARM
-		port_EnableEXT_IRQ();
-	}
+	NVIC->ISER[0] = (1 << ((uint32_t)(DECAIRQ_EXTI_IRQn) & 0x1F));
 }

@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_DW1000_F051_v0001\settings\UWB_DW1000_F051_v0001.Debug.general.xcl" --backend -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_DW1000_F051_v0001\settings\UWB_DW1000_F051_v0001.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_Firmware\settings\UWB_DW1000_F051_v0001.Debug.general.xcl" --backend -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_Firmware\settings\UWB_DW1000_F051_v0001.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_DW1000_F051_v0001\settings\UWB_DW1000_F051_v0001.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_DW1000_F051_v0001\settings\UWB_DW1000_F051_v0001.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_Firmware\settings\UWB_DW1000_F051_v0001.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\WORKSPACES\WS_IAR\stm32f051\UWB_Firmware\settings\UWB_DW1000_F051_v0001.Debug.driver.xcl" 
 
 @echo off 
 :end

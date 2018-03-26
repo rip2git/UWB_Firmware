@@ -2618,6 +2618,9 @@
     <group>
         <name>mLibs</name>
         <file>
+            <name>$PROJ_DIR$\mLibs\_DEBUG.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\mLibs\CheckSum.c</name>
         </file>
         <file>
@@ -2628,6 +2631,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\mLibs\mBaseTimer.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\mLibs\mGeneralTimer.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\mLibs\mGeneralTimer.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\mLibs\mUSART.c</name>
@@ -2642,16 +2651,10 @@
             <name>$PROJ_DIR$\mLibs\Random.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\mLibs\USARTHandler.c</name>
+            <name>$PROJ_DIR$\mLibs\SystemTimer.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\mLibs\USARTHandler.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\mLibs\UserPack.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\mLibs\UserPack.h</name>
+            <name>$PROJ_DIR$\mLibs\SystemTimer.h</name>
         </file>
     </group>
     <group>
@@ -2715,6 +2718,18 @@
         </file>
         <file>
             <name>$PROJ_DIR$\UAV\Transceiver.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\UAV\USARTHandler.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\UAV\USARTHandler.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\UAV\UserPack.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\UAV\UserPack.h</name>
         </file>
     </group>
     <file>

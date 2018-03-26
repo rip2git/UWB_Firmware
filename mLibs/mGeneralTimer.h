@@ -1,31 +1,31 @@
-#ifndef mBASETIMER_H
-#define mBASETIMER_H
+#ifndef mGENERALTIMER_H
+#define mGENERALTIMER_H
 
 #include <stdint.h>
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @typedef: BaseTimer_STATE
+ * @typedef: GeneralTimer_STATE
  *
  * @brief: Used for determine the state of the event provided by timer
  *
 */
-typedef uint8_t BaseTimer_STATE;
+typedef uint8_t GeneralTimer_STATE;
 
-#define BaseTimer_RESET		(0)
-#define BaseTimer_SET		(!BaseTimer_RESET)
+#define GeneralTimer_RESET		(0)
+#define GeneralTimer_SET		(!GeneralTimer_RESET)
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @def: BaseTimer_IRQHandler
+ * @def: GeneralTimer_IRQHandler
  *
  * @brief: Internal IRQHandler name
  *
 */
-#define BaseTimer_IRQHandler(x) TIM6_DAC_IRQHandler(x)
+#define GeneralTimer_IRQHandler(x) TIM14_IRQHandler(x)
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_Initialization
+ * @fn: GeneralTimer_Initialization
  *
  * @brief: Initializes peripherals and sets the timer state
  *
@@ -37,10 +37,10 @@ typedef uint8_t BaseTimer_STATE;
  *
  * no return value
 */
-extern void BaseTimer_Initialization(void);
+extern void GeneralTimer_Initialization(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_SetPrescaler
+ * @fn: GeneralTimer_SetPrescaler
  *
  * @brief: Sets a prescaler of the timer
  *
@@ -54,10 +54,10 @@ extern void BaseTimer_Initialization(void);
  *
  * no return value
 */
-extern inline void BaseTimer_SetPrescaler(uint16_t prescaler);
+extern inline void GeneralTimer_SetPrescaler(uint16_t prescaler);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_SetPeriod
+ * @fn: GeneralTimer_SetPeriod
  *
  * @brief: Sets a period of the timer
  *
@@ -70,10 +70,10 @@ extern inline void BaseTimer_SetPrescaler(uint16_t prescaler);
  *
  * no return value
 */
-extern inline void BaseTimer_SetPeriod(uint16_t period);
+extern inline void GeneralTimer_SetPeriod(uint16_t period);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_Enable
+ * @fn: GeneralTimer_Enable
  *
  * @brief: Enable timer
  *
@@ -85,10 +85,10 @@ extern inline void BaseTimer_SetPeriod(uint16_t period);
  *
  * no return value
 */
-extern inline void BaseTimer_Enable(void);
+extern inline void GeneralTimer_Enable(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_Disable
+ * @fn: GeneralTimer_Disable
  *
  * @brief: Disable timer
  *
@@ -100,10 +100,10 @@ extern inline void BaseTimer_Enable(void);
  *
  * no return value
 */
-extern inline void BaseTimer_Disable(void);
+extern inline void GeneralTimer_Disable(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_Set
+ * @fn: GeneralTimer_Set
  *
  * @brief: Sets the current timers ticks
  *
@@ -116,10 +116,10 @@ extern inline void BaseTimer_Disable(void);
  *
  * no return value
 */
-extern inline void BaseTimer_Set(uint16_t cnt);
+extern inline void GeneralTimer_Set(uint16_t cnt);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_Get
+ * @fn: GeneralTimer_Get
  *
  * @brief: Get the current timers ticks
  *
@@ -131,10 +131,10 @@ extern inline void BaseTimer_Set(uint16_t cnt);
  *
  * return value is the timers ticks
 */
-extern inline uint16_t BaseTimer_Get(void);
+extern inline uint16_t GeneralTimer_Get(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_GetState
+ * @fn: GeneralTimer_GetState
  *
  * @brief: Used to determine the state of the event
  *
@@ -146,10 +146,10 @@ extern inline uint16_t BaseTimer_Get(void);
  *
  * return value is the state of the event
 */
-extern BaseTimer_STATE BaseTimer_GetState(void);
+extern GeneralTimer_STATE GeneralTimer_GetState(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_Reset
+ * @fn: GeneralTimer_Reset
  *
  * @brief: Resets the event and the current timer ticks
  *
@@ -161,11 +161,11 @@ extern BaseTimer_STATE BaseTimer_GetState(void);
  *
  * no return value
 */
-extern void BaseTimer_Reset(void);
+extern void GeneralTimer_Reset(void);
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_IRQHandler
+ * @fn: GeneralTimer_IRQHandler
  *
  * @brief: IRQ handler that be called when the timer reaches all parts of the event
  *
@@ -177,7 +177,7 @@ extern void BaseTimer_Reset(void);
  *
  * no return value
 */
-extern void BaseTimer_IRQHandler(void);
+extern void GeneralTimer_IRQHandler(void);
 
 
 #endif
