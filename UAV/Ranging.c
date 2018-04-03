@@ -38,11 +38,13 @@ typedef signed long long int64;
 // resp->init:  tx delay
 #define INIT_RX_TO_RESP_TX_DELAY_UUS 		500 	//500	//570	 //750 	//2600		(before resp)  <---
 // resp->init:  rx after tx
-#define RESP_TX_TO_FINAL_RX_DELAY_UUS		250 	//500
+#define RESP_TX_TO_FINAL_RX_DELAY_UUS		150 	//500
 // init->resp:  tx delay
 #define RESP_RX_TO_FINAL_TX_DELAY_UUS 		530 	//530	//600	 //800 	//3100		(before final) <---
 // resp->init:  rx timeout
 #define FINAL_RX_TIMEOUT_UUS 				800 	//3300
+// 
+#define TIMINGS_MULTIPLIER					1.4
 
 
 
@@ -53,6 +55,14 @@ static const uint8 resp_identifier[RESP_IDENTIFIER_SIZE] = {0xAA, 0x55};
 
 #define FINAL_IDENTIFIER_SIZE			2
 static const uint8 final_identifier[FINAL_IDENTIFIER_SIZE] = {0x55, 0xAA};
+
+
+
+// Expected times between messages (default settings)
+static uint16_t _Ranging_ResponseDelay = INIT_RX_TO_RESP_TX_DELAY_UUS;
+static uint16_t _Ranging_FinalDelay = RESP_RX_TO_FINAL_TX_DELAY_UUS;
+static uint16_t _Ranging_ResponseTimeOut = INIT_RX_TO_RESP_TX_DELAY_UUS * TIMINGS_MULTIPLIER;
+static uint16_t _Ranging_FinalTimeOut = RESP_RX_TO_FINAL_TX_DELAY_UUS * TIMINGS_MULTIPLIER;
 
 
 
@@ -114,7 +124,7 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 	tx_config.tx_delay = 0;
 	tx_config.ranging = 1;
 	tx_config.rx_aftertx_delay = INIT_TX_TO_RESP_RX_DELAY_UUS;
-	tx_config.rx_timeout = RESP_RX_TIMEOUT_UUS;
+	tx_config.rx_timeout = _Ranging_ResponseTimeOut;
 	tx_config.rx_buffer = resp_msg;
 	tx_config.rx_buffer_size = sizeof(resp_msg);	
 	
@@ -147,7 +157,7 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 			resp_rx_ts = _Ranging_GetRxTs64();
 
 			// Compute final message transmission time.
-			final_tx_time = (resp_rx_ts + (RESP_RX_TO_FINAL_TX_DELAY_UUS * UUS_TO_DWT_TIME)) >> 8;
+			final_tx_time = (resp_rx_ts + (_Ranging_FinalDelay * UUS_TO_DWT_TIME)) >> 8;
 			
 			// Final TX timestamp is the transmission time we programmed plus the TX antenna delay.
 			final_tx_ts = (((uint64)(final_tx_time & 0xFFFFFFFEUL)) << 8) + TX_ANT_DELAY;
@@ -195,7 +205,7 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 	init_rx_ts = _Ranging_GetRxTs64();
 
 	// Set send time for response. See NOTE 9 below.
-	resp_tx_time = (init_rx_ts + (INIT_RX_TO_RESP_TX_DELAY_UUS * UUS_TO_DWT_TIME)) >> 8;
+	resp_tx_time = (init_rx_ts + (_Ranging_ResponseDelay * UUS_TO_DWT_TIME)) >> 8;
 	
 	_Ranging_SetRespMsg(header, expected_resp_msg);
 	
@@ -206,7 +216,7 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 	tx_config.rx_aftertx_delay = RESP_TX_TO_FINAL_RX_DELAY_UUS;
 	tx_config.rx_buffer = final_msg;
 	tx_config.rx_buffer_size = sizeof(final_msg);
-	tx_config.rx_timeout = FINAL_RX_TIMEOUT_UUS;
+	tx_config.rx_timeout = _Ranging_FinalTimeOut;
 	
 	tr_res = Transceiver_Transmit( &tx_config );
 	
@@ -266,10 +276,14 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 
 
 
-void Ranging_Initialization(void) 
+void Ranging_Initialization(uint16_t responseDelay, uint16_t finalDelay) 
 {
 	dwt_setrxantennadelay(RX_ANT_DELAY);
     dwt_settxantennadelay(TX_ANT_DELAY);
+	_Ranging_ResponseDelay = responseDelay;
+	_Ranging_FinalDelay = finalDelay;
+	_Ranging_ResponseTimeOut = (uint16_t)(_Ranging_ResponseDelay * TIMINGS_MULTIPLIER);
+	_Ranging_FinalTimeOut = (uint16_t)(_Ranging_FinalDelay * TIMINGS_MULTIPLIER);
 }
 
 

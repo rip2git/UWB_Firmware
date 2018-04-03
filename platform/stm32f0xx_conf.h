@@ -56,6 +56,7 @@
 #include "stm32f0xx_misc.h"*/  /* High level functions for NVIC and SysTick (add-on to CMSIS functions) */
 
 #include "stm32f0xx_adc.h"
+#include "stm32f0xx_dma.h"
 #include "stm32f0xx_exti.h"
 #include "stm32f0xx_gpio.h"
 #include "stm32f0xx_syscfg.h"

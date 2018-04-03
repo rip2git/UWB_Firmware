@@ -17,7 +17,8 @@ static uint8_t _Token_GetTimeSlot(uint8_t nextID, uint8_t selfID);
 
 
 
-static uint8_t _Token_MAX_ID;
+static uint8_t _Token_MAX_ID = 2;
+static uint8_t _Token_timeSlotDurationMs = 1;
 static Token_BOOL _Token_tokenIsCaptured;
 
 
@@ -38,7 +39,7 @@ Token_RESULT Token_Transfer(MACHeader_Typedef *header)
 	tx_config.tx_delay = 0;
 	tx_config.ranging = 0;
 	tx_config.rx_aftertx_delay = 50;
-	tx_config.rx_timeout = Token_TIMESLOT_DURATION_MS * _Token_MAX_ID * 1000;
+	tx_config.rx_timeout = _Token_timeSlotDurationMs * _Token_MAX_ID * 1000;
 	tx_config.rx_buffer = _Token_buffer;
 	tx_config.rx_buffer_size = Token_BUFFER_SIZE;	
 	
@@ -62,7 +63,7 @@ Token_RESULT Token_Receipt(MACHeader_Typedef *header, uint8_t tokenOwnerID)
 	Transceiver_TxConfig tx_config;	
 	Transceiver_RxConfig rx_config;			
 	
-	otherTokenTimeout = _Token_GetTimeSlot(tokenOwnerID, header->SourceID) * Token_TIMESLOT_DURATION_MS * 1000;
+	otherTokenTimeout = _Token_GetTimeSlot(tokenOwnerID, header->SourceID) * _Token_timeSlotDurationMs * 1000;
 	
 	rx_config.rx_buffer = otherTokenBuffer;
 	rx_config.rx_buffer_size = Token_BUFFER_SIZE;
@@ -206,9 +207,10 @@ static void _Token_ConstructBuffer(MACHeader_Typedef *header)
 
 
 
-void Token_SetMaxID(uint8_t ID)
+void Token_Initialization(uint8_t ID, uint8_t timeSlotDurationMs)
 {
 	_Token_MAX_ID = ID;
+	_Token_timeSlotDurationMs = timeSlotDurationMs;
 }
 
 

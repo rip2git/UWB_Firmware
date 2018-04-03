@@ -7,9 +7,15 @@
 
 
 
+// 50/50
+#define SNIFF_ON_TIME 	1		// PACs (hard + 1, then if PAC = 8 -> 8*2 = 16 us)
+#define SNIFF_OFF_TIME 	4  		// us
+
+
+
+static void _Transceiver_PeriphConfig(void);
 // For handling MC sleep mode
 static void MC_GoToSleep(void);
-static void _Transceiver_PeriphConfig(void);
 static void SYSCLKConfig_STOP(void);
 
 
@@ -238,7 +244,9 @@ inline void Transceiver_ReceiverOn()
 	// Enable transceiver events - receive
 	dwt_setinterrupt(SYS_MASK_MRXFCG, 1);
 	
-	cbRes = 0;	
+	cbRes = 0;
+	
+	//dwt_setsniffmode(1, SNIFF_ON_TIME, SNIFF_OFF_TIME);
 	
 	dwt_setrxtimeout(0);
 	dwt_setdelayedtrxtime(0);
@@ -249,8 +257,9 @@ inline void Transceiver_ReceiverOn()
 
 
 inline void Transceiver_ReceiverOff(void)
-{
+{		
 	_Transceiver_rxoff();
+	//dwt_setsniffmode(0, 0, 0);
 }
 
 
@@ -265,7 +274,9 @@ inline Transceiver_RESULT Transceiver_GetReceptionResult(void)
 uint8 Transceiver_GetAvailableData(uint8 *buffer)
 {
 	if ( cbRes == Transceiver_RXFCG ) {
-		_Transceiver_rxoff(); // reset state
+		// reset state
+		Transceiver_ReceiverOff();
+		
 		cbRes = 0; // reset		
 		
 		uint32 frame_len = dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXFL_MASK_1023;
@@ -273,16 +284,6 @@ uint8 Transceiver_GetAvailableData(uint8 *buffer)
 		return (uint8)frame_len;
 	}
 	return 0;
-}
-
-				
-
-static void MC_GoToSleep(void)
-{
-	// Request to enter STOP mode with regulator in low power mode
-    //PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);	
-	// Configures system clock after wake-up from STOP
-    //SYSCLKConfig_STOP();
 }
 				
 
@@ -300,7 +301,7 @@ static void _Transceiver_PeriphConfig(void)
 
 
 
-static void SYSCLKConfig_STOP(void)
+/*static void SYSCLKConfig_STOP(void)
 {  
 	// After wake-up from STOP reconfigure the system clock
 	// Enable HSE
@@ -323,6 +324,15 @@ static void SYSCLKConfig_STOP(void)
 	// Wait till PLL is used as system clock source 
 	while (RCC_GetSYSCLKSource() != 0x08)
 		;
-}
+}*/
 
+				
+
+static void MC_GoToSleep(void)
+{
+	// Request to enter STOP mode with regulator in low power mode
+    //PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);	
+	// Configures system clock after wake-up from STOP
+    //SYSCLKConfig_STOP();
+}
 

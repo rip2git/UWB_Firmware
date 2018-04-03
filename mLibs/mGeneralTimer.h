@@ -164,20 +164,4 @@ extern GeneralTimer_STATE GeneralTimer_GetState(void);
 extern void GeneralTimer_Reset(void);
 
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn: GeneralTimer_IRQHandler
- *
- * @brief: IRQ handler that be called when the timer reaches all parts of the event
- *
- * NOTE: 
- *
- * input parameters
- *
- * output parameters
- *
- * no return value
-*/
-extern void GeneralTimer_IRQHandler(void);
-
-
 #endif

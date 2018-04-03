@@ -217,7 +217,7 @@ void USART_Initialization(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(USARTx_GPIO, &GPIO_InitStructure); 
 	
 	// USART CONFIG --------------------------------------------------
@@ -229,7 +229,7 @@ void USART_Initialization(void)
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 	USART_Init(USARTx, &USART_InitStructure);
 	//
-	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE); // txe enable/disable while working
+	USART_ITConfig(USARTx, USART_IT_RXNE | USART_IT_ERR, ENABLE); // txe enable/disable while working
 	//
 	USART_Cmd(USARTx, ENABLE);
 	

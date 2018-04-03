@@ -6,6 +6,16 @@
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
+ * @def: USART_DMA_VERSION
+ *
+ * @brief: Switch working mode of USART: 
+ * - defined: using USART through DMA
+ * - undef: using IRQ
+ *
+*/
+#define USART_DMA_VERSION
+
+/*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USARTHandler_RESULT
  *
  * @brief: Used for results (described below) returned from USARTHandler methods
@@ -22,35 +32,21 @@ typedef int USARTHandler_RESULT;
 typedef uint8_t USARTHandler_BOOL;
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @def: USARTHandler_ERROR
+ * @def: USARTHandler_RESULT
  *
- * @brief: Returns after failure operation
+ * @brief: Returns after operations
  *
 */
 #define USARTHandler_ERROR		(-1)
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: USARTHandler_SUCCESS
- *
- * @brief: Returns after successful operation
- *
-*/
 #define USARTHandler_SUCCESS	0
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @def: USARTHandler_FALSE
+ * @def: USARTHandler_BOOL
  *
- * @brief: Returns if statement is false
+ * @brief: Returns statement
  *
 */
 #define USARTHandler_FALSE		(0)
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: USARTHandler_TRUE
- *
- * @brief: Returns if statement is true
- *
-*/
 #define USARTHandler_TRUE		(!USARTHandler_FALSE)
 
 
@@ -59,7 +55,8 @@ typedef uint8_t USARTHandler_BOOL;
  *
  * @brief: Allows to check there is data from USART, returns USARTHandler_TRUE if it is
  *
- * NOTE: 
+ * NOTE: if DMA is using (@def USART_DMA_VERSION) then it is need to receive the data (by @fn USARTHandler_Receive) 
+ * before calling this method again, otherwise the data may be lost
  *
  * input parameters
  *

@@ -164,20 +164,4 @@ extern BaseTimer_STATE BaseTimer_GetState(void);
 extern void BaseTimer_Reset(void);
 
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn: BaseTimer_IRQHandler
- *
- * @brief: IRQ handler that be called when the timer reaches all parts of the event
- *
- * NOTE: 
- *
- * input parameters
- *
- * output parameters
- *
- * no return value
-*/
-extern void BaseTimer_IRQHandler(void);
-
-
 #endif

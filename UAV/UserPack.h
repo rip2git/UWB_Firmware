@@ -2,7 +2,6 @@
 #define USERPACK_H
 
 
-
 #include <stdint.h>
 
 
@@ -31,7 +30,7 @@
 */
 #define UserPack_SERVICE_INFO_SIZE 		3		// cmd + id + ttlsize
 #define UserPack_FCS_SIZE		 		2		// crc16
-#define UserPack_MAX_DATA_SIZE 			127 	// according with IEEE Std 802.15.4-2011
+#define UserPack_MAX_DATA_SIZE 			127		// according with IEEE Std 802.15.4-2011
 #define UserPack_MAX_PACK_BYTE			(UserPack_MAX_DATA_SIZE + UserPack_SERVICE_INFO_SIZE + UserPack_FCS_SIZE)
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -41,7 +40,7 @@
  *
 */
 #define UserPack_Cmd_Status 			0
-#define UserPack_Cmd_SetID				1
+#define UserPack_Cmd_SetConfig			1
 #define UserPack_Cmd_Distance			2
 #define UserPack_Cmd_Data				3
 
@@ -52,7 +51,7 @@
  *
 */
 #define UserPack_STATUS_Reserved		0
-#define UserPack_STATUS_SetID			1
+#define UserPack_STATUS_SetConfig		1
 #define UserPack_STATUS_Distance		2
 #define UserPack_STATUS_Data			3
 

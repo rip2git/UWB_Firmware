@@ -161,6 +161,18 @@ extern void TIM14_IRQHandler(void);
 extern void USART1_IRQHandler(void);
 
 
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn DMA1_Channel4_5_IRQHandler()
+ *
+ * @brief 
+ *
+ * @param none
+ *
+ * @return none
+ */
+extern void DMA1_Channel4_5_IRQHandler(void);
+
+
 /**
   * @}
   */

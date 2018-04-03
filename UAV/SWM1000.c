@@ -7,6 +7,7 @@
 #include "USARTHandler.h"
 #include "Random.h"
 #include "Token.h"
+#include "ConfigFW.h"
 
 
 
@@ -21,25 +22,17 @@ typedef union {
 
 
 
-#define SWM1000_PAN_ID					0x1AF0		// any creativity
+
 #define SWM1000_FRAME_CONTROL			0x8841		// ckeck IEEE Std 802.15.4-2011 for details
 #define SWM1000_FRAME_FILTER_MASK		(DWT_FF_DATA_EN) // ckeck IEEE Std 802.15.4-2011 for details
-#define SWM1000_MAXIMUM_BUFFER_SIZE		127
 
 
 
 static MACHeader_Typedef _Pointer_MACHeader;
-//static Transceiver_RESULT TrRes;
 static Ranging_RESULT RngRes;
-
-
-
 static Token_RESULT TokRes;
-
-
-
 static USARTHandler_RESULT UHRes;
-static uint8 buffer[SWM1000_MAXIMUM_BUFFER_SIZE];
+//static Transceiver_RESULT TrRes;
 
 
 
@@ -52,57 +45,70 @@ static inline void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config);
 
 void SWM1000_Initialization()
 {
-	UserPack upack;
-	Transceiver_Initialization();	
+	UserPack upack;	
 	USARTHandler_Initialization();
 	
-	// get own ID from higher level
-	UHRes = USARTHandler_Receive(&upack);
-	
-	if (UHRes == USARTHandler_SUCCESS && upack.Command == UserPack_Cmd_SetID) {
-		UHRes = USARTHandler_ERROR; // just reset	
-		uint8 buf[] = "STARTED\n";
-		upack.TotalSize = sizeof(buf);
-		UserPack_SetData(&upack, buf);
+	do {
+		// get own ID from higher level
+		while (USARTHandler_isAvailableToReceive() == USARTHandler_FALSE)
+			;
+		UHRes = USARTHandler_Receive(&upack);
+		
+		if (UHRes == USARTHandler_SUCCESS && 
+			upack.Command == UserPack_Cmd_SetConfig && 
+			upack.TotalSize == ConfigFW_SIZE
+		) {
+			UHRes = USARTHandler_ERROR; // just reset	
 			
+			ConfigFW_FromUserPack(&upack);
+			
+			uint8 buf[] = "STARTED\n";
+			upack.TotalSize = sizeof(buf);
+			UserPack_SetData(&upack, buf);
+		
 #ifdef MAIN_DEBUG
 /* TODO: testing space. Include testing code here */			
-		USART_SendString("STARTED\n");
+			USART_SendString("STARTED\n");
 /* TODO: end of testing code*/		
 #else
-		USARTHandler_Send(&upack);
+			USARTHandler_Send(&upack);
 #endif
-		
-	}
-	
-	// Initialises network params
-	dwt_setpanid(SWM1000_PAN_ID);
-	dwt_setaddress16(upack.DestinationID);
-	dwt_enableframefilter(SWM1000_FRAME_FILTER_MASK);
+			
+			break;
+		}
+	} while (1);
 	
 	_Pointer_MACHeader.FrameControl = SWM1000_FRAME_CONTROL;
 	_Pointer_MACHeader.SequenceNumber = 0;
-	_Pointer_MACHeader.PAN_ID = SWM1000_PAN_ID;
-	_Pointer_MACHeader.SourceID = upack.DestinationID & 0x00FF;
+	_Pointer_MACHeader.PAN_ID = ConfigFW.SW1000.PAN_ID;
+	_Pointer_MACHeader.SourceID = ConfigFW.SW1000.DeviceID & 0x00FF;
 	
-	Ranging_Initialization();
+	Transceiver_Initialization();
+	
+	// Initialises network params
+	dwt_setpanid(_Pointer_MACHeader.PAN_ID);
+	dwt_setaddress16(_Pointer_MACHeader.SourceID);
+	dwt_enableframefilter(SWM1000_FRAME_FILTER_MASK);
+		
 	Random_Initialization();
-	Token_SetMaxID(SWM1000_nDEVICES);
+	Ranging_Initialization(ConfigFW.Ranging.RespondingDelay, ConfigFW.Ranging.FinalDelay);
+	Token_Initialization(ConfigFW.SW1000.nDevices, ConfigFW.Token.TimeSlotDurationMs);
 	
 	// timer for 
 	GeneralTimer_SetPrescaler(SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(SWM1000_PollingPeriod);		
+	GeneralTimer_SetPeriod(ConfigFW.SW1000.PollingPeriod);		
 }
 
 
 
 void SWM1000_Loop(void)
 {
+	uint8 buffer[UserPack_MAX_DATA_SIZE];
 	uint8 generate, transmit, token_transfer; 
 	uint8 receivingState = 0;
 	Transceiver_RxConfig rx_config;
 	rx_config.rx_buffer = buffer;
-	rx_config.rx_buffer_size = SWM1000_MAXIMUM_BUFFER_SIZE;
+	rx_config.rx_buffer_size = UserPack_MAX_DATA_SIZE;
 	UserPack upack;
 		
 	GeneralTimer_Reset();
@@ -158,23 +164,17 @@ void SWM1000_Loop(void)
 				//deca_sleep(10);
 				_Pointer_MACHeader.DestinationID = 0xFFFF;	
 				TokRes = Token_Transfer( &_Pointer_MACHeader );
-				if (TokRes == Token_SUCCESS) {
-					
+				
 #ifdef MAIN_DEBUG
-/* TODO: testing space. Include testing code here */					
-					USART_SendString("tok_tx success\n");
-/* TODO: end of testing code*/
-#endif	
-					
-				} else {
-					
-#ifdef MAIN_DEBUG	
-/* TODO: testing space. Include testing code here */					
+/* TODO: testing space. Include testing code here */				
+				if (TokRes == Token_SUCCESS) {
+					USART_SendString("tok_tx success\n");					
+				} else {				
 					USART_SendString("tok_tx fail\n");
-/* TODO: end of testing code*/
-#endif	
-					
 				}
+/* TODO: end of testing code*/
+#endif
+				
 			}
 		}
 		// receiving
@@ -212,7 +212,7 @@ static inline void _SWM1000_TransceivingAutomat(UserPack *upack)
 		case UserPack_Cmd_Distance: 
 		{	
 			if (upack->DestinationID == 0xFF) {
-				for (i = 1; i <= SWM1000_nDEVICES; ++i) {							
+				for (i = 1; i <= ConfigFW.SW1000.nDevices; ++i) {							
 					if ( (uint8_t)(_Pointer_MACHeader.SourceID) != i ) {
 			
 #ifdef MAIN_DEBUG
@@ -276,23 +276,17 @@ static inline void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
 		{	
 			_Pointer_MACHeader.DestinationID = 0xFFFF; // everybody should be able to hear this message			
 			TokRes = Token_Receipt( &_Pointer_MACHeader, rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET] );
-			if (TokRes == Token_SUCCESS) {
 			
 #ifdef MAIN_DEBUG	
 /* TODO: testing space. Include testing code here */				
+			if (TokRes == Token_SUCCESS) {			
 				USART_SendString("tok_recvd success\n");
-/* TODO: end of testing code*/ 
-#endif	
-				
-			} else {
-			
-#ifdef MAIN_DEBUG	
-/* TODO: testing space. Include testing code here */				
+			} else {			
 				USART_SendString("tok_recvd fail\n");
+			}
 /* TODO: end of testing code*/ 	
 #endif				
-				
-			}
+			
 		} break;	
 		// -------------------------------------------------------------------------			
 		case (MACFrame_Flags_TOKEN | MACFrame_Flags_ACK):					

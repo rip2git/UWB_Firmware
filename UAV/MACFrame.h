@@ -32,6 +32,7 @@
 #define MACFrame_SOURCE_ADDRESS_SIZE			2
 #define MACFrame_FLAGS_SIZE 					1
 #define MACFrame_FCS_SIZE						2
+#define MACFrame_PAYLOAD_MAX_SIZE				127
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: MACFrame_HEADER_SIZE

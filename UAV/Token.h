@@ -4,13 +4,6 @@
 #include "MACFrame.h"
 #include <stdint.h>
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Token_TIMESLOT_DURATION_MS
- *
- * @brief: 
- *
-*/
-#define Token_TIMESLOT_DURATION_MS		5
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: Token_RESULT
@@ -154,11 +147,13 @@ extern Token_BOOL Token_isCaptured();
  *
  * input parameters
  * @param ID - higher ID in the PAN
+ * @param timeSlotDurationMs - duration of token timeslot in ms (the pause between messages of two devices, 
+ * when these devices try to catch the token)
  *
  * output parameters
  *
  * no return value
 */
-extern void Token_SetMaxID(uint8_t ID);
+extern void Token_Initialization(uint8_t ID, uint8_t timeSlotDurationMs);
 
 #endif

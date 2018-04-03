@@ -23,19 +23,12 @@
 typedef int Ranging_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @def: Ranging_ERROR
+ * @def: Ranging_RESULT
  *
- * @brief: Returns after failure operation
+ * @brief: Returns after operation
  *
 */
 #define Ranging_ERROR 		(-1)
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Ranging_SUCCESS
- *
- * @brief: Returns after successful operation
- *
-*/
 #define Ranging_SUCCESS 	(0)
 
 
@@ -47,17 +40,19 @@ typedef int Ranging_RESULT;
  * NOTE: 
  *
  * input parameters
+ * @param responseDelay - expected time between first and second message
+ * @param finalDelay - expected time between second and third (last) message
  *
  * output parameters
  *
  * no return value
 */
-extern void Ranging_Initialization(void);
+extern void Ranging_Initialization(uint16_t responseDelay, uint16_t finalDelay);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: Ranging_GetDistance
  *
- * @brief: 
+ * @brief: Measures distance between initiator (defines by header) and this device
  *
  * NOTE: 
  *
@@ -75,7 +70,8 @@ extern Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *d
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: Ranging_Initiate
  *
- * @brief: 
+ * @brief: Measures distance between this device and device defined by header (distance send to second device
+ * and won't be defined here)
  *
  * NOTE: 
  *
