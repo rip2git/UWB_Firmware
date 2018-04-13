@@ -1,10 +1,6 @@
-*.ewt
-*.dep
-*.ewd
-*.ewp
-*.eww
-/settings/
-/Debug/
+/.metadata/
+/RemoteSystemsTempFiles/
+
 
 # Prerequisites
 *.d
@@ -58,3 +54,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/.metadata/
