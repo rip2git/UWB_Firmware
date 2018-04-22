@@ -13,13 +13,6 @@
 
 
 
-static void _Transceiver_PeriphConfig(void);
-// For handling MC sleep mode
-static void MC_GoToSleep(void);
-//static void SYSCLKConfig_STOP(void);
-
-
-
 void Transceiver_Initialization(void)
 {	
 	dwt_config_t config = {
@@ -35,13 +28,10 @@ void Transceiver_Initialization(void)
 		(129 + 8 - 8)    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
 	};
 	
-	// Config controllers periptherals
-	_Transceiver_PeriphConfig();	
-	
+	spi_set_rate_low();
 	do {
 		deca_sleep(500);
-		reset_DW1000();	
-		spi_set_rate_low();
+		reset_DW1000();
 	} while ( dwt_initialise(DWT_LOADUCODE) == DWT_ERROR );
     
 	spi_set_rate_high();    
@@ -98,13 +88,10 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 		return Transceiver_ERROR;		
 	}
 	
-	MC_GoToSleep();
-	
 	if (config->rx_aftertx_delay) { // Response expected
-		while ( !(cbRes & (Transceiver_RXFCG | Transceiver_RXRFTO)) ) 
-		{
+		while ( !(cbRes & (Transceiver_RXFCG | Transceiver_RXRFTO)) )
 			;			
-		}
+
 		_Transceiver_rxoff(); // reset state
 		
 		if (cbRes == Transceiver_RXFCG) {
@@ -119,10 +106,8 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 		}
 	} 
 	else { // Response isn't expected		
-		while ( !(cbRes & Transceiver_TXFRS) ) 
-		{
+		while ( !(cbRes & Transceiver_TXFRS) )
 			;
-		}
 	}	
 	
 	return cbRes;
@@ -133,7 +118,6 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 {
 	uint32 frame_len;
-	uint16 rxTO_ms = 0, rxTO_us = 0;
 	
 	decamutexon();
 	
@@ -146,18 +130,8 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 	
 	decamutexoff();
 	
-	dwt_receiverautoreenabled(1);	
-	
-	if (config->rx_timeout < 0xFFFFUL) {
-		dwt_setrxtimeout(config->rx_timeout);	
-	} else { // internal timer to be used
-		dwt_setrxtimeout(0);
-		rxTO_ms = (config->rx_timeout + config->rx_delay) / 1000;
-		rxTO_us = (config->rx_timeout + config->rx_delay) % 1000;
-		BaseTimer_SetPeriod(rxTO_ms);
-		BaseTimer_Reset();
-		BaseTimer_Enable();			
-	}
+	dwt_receiverautoreenabled(1);
+	dwt_setrxtimeout(config->rx_timeout);
 	
 	if (config->rx_delay) {		
 		dwt_setdelayedtrxtime(config->rx_delay);
@@ -166,8 +140,6 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 		dwt_setdelayedtrxtime(0);
 		dwt_rxenable(DWT_START_RX_IMMEDIATE);
 	}
-	
-	MC_GoToSleep();	
 		
 	// Waiting message or timeout	
 	while ( !(cbRes & (Transceiver_RXFCG | Transceiver_RXRFTO)) ) {		
@@ -176,18 +148,6 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 				_Transceiver_rxoff();
 				return Transceiver_INTERRUPTED;
 			}
-		}
-		if (BaseTimer_GetState() == BaseTimer_SET) { // if rx timeout >= 65535 us -> internal MC timer is used
-			BaseTimer_Disable();
-			BaseTimer_Reset();
-			_Transceiver_rxoff();			
-			if (rxTO_us > 0) {
-				dwt_setrxtimeout(rxTO_us);
-				dwt_rxenable(DWT_START_RX_IMMEDIATE);
-			} else {
-				cbRes = Transceiver_RXRFTO;
-				break;
-			}			
 		}
 	}	
 	_Transceiver_rxoff(); // reset state
@@ -224,8 +184,6 @@ Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
 	
 	dwt_setpreambledetecttimeout(timeout);
 	dwt_rxenable(DWT_START_RX_IMMEDIATE);
-	
-	MC_GoToSleep();	
 
 	while ( !(cbRes & (Transceiver_RXPRD | Transceiver_RXPTO)) )
 		;
@@ -285,54 +243,5 @@ uint8 Transceiver_GetAvailableData(uint8 *buffer)
 	}
 	return 0;
 }
-				
 
-
-static void _Transceiver_PeriphConfig(void)
-{
-	// Initialises RCC, SPI, EXTI
-	peripherals_init();  
-	BaseTimer_SetPrescaler(SystemCoreClock / 1000); // ms
-	BaseTimer_Reset();
-	
-	// 
-	//RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-}
-
-
-
-/*static void SYSCLKConfig_STOP(void)
-{  
-	// After wake-up from STOP reconfigure the system clock
-	// Enable HSE
-	RCC_HSEConfig(RCC_HSE_ON);
-
-	// Wait till HSE is ready
-	while (RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET)
-		;
-
-	// Enable PLL
-	RCC_PLLCmd(ENABLE);
-
-	// Wait till PLL is ready
-	while (RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET)
-		;
-
-	// Select PLL as system clock source
-	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
-
-	// Wait till PLL is used as system clock source 
-	while (RCC_GetSYSCLKSource() != 0x08)
-		;
-}*/
-
-				
-
-static void MC_GoToSleep(void)
-{
-	// Request to enter STOP mode with regulator in low power mode
-    //PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);	
-	// Configures system clock after wake-up from STOP
-    //SYSCLKConfig_STOP();
-}
 

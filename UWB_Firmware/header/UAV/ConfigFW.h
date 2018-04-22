@@ -11,7 +11,8 @@
  * @brief: size of ConfigFW
  *
 */
-#define ConfigFW_SIZE	12
+#define ConfigFW_SIZE	15
+
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: ConfigFW
@@ -19,7 +20,7 @@
  * @brief: Global config of the firmware
  *
 */
-struct {
+static struct {
 	struct SW1000_Str {
 		uint16_t 	DeviceID;
 		uint16_t 	PAN_ID;
@@ -33,6 +34,11 @@ struct {
 		uint16_t	RespondingDelay;
 		uint16_t	FinalDelay;
 	} Ranging;
+	struct Routing_Str {
+		uint8_t		TransactionSize;
+		uint8_t		TrustPacks;
+		uint8_t		Repeats;
+	} Routing;
 } ConfigFW;
 
 
@@ -48,7 +54,7 @@ struct {
  *
  * no return value
 */
-void ConfigFW_FromUserPack(const UserPack *pack)
+static inline void ConfigFW_FromUserPack(const UserPack *pack)
 {	
 	uint8_t i = 0;
 	
@@ -66,6 +72,10 @@ void ConfigFW_FromUserPack(const UserPack *pack)
 	ConfigFW.Ranging.RespondingDelay |= pack->Data[i++] << 8;
 	ConfigFW.Ranging.FinalDelay	= pack->Data[i++];
 	ConfigFW.Ranging.FinalDelay	|= pack->Data[i++] << 8;
+	//
+	ConfigFW.Routing.TransactionSize = pack->Data[i++];
+	ConfigFW.Routing.TrustPacks = pack->Data[i++];
+	ConfigFW.Routing.Repeats = pack->Data[i++];
 }
 
 

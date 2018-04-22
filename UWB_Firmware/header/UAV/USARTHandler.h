@@ -21,7 +21,10 @@
  * @brief: Used for results (described below) returned from USARTHandler methods
  *
 */
-typedef int USARTHandler_RESULT;
+typedef enum {
+	USARTHandler_ERROR = -1,
+	USARTHandler_SUCCESS = 0
+} USARTHandler_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USARTHandler_BOOL
@@ -29,25 +32,10 @@ typedef int USARTHandler_RESULT;
  * @brief: Logical result of operations
  *
 */
-typedef uint8_t USARTHandler_BOOL;
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: USARTHandler_RESULT
- *
- * @brief: Returns after operations
- *
-*/
-#define USARTHandler_ERROR		(-1)
-#define USARTHandler_SUCCESS	0
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: USARTHandler_BOOL
- *
- * @brief: Returns statement
- *
-*/
-#define USARTHandler_FALSE		(0)
-#define USARTHandler_TRUE		(!USARTHandler_FALSE)
+typedef enum {
+	USARTHandler_FALSE = 0,
+	USARTHandler_TRUE = (!USARTHandler_FALSE)
+} USARTHandler_BOOL;
 
 
 /*! ------------------------------------------------------------------------------------------------------------------

@@ -20,16 +20,10 @@
  * @brief: Used for results (described below) returned from Ranging methods
  *
 */
-typedef int Ranging_RESULT;
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Ranging_RESULT
- *
- * @brief: Returns after operation
- *
-*/
-#define Ranging_ERROR 		(-1)
-#define Ranging_SUCCESS 	(0)
+typedef enum {
+	Ranging_ERROR = -1,
+	Ranging_SUCCESS = 0
+} Ranging_RESULT;
 
 
 /*! ------------------------------------------------------------------------------------------------------------------

@@ -11,7 +11,10 @@
  * @brief: Used for results (described below) returned from Token methods
  *
 */
-typedef int Token_RESULT;
+typedef enum {
+	Token_FAIL = -1,
+	Token_SUCCESS = 0
+} Token_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: Token_BOOL
@@ -19,39 +22,10 @@ typedef int Token_RESULT;
  * @brief: Logical result of operations
  *
 */
-typedef uint8_t Token_BOOL;
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Token_FAIL
- *
- * @brief: Returns after failure operation
- *
-*/
-#define Token_FAIL			(-1)
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Token_SUCCESS
- *
- * @brief: Returns after successful operation
- *
-*/
-#define Token_SUCCESS		0
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Token_FALSE
- *
- * @brief: Returns if statement is false
- *
-*/
-#define Token_FALSE		(0)
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: Token_TRUE
- *
- * @brief: Returns if statement is true
- *
-*/
-#define Token_TRUE		(!Token_FALSE)
+typedef enum {
+	Token_FALSE = 0,
+	Token_TRUE = (!Token_FALSE)
+} Token_BOOL;
 
 
 /*! ------------------------------------------------------------------------------------------------------------------

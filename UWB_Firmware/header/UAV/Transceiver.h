@@ -15,15 +15,15 @@
  * @brief: Used for results (described below) returned from Transceiver methods
  *
 */
-typedef uint32 Transceiver_RESULT;
-
-#define Transceiver_ERROR			0x00000000UL		// Some types of error: rx/tx_buffer from config could not be used
-#define Transceiver_INTERRUPTED		0x00000001UL		// if receiving was interrupted
-#define Transceiver_TXFRS			SYS_STATUS_TXFRS	// Transmit Frame Sent
-#define Transceiver_RXFCG			SYS_STATUS_RXFCG	// Receiver FCS Good (data frame ready) 
-#define Transceiver_RXRFTO			SYS_STATUS_RXRFTO	// Receive Frame Wait Timeout
-#define Transceiver_RXPRD			SYS_STATUS_RXPRD	// Receiver Preamble Detected
-#define Transceiver_RXPTO			SYS_STATUS_RXPTO	// Preamble detection timeout
+typedef enum {
+	Transceiver_ERROR			= 0x00000000UL,		// Some types of error: rx/tx_buffer from config could not be used
+	Transceiver_INTERRUPTED		= 0x00000001UL,		// if receiving was interrupted
+	Transceiver_TXFRS			= SYS_STATUS_TXFRS,	// Transmit Frame Sent
+	Transceiver_RXFCG			= SYS_STATUS_RXFCG,	// Receiver FCS Good (data frame ready)
+	Transceiver_RXRFTO			= SYS_STATUS_RXRFTO,// Receive Frame Wait Timeout
+	Transceiver_RXPRD			= SYS_STATUS_RXPRD,	// Receiver Preamble Detected
+	Transceiver_RXPTO			= SYS_STATUS_RXPTO	// Preamble detection timeout
+} Transceiver_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: Transceiver_Interrupt
@@ -70,7 +70,7 @@ typedef struct {
 typedef struct {
 	uint8 	*rx_buffer;					// buffer for expected message
 	uint16 	rx_buffer_size;				// size of expected message in bytes, can be changed to less value
-	uint32	rx_timeout;					// time for waiting of a message (in uus)
+	uint16	rx_timeout;					// time for waiting of a message (in uus)
 	uint32 	rx_delay;					// if needs to receive a message in certain time (in uus)
 	Transceiver_Interrupt rx_interrupt;	// used to inerrupt receiving
 } Transceiver_RxConfig;

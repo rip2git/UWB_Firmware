@@ -10,10 +10,10 @@
  * @brief: Used for determine the state of the event provided by timer
  *
 */
-typedef uint8_t GeneralTimer_STATE;
-
-#define GeneralTimer_RESET		(0)
-#define GeneralTimer_SET		(!GeneralTimer_RESET)
+typedef enum {
+	GeneralTimer_RESET = 0,
+	GeneralTimer_SET = (!GeneralTimer_RESET)
+} GeneralTimer_STATE;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: GeneralTimer_IRQHandler

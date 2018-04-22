@@ -48,7 +48,6 @@ void USARTHandler_Initialization(void)
 USARTHandler_RESULT USARTHandler_Send(const UserPack *pack)
 {	
 	uint8_t buf_size = UserPack_ToBytes(pack, _USARTHandler_TXbuffer);
-	uint16_str crc;
 	crc.d = CheckSum_GetCRC16(_USARTHandler_TXbuffer, buf_size);
 	_USARTHandler_TXbuffer[buf_size++] = crc.b[0];
 	_USARTHandler_TXbuffer[buf_size++] = crc.b[1];
@@ -99,7 +98,7 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 	
 #endif	
 	
-	if (_USARTHandler_RXbuffer[0] == UserPack_Cmd_Status)
+	if (_USARTHandler_RXbuffer[0] == (uint8_t)UserPack_Cmd_Error)
 		return USARTHandler_ERROR;
 			
 	crc.d = CheckSum_GetCRC16(_USARTHandler_RXbuffer, it - 2);

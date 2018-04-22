@@ -31,16 +31,11 @@
 #define MACFrame_DESTINATION_ADDRESS_SIZE		2
 #define MACFrame_SOURCE_ADDRESS_SIZE			2
 #define MACFrame_FLAGS_SIZE 					1
+#define MACFrame_HEADER_SIZE					10
 #define MACFrame_FCS_SIZE						2
 #define MACFrame_PAYLOAD_MAX_SIZE				127
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: MACFrame_HEADER_SIZE
- *
- * @brief: Sizes of MAC frame with extension (described below)
- *
-*/
-#define MACFrame_HEADER_SIZE					10		
+#define MACFrame_SERVICE_INFO_SIZE				(MACFrame_HEADER_SIZE + MACFrame_FCS_SIZE)
+#define MACFrame_FRAME_MAX_SIZE					(MACFrame_SERVICE_INFO_SIZE + MACFrame_PAYLOAD_MAX_SIZE)
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: Flags 
@@ -48,9 +43,12 @@
  * @brief: Defines of bits of the 'Flags' field of MAC header
  *
 */
+#define MACFrame_Flags_NOP			0x00
 #define MACFrame_Flags_RNG			0x01
 #define MACFrame_Flags_DATA			0x02
 #define MACFrame_Flags_TOKEN		0x04
+#define MACFrame_Flags_SYN			0x20
+#define MACFrame_Flags_RST			0x40
 #define MACFrame_Flags_ACK			0x80
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -63,11 +61,11 @@
 */
 typedef struct {
 	uint16_t 	FrameControl;
-	uint8_t 	SequenceNumber;	
-	uint16_t 	PAN_ID;			
-	uint16_t	DestinationID;	
-	uint16_t	SourceID;		
-	uint8_t		Flags;			
+	uint8_t 	SequenceNumber;
+	uint16_t 	PAN_ID;
+	uint16_t	DestinationID;
+	uint16_t	SourceID;
+	uint8_t		Flags;
 } MACHeader_Typedef;
 
 

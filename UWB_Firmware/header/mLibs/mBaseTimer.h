@@ -10,10 +10,10 @@
  * @brief: Used for determine the state of the event provided by timer
  *
 */
-typedef uint8_t BaseTimer_STATE;
-
-#define BaseTimer_RESET		(0)
-#define BaseTimer_SET		(!BaseTimer_RESET)
+typedef enum {
+	BaseTimer_RESET = 0,
+	BaseTimer_SET = (!BaseTimer_RESET)
+} BaseTimer_STATE;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: BaseTimer_IRQHandler

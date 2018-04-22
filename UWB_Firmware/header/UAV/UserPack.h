@@ -34,26 +34,23 @@
 #define UserPack_MAX_PACK_BYTE			(UserPack_MAX_DATA_SIZE + UserPack_SERVICE_INFO_SIZE + UserPack_FCS_SIZE)
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @def: UserPack_Commands
+ * @typedef: UserPack_COMMAND
  *
  * @brief:
  *
 */
-#define UserPack_Cmd_Status 			0
-#define UserPack_Cmd_SetConfig			1
-#define UserPack_Cmd_Distance			2
-#define UserPack_Cmd_Data				3
+typedef enum {
+	UserPack_Cmd_Error = 0,
+	UserPack_Cmd_SetConfig,
+	UserPack_Cmd_Distance,
+	UserPack_Cmd_Data
+} UserPack_FCommand;
 
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: UserPack_STATUSES
- *
- * @brief:
- *
-*/
-#define UserPack_STATUS_Reserved		0
-#define UserPack_STATUS_SetConfig		1
-#define UserPack_STATUS_Distance		2
-#define UserPack_STATUS_Data			3
+typedef union {
+	uint8_t _raw;
+	uint8_t devID;
+	UserPack_FCommand cmd;
+} UserPack_SCommand;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: UserPack struct
@@ -62,8 +59,8 @@
  *
 */
 typedef struct {
-	uint8_t Command;
-	uint8_t DestinationID;
+	UserPack_FCommand FCmd;
+	UserPack_SCommand SCmd;
 	uint8_t TotalSize;
 	uint8_t Data[UserPack_MAX_DATA_SIZE];
 } UserPack;

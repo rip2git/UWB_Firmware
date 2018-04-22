@@ -15,40 +15,26 @@
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USART_RESULT
  *
- * @brief: Used for results (described below) returned from USART methods
+ * @brief: Returns from USART methods after operation
  *
 */
-typedef int USART_RESULT;
+typedef enum {
+	USART_FAIL = -1,
+	USART_SUCCESS = 0
+} USART_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USART_MODE
  *
- * @brief: 
- *
-*/
-typedef uint8_t USART_MODE;
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: USART_RESULT
- *
- * @brief: Returns from USART methods after operation
- *
-*/
-#define USART_SUCCESS					(0)
-#define USART_FAIL						(-1)
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @def: USART_MODE
- *
  * NOTE: USART_WAIT - isn't supported yet
  *
- * @brief: Mode of transmit/receive operation:
- * - USART_NOWAIT 	- 	returns from methods after puts up the data to transmitting or request to receiving
- * - USART_WAIT 	- 	waits while the data isn't received or transmitted
+ * @brief: Mode of transmit/receive operation
  *
 */
-#define USART_NOWAIT					0x00
-#define USART_WAIT						0x01
+typedef enum {
+	USART_NOWAIT = 0x00, // returns from methods after puts up the data to transmitting or request to receiving
+	USART_WAIT = 0x01 // waits while the data isn't received or transmitted
+} USART_MODE;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USART_CALL_BACK
