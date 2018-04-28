@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/UAV/Debugger.c \
 ../source/UAV/Ranging.c \
 ../source/UAV/Routing.c \
 ../source/UAV/SWM1000.c \
@@ -13,6 +14,7 @@ C_SRCS += \
 ../source/UAV/UserPack.c 
 
 OBJS += \
+./source/UAV/Debugger.o \
 ./source/UAV/Ranging.o \
 ./source/UAV/Routing.o \
 ./source/UAV/SWM1000.o \
@@ -22,6 +24,7 @@ OBJS += \
 ./source/UAV/UserPack.o 
 
 C_DEPS += \
+./source/UAV/Debugger.d \
 ./source/UAV/Ranging.d \
 ./source/UAV/Routing.d \
 ./source/UAV/SWM1000.d \
@@ -35,7 +38,7 @@ C_DEPS += \
 source/UAV/%.o: ../source/UAV/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM GNU C Compiler'
-	arm-none-eabi-gcc -mcpu=cortex-m0 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -Wall -Wextra -fgnu89-inline -DNDEBUG -DSTM32F051 -DUSE_STDPERIPH_DRIVER -DHSE_VALUE=8000000 -I"../header" -I"../system/header" -I"../system/header/cmsis" -I"../system/header/stm32f0-stdperiph" -I../header/platform -I../header/mLibs -I../header/decadriver -I../header/UAV -std=gnu11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m0 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -Wall -Wextra -fgnu89-inline -DNDEBUG -DSTM32F051 -DUSE_STDPERIPH_DRIVER -DHSE_VALUE=8000000 -DUSE_DEBUGGER -I"../header" -I"../system/header" -I"../system/header/cmsis" -I"../system/header/stm32f0-stdperiph" -I../header/platform -I../header/mLibs -I../header/decadriver -I../header/UAV -std=gnu11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

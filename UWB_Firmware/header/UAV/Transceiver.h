@@ -142,7 +142,7 @@ extern Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config);
  *
  * no returned value
 */
-extern inline void Transceiver_ReceiverOn(void);
+extern void Transceiver_ReceiverOn(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn Transceiver_ReceiverOff()
@@ -157,7 +157,7 @@ extern inline void Transceiver_ReceiverOn(void);
  *
  * no returned value
 */
-extern inline void Transceiver_ReceiverOff(void);
+extern void Transceiver_ReceiverOff(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn Transceiver_GetReceptionResult()
@@ -172,20 +172,35 @@ extern inline void Transceiver_ReceiverOff(void);
  *
  * no returned value
 */
-extern inline Transceiver_RESULT Transceiver_GetReceptionResult(void);
+extern Transceiver_RESULT Transceiver_GetReceptionResult(void);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn Transceiver_GetLevelOfLastReceived()
+ *
+ * @brief: allows to get received signal strength of last received frame (from 0 to 100 cu)
+ *
+ * NOTE: 
+ *
+ * input parameters
+ *
+ * output parameters
+ *
+ * return received signal strength
+*/
+extern uint8 Transceiver_GetLevelOfLastReceived(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn Transceiver_GetAvailableData()
  *
- * @brief: 
+ * @brief:
  *
- * NOTE: 
+ * NOTE:
  *
  * input parameters
  * @param buffer
  *
  * output parameters
- * @param buffer 
+ * @param buffer
  *
  * return size of received data (size of buffer)
 */
@@ -205,7 +220,7 @@ extern uint8 Transceiver_GetAvailableData(uint8 *buffer);
  *
  * return value is Transceiver_RESULT described above
 */
-extern Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout);
+//extern Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout);
 
 
 #endif

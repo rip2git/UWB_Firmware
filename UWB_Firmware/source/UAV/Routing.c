@@ -1,17 +1,15 @@
 
 #include "Routing.h"
-#include <math.h>
 #include <string.h>
 
 
 
-
-// todo
-//#include "USARTHandler.h"
+#include "Debugger.h"
 
 
 
-#define _Routing_WORST_LVL		0
+#define _Routing_WORST_LVL			255
+#define _Routing_THRESHHOLD_LVL		65.0
 
 
 
@@ -38,6 +36,7 @@ static uint8_t _Routing_newTable_Lvls[Routing_TABLE_SIZE];
 static uint8_t _Routing_newTable_IDs[Routing_TABLE_SIZE];
 
 
+static uint8_t _Routing_deviceID;
 static uint8_t _Routing_ACKReceivingTimeOut;
 static uint8_t _Routing_transactionSize;
 static uint8_t _Routing_trustPacks;
@@ -49,10 +48,10 @@ static Transceiver_TxConfig tx_config;
 
 
 
-static inline void _Routing_Refresh_newTable(const uint8_t *buffer, uint8_t tableOwnerID);
-static inline void _Routing_Refresh_Tables();
-static inline uint8_t _Routing_GetIntermediateID(uint8_t destinationID);
-static inline uint8_t _Routing_ConstructBuffer(const MACHeader_Typedef *header, const uint8_t *payload, uint8_t payload_size);
+static void _Routing_Refresh_newTable(const uint8_t *buffer, uint8_t tableOwnerID, uint8_t tableOwnerRxlvl);
+static void _Routing_Refresh_Tables();
+static uint8_t _Routing_GetIntermediateID(uint8_t destinationID);
+static uint8_t _Routing_ConstructBuffer(const MACHeader_Typedef *header, const uint8_t *payload, uint8_t payload_size);
 static Routing_RESULT _Routing_WaitResponse(_Routing_WaitResponseConditions *cond, uint8_t *respSize);
 
 
@@ -70,17 +69,9 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 			0												// previous node
 	};
 
-	//todo
-//	UserPack uuupack;
-//	uuupack.FCmd = UserPack_Cmd_Error;
-//	uuupack.SCmd.cmd = UserPack_Cmd_Error;
-//	uuupack.TotalSize = 1;
-
-
 	// intermediate node is available
 	if (neighboringNodes[0] == 0xFF) {
-//		uuupack.Data[0] = 10;
-//		USARTHandler_Send(&uuupack);
+		Debugger_SendStr("\4\1 0xFF");
 		return Routing_FAIL;
 	}
 
@@ -91,8 +82,6 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 
 		tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, extremeNodes, 2);
 		if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//			uuupack.Data[0] = 11;
-//			USARTHandler_Send(&uuupack);
 			return Routing_FAIL;
 		}
 		header->SequenceNumber++;
@@ -107,8 +96,10 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 		cond.routingSrc = extremeNodes[1]; // to start node
 		cond.routingDst = extremeNodes[0]; // from end node
 		if ( _Routing_WaitResponse(&cond, 0) == Routing_FAIL ) {
-//			uuupack.Data[0] = 12;
-//			USARTHandler_Send(&uuupack);
+			Debugger_PushSymBack(4);
+			Debugger_PushSymBack(2);
+			Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
+			Debugger_SendPreparedBuf();
 			return Routing_FAIL;
 		}
 	} // --------------------------------------------------------------------------------------------------
@@ -122,8 +113,6 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 
 			tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, payload, payload_size);
 			if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//				uuupack.Data[0] = 13;
-//				USARTHandler_Send(&uuupack);
 				return Routing_FAIL;
 			}
 			header->SequenceNumber++;
@@ -140,16 +129,16 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 				cond.routingSrc = extremeNodes[1]; // to start node
 				cond.routingDst = extremeNodes[0]; // from end node
 				if ( _Routing_WaitResponse(&cond, 0) == Routing_FAIL ) {
-//					uuupack.Data[0] = 14;
-//					USARTHandler_Send(&uuupack);
+					Debugger_PushSymBack(4);
+					Debugger_PushSymBack(3);
+					Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
+					Debugger_SendPreparedBuf();
 					return Routing_FAIL;
 				}
 			} // ------------------------------------------------------------------------------------------
 		}
 	}
-
-//	uuupack.Data[0] = 15;
-//	USARTHandler_Send(&uuupack);
+	Debugger_SendStr("\4\4");
 
 	return Routing_SUCCESS;
 }
@@ -177,15 +166,9 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 	uint8_t tmp_data_buffer_size = *data_buffer_size; // keep in mind
 	*data_buffer_size = 0; // reset
 
-	//todo
-//	UserPack uuupack;
-//	uuupack.FCmd = UserPack_Cmd_Error;
-//	uuupack.SCmd.cmd = UserPack_Cmd_Error;
-//	uuupack.TotalSize = 1;
-
 	// ****************************************************************************************************
 	// retransmission *************************************************************************************
-	if (rx_buffer[MACFrame_DESTINATION_ADDRESS_OFFSET] != header->SourceID) {
+	if ( rx_buffer[_Routing_DESTINATION_OFFSET] != (uint8_t)(header->SourceID & 0x00FF) ) {
 
 		uint8_t respSize = 0;
 		uint8_t neighboringNodes[] = {
@@ -195,8 +178,7 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 		// intermediate node is available
 		if (neighboringNodes[0] == 0xFF) {
-//			uuupack.Data[0] = 20;
-//			USARTHandler_Send(&uuupack);
+			Debugger_SendStr("\3\1 0xFF");
 			return Routing_FAIL;
 		}
 
@@ -207,8 +189,6 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 			tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, extremeNodes, 2);
 			if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//				uuupack.Data[0] = 21;
-//				USARTHandler_Send(&uuupack);
 				return Routing_FAIL;
 			}
 			header->SequenceNumber++;
@@ -223,8 +203,10 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 			cond.routingSrc = extremeNodes[1]; // from end node
 			cond.routingDst = extremeNodes[0]; // to start node
 			if ( _Routing_WaitResponse(&cond, 0) == Routing_FAIL ) {
-//				uuupack.Data[0] = 22;
-//				USARTHandler_Send(&uuupack);
+				Debugger_PushSymBack(3);
+				Debugger_PushSymBack(2);
+				Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
+				Debugger_SendPreparedBuf();
 				return Routing_FAIL;
 			}
 		} // ----------------------------------------------------------------------------------------------
@@ -236,8 +218,6 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 			tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, rev_extremeNodes, 2);
 			if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//				uuupack.Data[0] = 23;
-//				USARTHandler_Send(&uuupack);
 				return Routing_FAIL;
 			}
 			header->SequenceNumber++;
@@ -254,8 +234,10 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 				cond.routingSrc = 0; // data massege - without routing src
 				cond.routingDst = 0; // data massege - without routing dst
 				if ( _Routing_WaitResponse(&cond, &respSize) == Routing_FAIL ) {
-//					uuupack.Data[0] = 24;
-//					USARTHandler_Send(&uuupack);
+					Debugger_PushSymBack(3);
+					Debugger_PushSymBack(2);
+					Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
+					Debugger_SendPreparedBuf();
 					return Routing_FAIL;
 				}
 			} // ------------------------------------------------------------------------------------------
@@ -270,8 +252,6 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 						&(_Routing_buffer[MACFrame_PAYLOAD_OFFSET]),
 						respSize - MACFrame_HEADER_SIZE - MACFrame_FCS_SIZE);
 				if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//					uuupack.Data[0] = 25;
-//					USARTHandler_Send(&uuupack);
 					return Routing_FAIL;
 				}
 				header->SequenceNumber++;
@@ -288,8 +268,10 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 					cond.routingSrc = extremeNodes[1]; // from end node
 					cond.routingDst = extremeNodes[0]; // to start node
 					if ( _Routing_WaitResponse(&cond, 0) == Routing_FAIL ) {
-//						uuupack.Data[0] = 26;
-//						USARTHandler_Send(&uuupack);
+						Debugger_PushSymBack(3);
+						Debugger_PushSymBack(4);
+						Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
+						Debugger_SendPreparedBuf();
 						return Routing_FAIL;
 					}
 				} // --------------------------------------------------------------------------------------
@@ -301,17 +283,13 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 					tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, rev_extremeNodes, 2);
 					if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//						uuupack.Data[0] = 27;
-//						USARTHandler_Send(&uuupack);
 						return Routing_FAIL;
 					}
 					header->SequenceNumber++;
 				} // --------------------------------------------------------------------------------------
 			}
 		}
-
-//		uuupack.Data[0] = 28;
-//		USARTHandler_Send(&uuupack);
+		Debugger_SendStr("\3\5");
 
 		return Routing_SUCCESS;
 	}
@@ -331,8 +309,6 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 			tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, rev_extremeNodes, 2);
 			if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS )  {
-//				uuupack.Data[0] = 30;
-//				USARTHandler_Send(&uuupack);
 				return Routing_FAIL;
 			}
 		} // ----------------------------------------------------------------------------------------------
@@ -348,11 +324,14 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 				cond.routingSrc = 0; // data massege - without routing src
 				cond.routingDst = 0; // data massege - without routing dst
 				if ( _Routing_WaitResponse(&cond, data_buffer_size) == Routing_FAIL ) {
-//					uuupack.Data[0] = 31;
-//					USARTHandler_Send(&uuupack);
+					Debugger_PushSymBack(3);
+					Debugger_PushSymBack(6);
+					Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
+					Debugger_SendPreparedBuf();
 					return Routing_FAIL;
 				}
 				*data_buffer_size = (*data_buffer_size > tmp_data_buffer_size)? tmp_data_buffer_size : *data_buffer_size;
+				_Routing_buffer[MACFrame_SOURCE_ADDRESS_OFFSET] = extremeNodes[0];
 				memcpy(data_buffer, _Routing_buffer, *data_buffer_size);
 			} // ------------------------------------------------------------------------------------------
 
@@ -365,16 +344,12 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 					tx_config.tx_buffer_size = _Routing_ConstructBuffer(header, rev_extremeNodes, 2);
 					if ( Transceiver_Transmit( &tx_config ) != Transceiver_TXFRS ) {
-//						uuupack.Data[0] = 32;
-//						USARTHandler_Send(&uuupack);
 						return Routing_FAIL;
 					}
 				} // --------------------------------------------------------------------------------------
 			}
 		}
-
-//		uuupack.Data[0] = 33;
-//		USARTHandler_Send(&uuupack);
+		Debugger_SendStr("\3\7");
 
 		return Routing_SUCCESS;
 	}
@@ -386,15 +361,16 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 
 void Routing_SendTokenWithTable(MACHeader_Typedef *header)
 {
-	TokenExt_Transfer( header, _Routing_newTable_Lvls, Routing_TABLE_SIZE );
+	TokenExt_Transfer( header, _Routing_oldTable_Lvls, Routing_TABLE_SIZE );
 }
 
 
 
 void Routing_RecvTokenWithTable(MACHeader_Typedef *header, const uint8_t *rx_buffer)
 {
+	uint8_t rxlvl = Transceiver_GetLevelOfLastReceived();
 	TokenExt_Receipt( header, rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET] );
-	_Routing_Refresh_newTable( &(rx_buffer[MACFrame_PAYLOAD_OFFSET]), rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET] );
+	_Routing_Refresh_newTable( &(rx_buffer[MACFrame_PAYLOAD_OFFSET]), rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET], rxlvl );
 
 	if (TokenExt_isCaptured() == TokenExt_TRUE) { // new cycle
 		_Routing_Refresh_Tables();
@@ -413,6 +389,7 @@ void Routing_Initialization(const Routing_InitializationStruct *initializationSt
 		_Routing_newTable_IDs[i] = _Routing_WORST_LVL;
 	}
 
+	_Routing_deviceID = initializationStruct->deviceID - 1; // simplifies the logic
 	_Routing_ACKReceivingTimeOut = initializationStruct->ACKReceivingTimeOut;
 	_Routing_transactionSize = initializationStruct->transactionSize;
 	_Routing_trustPacks = initializationStruct->trustPacks + 1; // simplifies the logic
@@ -430,41 +407,70 @@ void Routing_Initialization(const Routing_InitializationStruct *initializationSt
 
 
 
-static inline uint8_t _Routing_DefineNewLvl(double lvl)
+/*static inline uint8_t _Routing_DefineNewLvl(double lvl)
 {
 	return log10( pow((lvl), 1.31) + 0.338 ) + 0.66;
+}*/
+
+
+
+static uint8_t _Routing_DefineNewLvl(uint8_t lvl)
+{
+	return lvl + 1;
 }
 
 
 
-static inline void _Routing_Refresh_newTable(const uint8_t *buffer, uint8_t tableOwnerID)
+static void _Routing_Refresh_newTable(const uint8_t *buffer, uint8_t tableOwnerID, uint8_t tableOwnerRxlvl)
 {
-	uint16 RXPACC = (dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXPACC_MASK) >> RX_FINFO_RXPACC_SHIFT;
-	uint16 CIR_PWR = dwt_read16bitoffsetreg(RX_FQUAL_ID, 6);
-
 	tableOwnerID--;
 
-	//  0 -min, 50 -max; using relative lvl
-	double rxlvl = (20.0 * log10 (((double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) )) - 40.0) / 50.0;
+	Debugger_ConstrAndSendBuf(3, 2, tableOwnerID+1, tableOwnerRxlvl);
 
+	if (tableOwnerRxlvl > _Routing_THRESHHOLD_LVL) {
+		for (uint8_t i = 0, tmp; i < Routing_TABLE_SIZE; ++i) {
+			if (i != _Routing_deviceID) {
+				if (i != tableOwnerID) {
+					if (buffer[i] != _Routing_WORST_LVL) {
+						tmp = _Routing_DefineNewLvl( buffer[i] );
+						if (_Routing_newTable_Lvls[i] >= tmp) {
+							_Routing_newTable_Lvls[i] = tmp;
+							_Routing_newTable_IDs[i] = tableOwnerID;
+						}
+					}
+				} else {
+					_Routing_newTable_Lvls[i] = 1;
+					_Routing_newTable_IDs[i] = tableOwnerID;
+				}
+			}
+		}
+	}
+
+	/*
 	for (uint8_t i = 0, tmp; i < Routing_TABLE_SIZE; ++i) {
 		if (i != tableOwnerID) {
-			tmp = _Routing_DefineNewLvl(((double)buffer[i] / 100.0) * rxlvl) * 100.0;
-			if (_Routing_newTable_Lvls[i] <= tmp) {
+			tmp = _Routing_DefineNewLvl(((double)buffer[i] / 100.0) * ((double)tableOwnerRxlvl / 100.0)) * 100.0;
+			if (tmp != _Routing_WORST_LVL && _Routing_newTable_Lvls[i] <= tmp) {
 				_Routing_newTable_Lvls[i] = tmp;
 				_Routing_newTable_IDs[i] = tableOwnerID;
 			}
 		} else {
-			_Routing_newTable_Lvls[i] = (uint8_t)(rxlvl * 100.0);
+			_Routing_newTable_Lvls[i] = tableOwnerRxlvl;
 			_Routing_newTable_IDs[i] = tableOwnerID;
 		}
 	}
+	*/
 }
 
 
 
-static inline void _Routing_Refresh_Tables()
+static void _Routing_Refresh_Tables()
 {
+	Debugger_PushSymBack(1);
+	Debugger_PushArrayBack(_Routing_oldTable_Lvls, 10);
+	Debugger_PushArrayBack(_Routing_oldTable_IDs, 10);
+	Debugger_SendPreparedBuf();
+
 	for (uint8_t i = 0; i < Routing_TABLE_SIZE; ++i) {
 		_Routing_oldTable_Lvls[i] = _Routing_newTable_Lvls[i];
 		_Routing_oldTable_IDs[i] = _Routing_newTable_IDs[i];
@@ -476,7 +482,7 @@ static inline void _Routing_Refresh_Tables()
 
 
 
-static inline uint8_t _Routing_GetIntermediateID(uint8_t destinationID)
+static uint8_t _Routing_GetIntermediateID(uint8_t destinationID)
 {
 	destinationID--;
 	if (_Routing_newTable_Lvls[destinationID] != _Routing_WORST_LVL)
@@ -534,7 +540,7 @@ static Routing_RESULT _Routing_WaitResponse(_Routing_WaitResponseConditions *con
 
 
 
-static inline uint8_t _Routing_ConstructBuffer(const MACHeader_Typedef *header, const uint8_t *payload, uint8_t payload_size)
+static uint8_t _Routing_ConstructBuffer(const MACHeader_Typedef *header, const uint8_t *payload, uint8_t payload_size)
 {
 	uint8_t i = 0;
 	// header

@@ -11,7 +11,7 @@
 #define USARTx_PinSource_RX 	GPIO_PinSource10        //GPIO_PinSource3  
 #define USARTx_CLK				RCC_APB2Periph_USART1   //RCC_APB1Periph_USART2
 #define USARTx_GPIO_CLK			RCC_AHBPeriph_GPIOA
-#define USARTx_BaudRate			(115200)
+#define USARTx_BaudRate			460800 //(115200)
 
 #define DMAx					DMA1
 #define DMAx_ChTX				DMA1_Channel4

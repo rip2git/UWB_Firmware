@@ -32,8 +32,8 @@ static USARTHandler_RESULT UHRes;
 
 
 static inline void _SWM1000_UserCommandHandler();
-static inline void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config);
-static inline void _SWM1000_PutDistanceInUData(uint8 *payload, uint16_str distance);
+static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config);
+static void _SWM1000_PutDistanceInUData(uint8 *payload, uint16_str distance);
 
 
 
@@ -115,7 +115,7 @@ void SWM1000_Loop(void)
 
 
 
-static inline void _SWM1000_UserCommandHandler(UserPack *upack)
+static void _SWM1000_UserCommandHandler(UserPack *upack)
 {
 	uint8 i;
 	switch (upack->FCmd) {
@@ -166,15 +166,14 @@ static inline void _SWM1000_UserCommandHandler(UserPack *upack)
 
 
 
-static inline void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
-{	
-	uint16_str distance;
-	
+static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
+{
 	switch ( rx_config->rx_buffer[MACFrame_FLAGS_OFFSET] ) {
 		// ---------------------------------------------------------------------------------------------------
 		// Ranging algorithm - getting distance
 		case MACFrame_Flags_RNG:					
-		{					
+		{
+			uint16_str distance;
 			_Pointer_MACHeader.DestinationID = rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET]; // low byte first	
 			_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 			RngRes = Ranging_GetDistance( &_Pointer_MACHeader, &(distance.d) );
@@ -205,6 +204,7 @@ static inline void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
 			}
 		} break;
 		// ---------------------------------------------------------------------------------------------------
+		// Data receiving algorithm - establish logical connection and receive / retranslate the data
 		case (MACFrame_Flags_TOKEN | MACFrame_Flags_SYN):
 		{
 			_Pointer_MACHeader.DestinationID = rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET];
@@ -299,6 +299,7 @@ void SWM1000_Initialization()
 	dwt_enableframefilter(SWM1000_FRAME_FILTER_MASK);
 
 	Routing_InitializationStruct routing_initializationStruct = {
+		ConfigFW.SW1000.DeviceID,
 		ConfigFW.Token.TimeSlotDurationMs * ConfigFW.SW1000.nDevices * 2,
 		ConfigFW.Routing.TransactionSize,
 		ConfigFW.Routing.TrustPacks,

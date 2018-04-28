@@ -1,0 +1,2378 @@
+Archive member included to satisfy reference by file (symbol)
+
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+                              ./source/UAV/Transceiver.o (log10)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o) (__ieee754_log10)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_lib_ver.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o) (__fdlib_version)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o) (matherr)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o) (nan)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o) (__ieee754_log)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o)
+                              ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o (__aeabi_uidiv)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_dvmd_tls.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o) (__aeabi_dcmpeq)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfsi.o)
+                              ./source/UAV/Ranging.o (__aeabi_d2uiz)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o)
+                              ./source/UAV/Ranging.o (__aeabi_d2lz)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfdi.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o) (__aeabi_d2ulz)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_floatdidf.o)
+                              ./source/UAV/Ranging.o (__aeabi_l2d)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o)
+                              ./source/decadriver/deca_device.o (__aeabi_dadd)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+                              ./source/UAV/Ranging.o (__aeabi_ddiv)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(eqdf2.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o) (__eqdf2)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(gedf2.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o) (__gedf2)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(ledf2.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o) (__ledf2)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+                              ./source/decadriver/deca_device.o (__aeabi_dmul)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(subdf3.o)
+                              ./source/decadriver/deca_device.o (__aeabi_dsub)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(unorddf2.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o) (__aeabi_dcmpun)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(fixdfsi.o)
+                              ./source/decadriver/deca_device.o (__aeabi_d2iz)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatsidf.o)
+                              ./source/UAV/Ranging.o (__aeabi_i2d)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatunsidf.o)
+                              ./source/UAV/Ranging.o (__aeabi_ui2d)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_clzsi2.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o) (__clzsi2)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+                              ./source/decadriver/deca_device.o (abs)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+                              ./system/src/newlib/_sbrk.o (__errno)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o) (_impure_ptr)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+                              ./source/UAV/Ranging.o (memcmp)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+                              ./source/mLibs/mUSART_DMA.o (memcpy)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+                              ./source/mLibs/Random.o (srand)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o) (malloc)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o) (_free_r)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o) (_malloc_r)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o) (_sbrk_r)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o) (__malloc_lock)
+/opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_muldi3.o)
+                              /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o) (__aeabi_lmul)
+
+Allocating common symbols
+Common symbol       size              file
+
+decairq_callBackResult
+                    0x4               ./source/decadriver/deca_irqhandler.o
+errno               0x4               ./system/src/newlib/_syscalls.o
+final_msg           0x1a              ./source/UAV/Ranging.o
+dummyVola           0x1               ./source/platform/deca_spi.o
+crc                 0x2               ./source/UAV/USARTHandler.o
+expected_resp_msg   0xe               ./source/UAV/Ranging.o
+expected_final_msg  0x1a              ./source/UAV/Ranging.o
+resp_msg            0xe               ./source/UAV/Ranging.o
+init_msg            0x12              ./source/UAV/Ranging.o
+
+Discarded input sections
+
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_DeInit
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_Init
+                0x00000000       0x2c ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_StructInit
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_Cmd  0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_ClockModeConfig
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_JitterCmd
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_AutoPowerOffCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_WaitModeCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_AnalogWatchdogCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_AnalogWatchdogThresholdsConfig
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_AnalogWatchdogSingleChannelConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_AnalogWatchdogSingleChannelCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_TempSensorCmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_VrefintCmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_VbatCmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_ChannelConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_ContinuousModeCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_DiscModeCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_OverrunModeCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_GetCalibrationFactor
+                0x00000000       0x30 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_StopOfConversion
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_StartOfConversion
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_GetConversionValue
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_DMACmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_DMARequestModeConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_ITConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_GetFlagStatus
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_ClearFlag
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_GetITStatus
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text.ADC_ClearITPendingBit
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .comment       0x00000000       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .ARM.attributes
+                0x00000000       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_DeInit
+                0x00000000      0x138 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_StructInit
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_Cmd  0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_SetCurrDataCounter
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_GetCurrDataCounter
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_GetFlagStatus
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_ClearFlag
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_GetITStatus
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text.DMA_ClearITPendingBit
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_DeInit
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_StructInit
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_GenerateSWInterrupt
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_GetFlagStatus
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_ClearFlag
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_GetITStatus
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text.EXTI_ClearITPendingBit
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_DeInit
+                0x00000000       0xc0 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_StructInit
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_PinLockConfig
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_ReadInputDataBit
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_ReadInputData
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_ReadOutputDataBit
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_ReadOutputData
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_WriteBit
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text.GPIO_Write
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_WriteAccessCmd
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_SetPrescaler
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_SetReload
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_ReloadCounter
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_SetWindowValue
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_Enable
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text.IWDG_GetFlagStatus
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .comment       0x00000000       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .ARM.attributes
+                0x00000000       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .text.NVIC_SystemLPConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .text.SysTick_CLKSourceConfig
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_AdjustHSICalibrationValue
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_HSICmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_AdjustHSI14CalibrationValue
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_HSI14Cmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_HSI14ADCRequestCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_LSEConfig
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_LSEDriveConfig
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_LSICmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_HSI48Cmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_ClockSecuritySystemCmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_MCOConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_ADCCLKConfig
+                0x00000000       0x34 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_CECCLKConfig
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_I2CCLKConfig
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_USBCLKConfig
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_RTCCLKConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_RTCCLKCmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_BackupResetCmd
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_AHBPeriphResetCmd
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_ITConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_ClearFlag
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_GetITStatus
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text.RCC_ClearITPendingBit
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_StructInit
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.I2S_StructInit
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.I2S_Init
+                0x00000000       0xb4 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_TIModeCmd
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.I2S_Cmd  0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_DataSizeConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_RxFIFOThresholdConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_BiDirectionalLineConfig
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_NSSInternalSoftwareConfig
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_NSSPulseModeCmd
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_SendData8
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_SendData16
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_ReceiveData8
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_ReceiveData16
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_CRCLengthConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_CalculateCRC
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_TransmitCRC
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_GetCRC
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_GetCRCPolynomial
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_DMACmd
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_LastDMATransferCmd
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_ITConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_GetTransmissionFIFOStatus
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_GetReceptionFIFOStatus
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_GetFlagStatus
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_ClearFlag
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text.SPI_I2S_GetITStatus
+                0x00000000       0x2c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_DeInit
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_MemoryRemapConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_I2CFastModePlusConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_IRDAEnvSelection
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_GetPendingIT
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_BreakConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_GetFlagStatus
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text.SYSCFG_ClearFlag
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TI1_Config
+                0x00000000       0x2c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TI2_Config
+                0x00000000       0x3c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TI3_Config
+                0x00000000       0x3c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TI4_Config
+                0x00000000       0x44 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_DeInit
+                0x00000000      0x110 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_PrescalerConfig
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_CounterModeConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetCounter
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetAutoreload
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetCounter
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetPrescaler
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_UpdateDisableConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_UpdateRequestConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ARRPreloadConfig
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectOnePulseMode
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetClockDivision
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_Cmd  0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_BDTRConfig
+                0x00000000       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_BDTRStructInit
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_CtrlPWMOutputs
+                0x00000000       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC1Init
+                0x00000000       0x7c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC2Init
+                0x00000000       0x9c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC3Init
+                0x00000000       0x88 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC4Init
+                0x00000000       0x64 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OCStructInit
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectOCxM
+                0x00000000       0x50 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetCompare1
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetCompare2
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetCompare3
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetCompare4
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ForcedOC1Config
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ForcedOC2Config
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ForcedOC3Config
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ForcedOC4Config
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_CCPreloadControl
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC1PreloadConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC2PreloadConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC3PreloadConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC4PreloadConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC1FastConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC2FastConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC3FastConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC4FastConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ClearOC1Ref
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ClearOC2Ref
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ClearOC3Ref
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ClearOC4Ref
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC1PolarityConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC1NPolarityConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC2PolarityConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC2NPolarityConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC3PolarityConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC3NPolarityConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_OC4PolarityConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectOCREFClear
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_CCxCmd
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_CCxNCmd
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectCOM
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ICStructInit
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetCapture1
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetCapture2
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetCapture3
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetCapture4
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetIC1Prescaler
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetIC2Prescaler
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_PWMIConfig
+                0x00000000       0x70 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetIC3Prescaler
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SetIC4Prescaler
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ICInit
+                0x00000000       0x64 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GenerateEvent
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetFlagStatus
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ClearFlag
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_GetITStatus
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ClearITPendingBit
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_DMAConfig
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_DMACmd
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectCCDMA
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_InternalClockConfig
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectInputTrigger
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ITRxExternalClockConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_TIxExternalClockConfig
+                0x00000000       0x30 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectOutputTrigger
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectSlaveMode
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectMasterSlaveMode
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ETRConfig
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ETRClockMode1Config
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_ETRClockMode2Config
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_EncoderInterfaceConfig
+                0x00000000       0x30 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_SelectHallSensor
+                0x00000000       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text.TIM_RemapConfig
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .text          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .data          0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .bss           0x00000000        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_DeInit
+                0x00000000       0xf8 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_StructInit
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ClockInit
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ClockStructInit
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_DirectionModeCmd
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_OverSampling8Cmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_OneBitMethodCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_MSBFirstCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_DataInvCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_InvPinCmd
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SWAPPinCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ReceiverTimeOutCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetReceiverTimeOut
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetPrescaler
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_STOPModeCmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_StopModeWakeUpSourceConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_AutoBaudRateCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_AutoBaudRateConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SendData
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ReceiveData
+                0x00000000        0x8 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetAddress
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_MuteModeCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_MuteModeWakeUpConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_AddressDetectionConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_LINBreakDetectLengthConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_LINCmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_HalfDuplexCmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetGuardTime
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SmartCardCmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SmartCardNACKCmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetAutoRetryCount
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetBlockLength
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_IrDAConfig
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_IrDACmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_DECmd
+                0x00000000       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_DEPolarityConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetDEAssertionTime
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_SetDEDeassertionTime
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ITConfig
+                0x00000000       0x38 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_RequestCmd
+                0x00000000       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_OverrunDetectionConfig
+                0x00000000       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_GetFlagStatus
+                0x00000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ClearFlag
+                0x00000000        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_GetITStatus
+                0x00000000       0x44 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text.USART_ClearITPendingBit
+                0x00000000        0xc ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .text          0x00000000        0x0 ./system/src/newlib/_exit.o
+ .data          0x00000000        0x0 ./system/src/newlib/_exit.o
+ .bss           0x00000000        0x0 ./system/src/newlib/_exit.o
+ .text.abort    0x00000000        0xc ./system/src/newlib/_exit.o
+ .text          0x00000000        0x0 ./system/src/newlib/_sbrk.o
+ .data          0x00000000        0x0 ./system/src/newlib/_sbrk.o
+ .bss           0x00000000        0x0 ./system/src/newlib/_sbrk.o
+ .text._sbrk    0x00000000       0x44 ./system/src/newlib/_sbrk.o
+ .bss.current_heap_end.3974
+                0x00000000        0x4 ./system/src/newlib/_sbrk.o
+ .comment       0x00000000       0x6f ./system/src/newlib/_sbrk.o
+ .ARM.attributes
+                0x00000000       0x31 ./system/src/newlib/_sbrk.o
+ .text          0x00000000        0x0 ./system/src/newlib/_startup.o
+ .data          0x00000000        0x0 ./system/src/newlib/_startup.o
+ .bss           0x00000000        0x0 ./system/src/newlib/_startup.o
+ .text.__initialize_data
+                0x00000000       0x10 ./system/src/newlib/_startup.o
+ .text.__initialize_bss
+                0x00000000       0x10 ./system/src/newlib/_startup.o
+ .text.__run_init_array
+                0x00000000       0x48 ./system/src/newlib/_startup.o
+ .text.__run_fini_array
+                0x00000000       0x24 ./system/src/newlib/_startup.o
+ .text          0x00000000        0x0 ./system/src/newlib/_syscalls.o
+ .data          0x00000000        0x0 ./system/src/newlib/_syscalls.o
+ .bss           0x00000000        0x0 ./system/src/newlib/_syscalls.o
+ .text.raise    0x00000000       0x10 ./system/src/newlib/_syscalls.o
+ .text.kill     0x00000000       0x10 ./system/src/newlib/_syscalls.o
+ .bss.__dso_handle
+                0x00000000        0x4 ./system/src/newlib/_syscalls.o
+ COMMON         0x00000000        0x4 ./system/src/newlib/_syscalls.o
+ .text          0x00000000        0x0 ./system/src/cortexm/_initialize_hardware.o
+ .data          0x00000000        0x0 ./system/src/cortexm/_initialize_hardware.o
+ .bss           0x00000000        0x0 ./system/src/cortexm/_initialize_hardware.o
+ .text          0x00000000        0x0 ./system/src/cortexm/_reset_hardware.o
+ .data          0x00000000        0x0 ./system/src/cortexm/_reset_hardware.o
+ .bss           0x00000000        0x0 ./system/src/cortexm/_reset_hardware.o
+ .text          0x00000000        0x0 ./system/src/cortexm/exception_handlers.o
+ .data          0x00000000        0x0 ./system/src/cortexm/exception_handlers.o
+ .bss           0x00000000        0x0 ./system/src/cortexm/exception_handlers.o
+ .text          0x00000000        0x0 ./system/src/cmsis/system_stm32f0xx.o
+ .data          0x00000000        0x0 ./system/src/cmsis/system_stm32f0xx.o
+ .bss           0x00000000        0x0 ./system/src/cmsis/system_stm32f0xx.o
+ .text          0x00000000        0x0 ./system/src/cmsis/vectors_stm32f0xx.o
+ .data          0x00000000        0x0 ./system/src/cmsis/vectors_stm32f0xx.o
+ .bss           0x00000000        0x0 ./system/src/cmsis/vectors_stm32f0xx.o
+ .text          0x00000000        0x0 ./src/main.o
+ .data          0x00000000        0x0 ./src/main.o
+ .bss           0x00000000        0x0 ./src/main.o
+ .text          0x00000000        0x0 ./source/platform/deca_mutex.o
+ .data          0x00000000        0x0 ./source/platform/deca_mutex.o
+ .bss           0x00000000        0x0 ./source/platform/deca_mutex.o
+ .text          0x00000000        0x0 ./source/platform/deca_sleep.o
+ .data          0x00000000        0x0 ./source/platform/deca_sleep.o
+ .bss           0x00000000        0x0 ./source/platform/deca_sleep.o
+ .text          0x00000000        0x0 ./source/platform/deca_spi.o
+ .data          0x00000000        0x0 ./source/platform/deca_spi.o
+ .bss           0x00000000        0x0 ./source/platform/deca_spi.o
+ .text.openspi  0x00000000        0x4 ./source/platform/deca_spi.o
+ .text.closespi
+                0x00000000       0x20 ./source/platform/deca_spi.o
+ .text          0x00000000        0x0 ./source/platform/port.o
+ .data          0x00000000        0x0 ./source/platform/port.o
+ .bss           0x00000000        0x0 ./source/platform/port.o
+ .text.No_Configuration
+                0x00000000        0x8 ./source/platform/port.o
+ .text.NVIC_DisableDECAIRQ
+                0x00000000       0x24 ./source/platform/port.o
+ .text.EXTI_GetITEnStatus
+                0x00000000       0x14 ./source/platform/port.o
+ .text.is_IRQ_enabled
+                0x00000000       0x14 ./source/platform/port.o
+ .text          0x00000000        0x0 ./source/mLibs/CheckSum.o
+ .data          0x00000000        0x0 ./source/mLibs/CheckSum.o
+ .bss           0x00000000        0x0 ./source/mLibs/CheckSum.o
+ .text          0x00000000        0x0 ./source/mLibs/Random.o
+ .data          0x00000000        0x0 ./source/mLibs/Random.o
+ .bss           0x00000000        0x0 ./source/mLibs/Random.o
+ .text.Random_Initialization
+                0x00000000       0xd8 ./source/mLibs/Random.o
+ .text.Random_GetNumber
+                0x00000000       0x14 ./source/mLibs/Random.o
+ .comment       0x00000000       0x6f ./source/mLibs/Random.o
+ .ARM.attributes
+                0x00000000       0x31 ./source/mLibs/Random.o
+ .text          0x00000000        0x0 ./source/mLibs/SystemTimer.o
+ .data          0x00000000        0x0 ./source/mLibs/SystemTimer.o
+ .bss           0x00000000        0x0 ./source/mLibs/SystemTimer.o
+ .text          0x00000000        0x0 ./source/mLibs/mBaseTimer.o
+ .data          0x00000000        0x0 ./source/mLibs/mBaseTimer.o
+ .bss           0x00000000        0x0 ./source/mLibs/mBaseTimer.o
+ .text.BaseTimer_Set
+                0x00000000        0xc ./source/mLibs/mBaseTimer.o
+ .text.BaseTimer_Get
+                0x00000000        0xc ./source/mLibs/mBaseTimer.o
+ .text          0x00000000        0x0 ./source/mLibs/mGeneralTimer.o
+ .data          0x00000000        0x0 ./source/mLibs/mGeneralTimer.o
+ .bss           0x00000000        0x0 ./source/mLibs/mGeneralTimer.o
+ .text.GeneralTimer_Disable
+                0x00000000       0x10 ./source/mLibs/mGeneralTimer.o
+ .text.GeneralTimer_Set
+                0x00000000        0xc ./source/mLibs/mGeneralTimer.o
+ .text.GeneralTimer_Get
+                0x00000000        0xc ./source/mLibs/mGeneralTimer.o
+ .text          0x00000000        0x0 ./source/mLibs/mUSART_DMA.o
+ .data          0x00000000        0x0 ./source/mLibs/mUSART_DMA.o
+ .bss           0x00000000        0x0 ./source/mLibs/mUSART_DMA.o
+ .text.USART_ForceReadEnd
+                0x00000000       0x10 ./source/mLibs/mUSART_DMA.o
+ .text.USART_SendByte
+                0x00000000       0x20 ./source/mLibs/mUSART_DMA.o
+ .text.USART_SendString
+                0x00000000       0x28 ./source/mLibs/mUSART_DMA.o
+ .text          0x00000000        0x0 ./source/decadriver/deca_device.o
+ .data          0x00000000        0x0 ./source/decadriver/deca_device.o
+ .bss           0x00000000        0x0 ./source/decadriver/deca_device.o
+ .text.dwt_otprevision
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_getpartid
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_getlotid
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_setgpiodirection
+                0x00000000       0x20 ./source/decadriver/deca_device.o
+ .text.dwt_setgpiovalue
+                0x00000000       0x20 ./source/decadriver/deca_device.o
+ .text.dwt_readcarrierintegrator
+                0x00000000       0x38 ./source/decadriver/deca_device.o
+ .text.dwt_readsystime
+                0x00000000       0x10 ./source/decadriver/deca_device.o
+ .text.dwt_readtxtimestamphi32
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_readtxtimestamplo32
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_readrxtimestamphi32
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_readrxtimestamplo32
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_readsystimestamphi32
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_readdiagnostics
+                0x00000000       0x3c ./source/decadriver/deca_device.o
+ .text.dwt_setfinegraintxseq
+                0x00000000       0x24 ./source/decadriver/deca_device.o
+ .text.dwt_setlnapamode
+                0x00000000       0x38 ./source/decadriver/deca_device.o
+ .text.dwt_configuretxrf
+                0x00000000       0x1c ./source/decadriver/deca_device.o
+ .text.dwt_seteui
+                0x00000000       0x10 ./source/decadriver/deca_device.o
+ .text.dwt_geteui
+                0x00000000       0x10 ./source/decadriver/deca_device.o
+ .text._dwt_otpsetmrregs
+                0x00000000      0x238 ./source/decadriver/deca_device.o
+ .rodata._dwt_otpsetmrregs
+                0x00000000       0x18 ./source/decadriver/deca_device.o
+ .text.dwt_setlocaldataptr
+                0x00000000       0x24 ./source/decadriver/deca_device.o
+ .text._dwt_otpprogword32
+                0x00000000       0xa4 ./source/decadriver/deca_device.o
+ .text._dwt_aonconfigupload
+                0x00000000       0x18 ./source/decadriver/deca_device.o
+ .text.dwt_entersleep
+                0x00000000        0x8 ./source/decadriver/deca_device.o
+ .text.dwt_configuresleep
+                0x00000000       0x24 ./source/decadriver/deca_device.o
+ .text.dwt_entersleepaftertx
+                0x00000000       0x2c ./source/decadriver/deca_device.o
+ .text.dwt_spicswakeup
+                0x00000000       0x40 ./source/decadriver/deca_device.o
+ .text.dwt_setsmarttxpower
+                0x00000000       0x4c ./source/decadriver/deca_device.o
+ .text.dwt_enableautoack
+                0x00000000       0x28 ./source/decadriver/deca_device.o
+ .text.dwt_setdblrxbuffmode
+                0x00000000       0x44 ./source/decadriver/deca_device.o
+ .text.dwt_setleds
+                0x00000000       0x88 ./source/decadriver/deca_device.o
+ .text.dwt_readaccdata
+                0x00000000       0x24 ./source/decadriver/deca_device.o
+ .text.dwt_otpread
+                0x00000000       0x38 ./source/decadriver/deca_device.o
+ .text.dwt_otpwriteandverify
+                0x00000000       0x50 ./source/decadriver/deca_device.o
+ .text.dwt_configuresleepcnt
+                0x00000000       0x48 ./source/decadriver/deca_device.o
+ .text.dwt_calibratesleepcnt
+                0x00000000       0x94 ./source/decadriver/deca_device.o
+ .text.dwt_loadopsettabfromotp
+                0x00000000       0x28 ./source/decadriver/deca_device.o
+ .text.dwt_setsniffmode
+                0x00000000       0x58 ./source/decadriver/deca_device.o
+ .text.dwt_setlowpowerlistening
+                0x00000000       0x2c ./source/decadriver/deca_device.o
+ .text.dwt_setsnoozetime
+                0x00000000       0x10 ./source/decadriver/deca_device.o
+ .text.dwt_setpreambledetecttimeout
+                0x00000000       0x10 ./source/decadriver/deca_device.o
+ .text.dwt_configeventcounters
+                0x00000000       0x20 ./source/decadriver/deca_device.o
+ .text.dwt_readeventcounters
+                0x00000000       0x8c ./source/decadriver/deca_device.o
+ .text.dwt_getinitxtaltrim
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_configcwmode
+                0x00000000       0x84 ./source/decadriver/deca_device.o
+ .text.dwt_configcontinuousframemode
+                0x00000000       0x4c ./source/decadriver/deca_device.o
+ .text.dwt_readtempvbat
+                0x00000000       0xa4 ./source/decadriver/deca_device.o
+ .text.dwt_readwakeuptemp
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_readwakeupvbat
+                0x00000000        0xc ./source/decadriver/deca_device.o
+ .text.dwt_calcbandwidthtempadj
+                0x00000000       0xe8 ./source/decadriver/deca_device.o
+ .text._dwt_computetxpowersetting
+                0x00000000       0x64 ./source/decadriver/deca_device.o
+ .text.dwt_calcpowertempadj
+                0x00000000       0x44 ./source/decadriver/deca_device.o
+ .text.dwt_calcpgcount
+                0x00000000       0xbc ./source/decadriver/deca_device.o
+ .text          0x00000000        0x0 ./source/decadriver/deca_irqhandler.o
+ .data          0x00000000        0x0 ./source/decadriver/deca_irqhandler.o
+ .bss           0x00000000        0x0 ./source/decadriver/deca_irqhandler.o
+ .text.dwt_checkirq
+                0x00000000       0x10 ./source/decadriver/deca_irqhandler.o
+ .text.dwt_lowpowerlistenisr
+                0x00000000        0x4 ./source/decadriver/deca_irqhandler.o
+ .text          0x00000000        0x0 ./source/decadriver/deca_params_init.o
+ .data          0x00000000        0x0 ./source/decadriver/deca_params_init.o
+ .bss           0x00000000        0x0 ./source/decadriver/deca_params_init.o
+ .rodata.txpwr_compensation
+                0x00000000       0x30 ./source/decadriver/deca_params_init.o
+ .text          0x00000000        0x0 ./source/UAV/Debugger.o
+ .data          0x00000000        0x0 ./source/UAV/Debugger.o
+ .bss           0x00000000        0x0 ./source/UAV/Debugger.o
+ .text.Debugger_SendNewBuf
+                0x00000000       0x38 ./source/UAV/Debugger.o
+ .text          0x00000000        0x0 ./source/UAV/Ranging.o
+ .data          0x00000000        0x0 ./source/UAV/Ranging.o
+ .bss           0x00000000        0x0 ./source/UAV/Ranging.o
+ .text          0x00000000        0x0 ./source/UAV/Routing.o
+ .data          0x00000000        0x0 ./source/UAV/Routing.o
+ .bss           0x00000000        0x0 ./source/UAV/Routing.o
+ .text          0x00000000        0x0 ./source/UAV/SWM1000.o
+ .data          0x00000000        0x0 ./source/UAV/SWM1000.o
+ .bss           0x00000000        0x0 ./source/UAV/SWM1000.o
+ .text          0x00000000        0x0 ./source/UAV/TokenExt.o
+ .data          0x00000000        0x0 ./source/UAV/TokenExt.o
+ .bss           0x00000000        0x0 ./source/UAV/TokenExt.o
+ .text          0x00000000        0x0 ./source/UAV/Transceiver.o
+ .data          0x00000000        0x0 ./source/UAV/Transceiver.o
+ .bss           0x00000000        0x0 ./source/UAV/Transceiver.o
+ .text          0x00000000        0x0 ./source/UAV/USARTHandler.o
+ .data          0x00000000        0x0 ./source/UAV/USARTHandler.o
+ .bss           0x00000000        0x0 ./source/UAV/USARTHandler.o
+ .text          0x00000000        0x0 ./source/UAV/UserPack.o
+ .data          0x00000000        0x0 ./source/UAV/UserPack.o
+ .bss           0x00000000        0x0 ./source/UAV/UserPack.o
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_lib_ver.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_lib_ver.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_lib_ver.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfsi.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfsi.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfdi.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfdi.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_floatdidf.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_floatdidf.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(eqdf2.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(eqdf2.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(gedf2.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(gedf2.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(ledf2.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(ledf2.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(subdf3.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(subdf3.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(unorddf2.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(unorddf2.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(fixdfsi.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(fixdfsi.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatsidf.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatsidf.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatunsidf.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatunsidf.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_clzsi2.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_clzsi2.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+ .text.abs      0x00000000        0x8 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+ .debug_frame   0x00000000       0x20 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-abs.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+ .rodata._global_impure_ptr
+                0x00000000        0x4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .text.srand    0x00000000       0x5c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .text.rand     0x00000000       0x78 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .debug_frame   0x00000000       0x44 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-rand.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .text.malloc   0x00000000       0x14 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .text.free     0x00000000       0x14 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .debug_frame   0x00000000       0x40 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-malloc.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+ .text._free_r  0x00000000       0x98 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-freer.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .text._malloc_r
+                0x00000000       0xc0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .bss.__malloc_sbrk_start
+                0x00000000        0x4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .bss.__malloc_free_list
+                0x00000000        0x4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+ .text._sbrk_r  0x00000000       0x24 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-sbrkr.o)
+ .text          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .text.__malloc_lock
+                0x00000000        0x2 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .text.__malloc_unlock
+                0x00000000        0x2 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x00000000       0x30 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-mlock.o)
+ .text          0x00000000       0x58 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_muldi3.o)
+ .data          0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_muldi3.o)
+ .bss           0x00000000        0x0 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_muldi3.o)
+ .debug_frame   0x00000000       0x34 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_muldi3.o)
+ .ARM.attributes
+                0x00000000       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_muldi3.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x20000000         0x00002000         xrw
+CCMRAM           0x00000000         0x00000000         xrw
+FLASH            0x08000000         0x00010000         xr
+FLASHB1          0x00000000         0x00000000         xr
+EXTMEMB0         0x00000000         0x00000000         xr
+EXTMEMB1         0x00000000         0x00000000         xr
+EXTMEMB2         0x00000000         0x00000000         xr
+EXTMEMB3         0x00000000         0x00000000         xr
+MEMORY_ARRAY     0x00000000         0x00000000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_iwdg.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+LOAD ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+LOAD ./system/src/newlib/_exit.o
+LOAD ./system/src/newlib/_sbrk.o
+LOAD ./system/src/newlib/_startup.o
+LOAD ./system/src/newlib/_syscalls.o
+LOAD ./system/src/cortexm/_initialize_hardware.o
+LOAD ./system/src/cortexm/_reset_hardware.o
+LOAD ./system/src/cortexm/exception_handlers.o
+LOAD ./system/src/cmsis/system_stm32f0xx.o
+LOAD ./system/src/cmsis/vectors_stm32f0xx.o
+LOAD ./src/main.o
+LOAD ./source/platform/deca_mutex.o
+LOAD ./source/platform/deca_sleep.o
+LOAD ./source/platform/deca_spi.o
+LOAD ./source/platform/port.o
+LOAD ./source/mLibs/CheckSum.o
+LOAD ./source/mLibs/Random.o
+LOAD ./source/mLibs/SystemTimer.o
+LOAD ./source/mLibs/mBaseTimer.o
+LOAD ./source/mLibs/mGeneralTimer.o
+LOAD ./source/mLibs/mUSART_DMA.o
+LOAD ./source/decadriver/deca_device.o
+LOAD ./source/decadriver/deca_irqhandler.o
+LOAD ./source/decadriver/deca_params_init.o
+LOAD ./source/UAV/Debugger.o
+LOAD ./source/UAV/Ranging.o
+LOAD ./source/UAV/Routing.o
+LOAD ./source/UAV/SWM1000.o
+LOAD ./source/UAV/TokenExt.o
+LOAD ./source/UAV/Transceiver.o
+LOAD ./source/UAV/USARTHandler.o
+LOAD ./source/UAV/UserPack.o
+LOAD /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libstdc++_nano.a
+LOAD /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a
+START GROUP
+LOAD /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a
+LOAD /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a
+END GROUP
+START GROUP
+LOAD /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a
+LOAD /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a
+END GROUP
+                0x20002000                __stack = (ORIGIN (RAM) + LENGTH (RAM))
+                0x20002000                _estack = __stack
+                0x00000400                __Main_Stack_Size = 0x400
+                [!provide]                PROVIDE (_Main_Stack_Size, __Main_Stack_Size)
+                0x20001c00                __Main_Stack_Limit = (__stack - __Main_Stack_Size)
+                [!provide]                PROVIDE (_Main_Stack_Limit, __Main_Stack_Limit)
+                0x00000100                _Minimum_Stack_Size = 0x100
+                0x2000077c                PROVIDE (_Heap_Begin, _end_noinit)
+                0x20001c00                PROVIDE (_Heap_Limit, (__stack - __Main_Stack_Size))
+
+.isr_vector     0x08000000      0x1bc
+ FILL mask 0xff
+                0x08000000                __vectors_start = ABSOLUTE (.)
+                0x08000000                __vectors_start__ = ABSOLUTE (.)
+ *(.isr_vector)
+ .isr_vector    0x08000000       0xc4 ./system/src/cmsis/vectors_stm32f0xx.o
+                0x08000000                g_pfnVectors
+ *(.cfmconfig)
+ *(.after_vectors .after_vectors.*)
+ .after_vectors
+                0x080000c4       0xc0 ./system/src/newlib/_startup.o
+                0x080000c4                _start
+ .after_vectors
+                0x08000184       0x34 ./system/src/cortexm/exception_handlers.o
+                0x08000184                Reset_Handler
+                0x08000188                NMI_Handler
+                0x0800018c                HardFault_Handler
+                0x080001a4                HardFault_Handler_C
+                0x080001a8                SVC_Handler
+                0x080001ac                PendSV_Handler
+ .after_vectors
+                0x080001b8        0x4 ./system/src/cmsis/vectors_stm32f0xx.o
+                0x080001b8                TIM1_CC_IRQHandler
+                0x080001b8                TSC_IRQHandler
+                0x080001b8                ADC1_COMP_IRQHandler
+                0x080001b8                TIM6_IRQHandler
+                0x080001b8                PVD_IRQHandler
+                0x080001b8                I2C1_IRQHandler
+                0x080001b8                RCC_CRS_IRQHandler
+                0x080001b8                SPI1_IRQHandler
+                0x080001b8                USART3_4_IRQHandler
+                0x080001b8                EXTI2_3_IRQHandler
+                0x080001b8                ADC1_IRQHandler
+                0x080001b8                I2C2_IRQHandler
+                0x080001b8                USART3_6_IRQHandler
+                0x080001b8                TIM17_IRQHandler
+                0x080001b8                CEC_CAN_IRQHandler
+                0x080001b8                RTC_IRQHandler
+                0x080001b8                PVD_VDDIO2_IRQHandler
+                0x080001b8                DMA1_Channel4_5_6_7_IRQHandler
+                0x080001b8                TIM16_IRQHandler
+                0x080001b8                TIM3_IRQHandler
+                0x080001b8                RCC_IRQHandler
+                0x080001b8                EXTI4_15_IRQHandler
+                0x080001b8                USART3_8_IRQHandler
+                0x080001b8                DMA1_Channel1_IRQHandler
+                0x080001b8                Default_Handler
+                0x080001b8                CEC_IRQHandler
+                0x080001b8                TIM7_IRQHandler
+                0x080001b8                TIM15_IRQHandler
+                0x080001b8                USB_IRQHandler
+                0x080001b8                SPI2_IRQHandler
+                0x080001b8                DMA1_Ch2_3_DMA2_Ch1_2_IRQHandler
+                0x080001b8                DMA1_Ch4_7_DMA2_Ch3_5_IRQHandler
+                0x080001b8                TS_IRQHandler
+                0x080001b8                WWDG_IRQHandler
+                0x080001b8                TIM2_IRQHandler
+                0x080001b8                DMA1_Channel2_3_IRQHandler
+                0x080001b8                USART2_IRQHandler
+                0x080001b8                VDDIO2_IRQHandler
+                0x080001b8                FLASH_IRQHandler
+                0x080001b8                USART1_IRQHandler
+                0x080001b8                TIM1_BRK_UP_TRG_COM_IRQHandler
+
+.inits          0x080001bc       0x28
+                0x080001bc                __data_regions_array_start = .
+                0x080001bc        0x4 LONG 0x8005ee8 LOADADDR (.data)
+                0x080001c0        0x4 LONG 0x20000000 ADDR (.data)
+                0x080001c4        0x4 LONG 0x200000a0 (ADDR (.data) + SIZEOF (.data))
+                0x080001c8        0x4 LONG 0x8005ee8 LOADADDR (.data_CCMRAM)
+                0x080001cc        0x4 LONG 0x0 ADDR (.data_CCMRAM)
+                0x080001d0        0x4 LONG 0x0 (ADDR (.data_CCMRAM) + SIZEOF (.data_CCMRAM))
+                0x080001d4                __data_regions_array_end = .
+                0x080001d4                __bss_regions_array_start = .
+                0x080001d4        0x4 LONG 0x200000a0 ADDR (.bss)
+                0x080001d8        0x4 LONG 0x2000077c (ADDR (.bss) + SIZEOF (.bss))
+                0x080001dc        0x4 LONG 0x0 ADDR (.bss_CCMRAM)
+                0x080001e0        0x4 LONG 0x0 (ADDR (.bss_CCMRAM) + SIZEOF (.bss_CCMRAM))
+                0x080001e4                __bss_regions_array_end = .
+ *(.init)
+ *(.fini)
+                0x080001e4                . = ALIGN (0x4)
+                0x080001e4                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array_sysinit .preinit_array_sysinit.*)
+ *(.preinit_array_platform .preinit_array_platform.*)
+ *(.preinit_array .preinit_array.*)
+                0x080001e4                PROVIDE (__preinit_array_end, .)
+                0x080001e4                . = ALIGN (0x4)
+                0x080001e4                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*))
+ *(.init_array)
+                0x080001e4                PROVIDE (__init_array_end, .)
+                0x080001e4                . = ALIGN (0x4)
+                0x080001e4                PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*))
+ *(.fini_array)
+                0x080001e4                PROVIDE (__fini_array_end, .)
+
+.flashtext
+ *(.flashtext .flashtext.*)
+
+.text           0x080001e4     0x5d04
+ *(.text .text.*)
+ .text.DMA_Init
+                0x080001e4       0x40 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+                0x080001e4                DMA_Init
+ .text.DMA_RemapConfig
+                0x08000224       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+                0x08000224                DMA_RemapConfig
+ .text.DMA_ITConfig
+                0x08000244       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+                0x08000244                DMA_ITConfig
+ .text.EXTI_Init
+                0x08000258       0x78 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+                0x08000258                EXTI_Init
+ .text.GPIO_Init
+                0x080002d0       0x84 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+                0x080002d0                GPIO_Init
+ .text.GPIO_SetBits
+                0x08000354        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+                0x08000354                GPIO_SetBits
+ .text.GPIO_ResetBits
+                0x08000358        0x4 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+                0x08000358                GPIO_ResetBits
+ .text.GPIO_PinAFConfig
+                0x0800035c       0x24 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+                0x0800035c                GPIO_PinAFConfig
+ .text.NVIC_Init
+                0x08000380       0x54 ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+                0x08000380                NVIC_Init
+ .text.RCC_DeInit
+                0x080003d4       0x60 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080003d4                RCC_DeInit
+ .text.RCC_HSEConfig
+                0x08000434       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000434                RCC_HSEConfig
+ .text.RCC_PLLConfig
+                0x08000444       0x20 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000444                RCC_PLLConfig
+ .text.RCC_PLLCmd
+                0x08000464       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000464                RCC_PLLCmd
+ .text.RCC_PREDIV1Config
+                0x0800048c       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x0800048c                RCC_PREDIV1Config
+ .text.RCC_SYSCLKConfig
+                0x080004a0       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080004a0                RCC_SYSCLKConfig
+ .text.RCC_GetSYSCLKSource
+                0x080004b4       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080004b4                RCC_GetSYSCLKSource
+ .text.RCC_HCLKConfig
+                0x080004c4       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080004c4                RCC_HCLKConfig
+ .text.RCC_PCLKConfig
+                0x080004d8       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080004d8                RCC_PCLKConfig
+ .text.RCC_USARTCLKConfig
+                0x080004f0       0x44 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080004f0                RCC_USARTCLKConfig
+ .text.RCC_GetClocksFreq
+                0x08000534      0x1f0 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000534                RCC_GetClocksFreq
+ .text.RCC_AHBPeriphClockCmd
+                0x08000724       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000724                RCC_AHBPeriphClockCmd
+ .text.RCC_APB2PeriphClockCmd
+                0x08000740       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000740                RCC_APB2PeriphClockCmd
+ .text.RCC_APB1PeriphClockCmd
+                0x0800075c       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x0800075c                RCC_APB1PeriphClockCmd
+ .text.RCC_APB2PeriphResetCmd
+                0x08000778       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000778                RCC_APB2PeriphResetCmd
+ .text.RCC_APB1PeriphResetCmd
+                0x08000794       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x08000794                RCC_APB1PeriphResetCmd
+ .text.RCC_GetFlagStatus
+                0x080007b0       0x38 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080007b0                RCC_GetFlagStatus
+ .text.RCC_WaitForHSEStartUp
+                0x080007e8       0x38 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+                0x080007e8                RCC_WaitForHSEStartUp
+ .text.SPI_I2S_DeInit
+                0x08000820       0x44 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+                0x08000820                SPI_I2S_DeInit
+ .text.SPI_Init
+                0x08000864       0x58 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+                0x08000864                SPI_Init
+ .text.SPI_Cmd  0x080008bc       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+                0x080008bc                SPI_Cmd
+ .text.SPI_SSOutputCmd
+                0x080008d8       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+                0x080008d8                SPI_SSOutputCmd
+ .text.SYSCFG_DMAChannelRemapConfig
+                0x080008f4       0x1c ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+                0x080008f4                SYSCFG_DMAChannelRemapConfig
+ .text.SYSCFG_EXTILineConfig
+                0x08000910       0x28 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+                0x08000910                SYSCFG_EXTILineConfig
+ .text.TIM_TimeBaseInit
+                0x08000938       0x78 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+                0x08000938                TIM_TimeBaseInit
+ .text.TIM_TimeBaseStructInit
+                0x080009b0       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+                0x080009b0                TIM_TimeBaseStructInit
+ .text.TIM_ITConfig
+                0x080009c4       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+                0x080009c4                TIM_ITConfig
+ .text.USART_Init
+                0x080009d8       0xdc ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+                0x080009d8                USART_Init
+ .text.USART_Cmd
+                0x08000ab4       0x18 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+                0x08000ab4                USART_Cmd
+ .text.USART_DMACmd
+                0x08000acc       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+                0x08000acc                USART_DMACmd
+ .text.USART_DMAReceptionErrorConfig
+                0x08000ae0       0x14 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+                0x08000ae0                USART_DMAReceptionErrorConfig
+ .text._exit    0x08000af4        0x8 ./system/src/newlib/_exit.o
+                0x08000af4                _exit
+ .text.__initialize_args
+                0x08000afc       0x10 ./system/src/newlib/_syscalls.o
+                0x08000afc                __initialize_args
+ .text.__initialize_hardware_early
+                0x08000b0c        0x8 ./system/src/cortexm/_initialize_hardware.o
+                0x08000b0c                __initialize_hardware_early
+ .text.__initialize_hardware
+                0x08000b14        0x8 ./system/src/cortexm/_initialize_hardware.o
+                0x08000b14                __initialize_hardware
+ .text.__reset_hardware
+                0x08000b1c       0x1c ./system/src/cortexm/_reset_hardware.o
+                0x08000b1c                __reset_hardware
+ .text.SetSysClock
+                0x08000b38       0xb0 ./system/src/cmsis/system_stm32f0xx.o
+ .text.SystemInit
+                0x08000be8       0x64 ./system/src/cmsis/system_stm32f0xx.o
+                0x08000be8                SystemInit
+ .text.SystemCoreClockUpdate
+                0x08000c4c       0x94 ./system/src/cmsis/system_stm32f0xx.o
+                0x08000c4c                SystemCoreClockUpdate
+ .text.main     0x08000ce0       0x10 ./src/main.o
+                0x08000ce0                main
+ .text.decamutexon
+                0x08000cf0       0x10 ./source/platform/deca_mutex.o
+                0x08000cf0                decamutexon
+ .text.decamutexoff
+                0x08000d00        0xc ./source/platform/deca_mutex.o
+                0x08000d00                decamutexoff
+ .text.deca_sleep
+                0x08000d0c        0x8 ./source/platform/deca_sleep.o
+                0x08000d0c                deca_sleep
+ .text.writetospi
+                0x08000d14       0x78 ./source/platform/deca_spi.o
+                0x08000d14                writetospi
+ .text.readfromspi
+                0x08000d8c       0x74 ./source/platform/deca_spi.o
+                0x08000d8c                readfromspi
+ .text.SPI_ChangeRate
+                0x08000e00       0x14 ./source/platform/port.o
+ .text.IRQ_Configuration
+                0x08000e14       0x5c ./source/platform/port.o
+                0x08000e14                IRQ_Configuration
+ .text.RCC_Configuration
+                0x08000e70       0x80 ./source/platform/port.o
+                0x08000e70                RCC_Configuration
+ .text.spi_set_rate_low
+                0x08000ef0        0xc ./source/platform/port.o
+                0x08000ef0                spi_set_rate_low
+ .text.spi_set_rate_high
+                0x08000efc        0xc ./source/platform/port.o
+                0x08000efc                spi_set_rate_high
+ .text.SPI_Configuration
+                0x08000f08       0xc4 ./source/platform/port.o
+                0x08000f08                SPI_Configuration
+ .text.reset_DW1000
+                0x08000fcc       0x68 ./source/platform/port.o
+                0x08000fcc                reset_DW1000
+ .text.peripherals_init
+                0x08001034       0x1c ./source/platform/port.o
+                0x08001034                peripherals_init
+ .text.CheckSum_GetCRC16
+                0x08001050       0x34 ./source/mLibs/CheckSum.o
+                0x08001050                CheckSum_GetCRC16
+ .text.CheckSum_Initialization
+                0x08001084       0x40 ./source/mLibs/CheckSum.o
+                0x08001084                CheckSum_Initialization
+ .text.SysTick_Handler
+                0x080010c4       0x10 ./source/mLibs/SystemTimer.o
+                0x080010c4                SysTick_Handler
+ .text.SystemTimer_Initialization
+                0x080010d4       0x48 ./source/mLibs/SystemTimer.o
+                0x080010d4                SystemTimer_Initialization
+ .text.SystemTimer_Sleep
+                0x0800111c       0x38 ./source/mLibs/SystemTimer.o
+                0x0800111c                SystemTimer_Sleep
+ .text.TIM6_DAC_IRQHandler
+                0x08001154       0x24 ./source/mLibs/mBaseTimer.o
+                0x08001154                TIM6_DAC_IRQHandler
+ .text.BaseTimer_Initialization
+                0x08001178       0x60 ./source/mLibs/mBaseTimer.o
+                0x08001178                BaseTimer_Initialization
+ .text.BaseTimer_GetState
+                0x080011d8       0x10 ./source/mLibs/mBaseTimer.o
+                0x080011d8                BaseTimer_GetState
+ .text.BaseTimer_SetPrescaler
+                0x080011e8       0x14 ./source/mLibs/mBaseTimer.o
+                0x080011e8                BaseTimer_SetPrescaler
+ .text.BaseTimer_SetPeriod
+                0x080011fc        0xc ./source/mLibs/mBaseTimer.o
+                0x080011fc                BaseTimer_SetPeriod
+ .text.BaseTimer_Enable
+                0x08001208       0x14 ./source/mLibs/mBaseTimer.o
+                0x08001208                BaseTimer_Enable
+ .text.BaseTimer_Disable
+                0x0800121c       0x10 ./source/mLibs/mBaseTimer.o
+                0x0800121c                BaseTimer_Disable
+ .text.BaseTimer_Reset
+                0x0800122c       0x14 ./source/mLibs/mBaseTimer.o
+                0x0800122c                BaseTimer_Reset
+ .text.TIM14_IRQHandler
+                0x08001240       0x24 ./source/mLibs/mGeneralTimer.o
+                0x08001240                TIM14_IRQHandler
+ .text.GeneralTimer_Initialization
+                0x08001264       0x64 ./source/mLibs/mGeneralTimer.o
+                0x08001264                GeneralTimer_Initialization
+ .text.GeneralTimer_GetState
+                0x080012c8       0x10 ./source/mLibs/mGeneralTimer.o
+                0x080012c8                GeneralTimer_GetState
+ .text.GeneralTimer_SetPrescaler
+                0x080012d8       0x14 ./source/mLibs/mGeneralTimer.o
+                0x080012d8                GeneralTimer_SetPrescaler
+ .text.GeneralTimer_SetPeriod
+                0x080012ec        0xc ./source/mLibs/mGeneralTimer.o
+                0x080012ec                GeneralTimer_SetPeriod
+ .text.GeneralTimer_Enable
+                0x080012f8       0x14 ./source/mLibs/mGeneralTimer.o
+                0x080012f8                GeneralTimer_Enable
+ .text.GeneralTimer_Reset
+                0x0800130c       0x14 ./source/mLibs/mGeneralTimer.o
+                0x0800130c                GeneralTimer_Reset
+ .text._USART_SendByDMA
+                0x08001320       0x50 ./source/mLibs/mUSART_DMA.o
+ .text.USART_StartRead
+                0x08001370       0x38 ./source/mLibs/mUSART_DMA.o
+                0x08001370                USART_StartRead
+ .text.USART_ErrorControl
+                0x080013a8       0x2c ./source/mLibs/mUSART_DMA.o
+                0x080013a8                USART_ErrorControl
+ .text.DMA1_Channel4_5_IRQHandler
+                0x080013d4       0x64 ./source/mLibs/mUSART_DMA.o
+                0x080013d4                DMA1_Channel4_5_IRQHandler
+ .text.USART_SendBuffer
+                0x08001438       0x1c ./source/mLibs/mUSART_DMA.o
+                0x08001438                USART_SendBuffer
+ .text.USART_Initialization
+                0x08001454      0x154 ./source/mLibs/mUSART_DMA.o
+                0x08001454                USART_Initialization
+ .text.USART_SetTRXMode
+                0x080015a8        0xc ./source/mLibs/mUSART_DMA.o
+                0x080015a8                USART_SetTRXMode
+ .text.USART_SetCallBacks
+                0x080015b4        0xc ./source/mLibs/mUSART_DMA.o
+                0x080015b4                USART_SetCallBacks
+ .text.dwt_writetodevice
+                0x080015c0       0x48 ./source/decadriver/deca_device.o
+                0x080015c0                dwt_writetodevice
+ .text.dwt_writetxdata
+                0x08001608       0x24 ./source/decadriver/deca_device.o
+                0x08001608                dwt_writetxdata
+ .text.dwt_readfromdevice
+                0x0800162c       0x40 ./source/decadriver/deca_device.o
+                0x0800162c                dwt_readfromdevice
+ .text.dwt_readrxdata
+                0x0800166c       0x14 ./source/decadriver/deca_device.o
+                0x0800166c                dwt_readrxdata
+ .text.dwt_readtxtimestamp
+                0x08001680       0x10 ./source/decadriver/deca_device.o
+                0x08001680                dwt_readtxtimestamp
+ .text.dwt_readrxtimestamp
+                0x08001690       0x10 ./source/decadriver/deca_device.o
+                0x08001690                dwt_readrxtimestamp
+ .text.dwt_read32bitoffsetreg
+                0x080016a0       0x2c ./source/decadriver/deca_device.o
+                0x080016a0                dwt_read32bitoffsetreg
+ .text.dwt_readdevid
+                0x080016cc        0xc ./source/decadriver/deca_device.o
+                0x080016cc                dwt_readdevid
+ .text.dwt_read16bitoffsetreg
+                0x080016d8       0x20 ./source/decadriver/deca_device.o
+                0x080016d8                dwt_read16bitoffsetreg
+ .text.dwt_read8bitoffsetreg
+                0x080016f8       0x1c ./source/decadriver/deca_device.o
+                0x080016f8                dwt_read8bitoffsetreg
+ .text.dwt_write8bitoffsetreg
+                0x08001714       0x18 ./source/decadriver/deca_device.o
+                0x08001714                dwt_write8bitoffsetreg
+ .text.dwt_write16bitoffsetreg
+                0x0800172c       0x1c ./source/decadriver/deca_device.o
+                0x0800172c                dwt_write16bitoffsetreg
+ .text.dwt_setrxantennadelay
+                0x08001748       0x14 ./source/decadriver/deca_device.o
+                0x08001748                dwt_setrxantennadelay
+ .text.dwt_settxantennadelay
+                0x0800175c       0x10 ./source/decadriver/deca_device.o
+                0x0800175c                dwt_settxantennadelay
+ .text.dwt_write32bitoffsetreg
+                0x0800176c       0x24 ./source/decadriver/deca_device.o
+                0x0800176c                dwt_write32bitoffsetreg
+ .text.dwt_writetxfctrl
+                0x08001790       0x20 ./source/decadriver/deca_device.o
+                0x08001790                dwt_writetxfctrl
+ .text.dwt_enableframefilter
+                0x080017b0       0x48 ./source/decadriver/deca_device.o
+                0x080017b0                dwt_enableframefilter
+ .text.dwt_setpanid
+                0x080017f8       0x10 ./source/decadriver/deca_device.o
+                0x080017f8                dwt_setpanid
+ .text.dwt_setaddress16
+                0x08001808       0x10 ./source/decadriver/deca_device.o
+                0x08001808                dwt_setaddress16
+ .text._dwt_otpread
+                0x08001818       0x2c ./source/decadriver/deca_device.o
+                0x08001818                _dwt_otpread
+ .text._dwt_aonarrayupload
+                0x08001844       0x18 ./source/decadriver/deca_device.o
+                0x08001844                _dwt_aonarrayupload
+ .text._dwt_configlde
+                0x0800185c       0x3c ./source/decadriver/deca_device.o
+                0x0800185c                _dwt_configlde
+ .text.dwt_configure
+                0x08001898      0x23c ./source/decadriver/deca_device.o
+                0x08001898                dwt_configure
+ .text.dwt_setrxaftertxdelay
+                0x08001ad4       0x20 ./source/decadriver/deca_device.o
+                0x08001ad4                dwt_setrxaftertxdelay
+ .text._dwt_enableclocks
+                0x08001af4       0xd0 ./source/decadriver/deca_device.o
+                0x08001af4                _dwt_enableclocks
+ .text._dwt_loaducodefromrom
+                0x08001bc4       0x24 ./source/decadriver/deca_device.o
+                0x08001bc4                _dwt_loaducodefromrom
+ .text._dwt_disablesequencing
+                0x08001be8       0x14 ./source/decadriver/deca_device.o
+                0x08001be8                _dwt_disablesequencing
+ .text.dwt_setdelayedtrxtime
+                0x08001bfc       0x10 ./source/decadriver/deca_device.o
+                0x08001bfc                dwt_setdelayedtrxtime
+ .text.dwt_starttx
+                0x08001c0c       0x74 ./source/decadriver/deca_device.o
+                0x08001c0c                dwt_starttx
+ .text.dwt_syncrxbufptrs
+                0x08001c80       0x20 ./source/decadriver/deca_device.o
+                0x08001c80                dwt_syncrxbufptrs
+ .text.dwt_forcetrxoff
+                0x08001ca0       0x34 ./source/decadriver/deca_device.o
+                0x08001ca0                dwt_forcetrxoff
+ .text.dwt_rxenable
+                0x08001cd4       0x5c ./source/decadriver/deca_device.o
+                0x08001cd4                dwt_rxenable
+ .text.dwt_setrxtimeout
+                0x08001d30       0x60 ./source/decadriver/deca_device.o
+                0x08001d30                dwt_setrxtimeout
+ .text.dwt_rxreset
+                0x08001d90       0x18 ./source/decadriver/deca_device.o
+                0x08001d90                dwt_rxreset
+ .text.dwt_softreset
+                0x08001da8       0x48 ./source/decadriver/deca_device.o
+                0x08001da8                dwt_softreset
+ .text.dwt_setxtaltrim
+                0x08001df0       0x18 ./source/decadriver/deca_device.o
+                0x08001df0                dwt_setxtaltrim
+ .text.dwt_initialise
+                0x08001e08       0xf0 ./source/decadriver/deca_device.o
+                0x08001e08                dwt_initialise
+ .text.dwt_receiverautoreenabled
+                0x08001ef8       0x2c ./source/decadriver/deca_device.o
+                0x08001ef8                dwt_receiverautoreenabled
+ .text.EXTI0_1_IRQHandler
+                0x08001f24       0xb4 ./source/decadriver/deca_irqhandler.o
+                0x08001f24                EXTI0_1_IRQHandler
+ .text.dwt_setinterrupt
+                0x08001fd8       0x30 ./source/decadriver/deca_irqhandler.o
+                0x08001fd8                dwt_setinterrupt
+ .text.Debugger_ConstrAndSendBuf
+                0x08002008       0x60 ./source/UAV/Debugger.o
+                0x08002008                Debugger_ConstrAndSendBuf
+ .text.Debugger_PushSymBack
+                0x08002068       0x18 ./source/UAV/Debugger.o
+                0x08002068                Debugger_PushSymBack
+ .text.Debugger_PushArrayBack
+                0x08002080       0x28 ./source/UAV/Debugger.o
+                0x08002080                Debugger_PushArrayBack
+ .text.Debugger_SendPreparedBuf
+                0x080020a8       0x2c ./source/UAV/Debugger.o
+                0x080020a8                Debugger_SendPreparedBuf
+ .text.Debugger_SendStr
+                0x080020d4       0x44 ./source/UAV/Debugger.o
+                0x080020d4                Debugger_SendStr
+ .text._Ranging_SetInitMsg
+                0x08002118       0x58 ./source/UAV/Ranging.o
+ .text._Ranging_SetRespMsg
+                0x08002170       0x60 ./source/UAV/Ranging.o
+ .text._Ranging_SetFinalMsg
+                0x080021d0      0x128 ./source/UAV/Ranging.o
+ .text._Ranging_FinalMsgGetTs
+                0x080022f8       0x20 ./source/UAV/Ranging.o
+ .text._Ranging_GetTxTs64
+                0x08002318       0x2c ./source/UAV/Ranging.o
+ .text._Ranging_GetRxTs64
+                0x08002344       0x2c ./source/UAV/Ranging.o
+ .text.Ranging_Initiate
+                0x08002370      0x11c ./source/UAV/Ranging.o
+                0x08002370                Ranging_Initiate
+ .text.Ranging_GetDistance
+                0x0800248c      0x1d4 ./source/UAV/Ranging.o
+                0x0800248c                Ranging_GetDistance
+ .text.Ranging_Initialization
+                0x08002660       0x68 ./source/UAV/Ranging.o
+                0x08002660                Ranging_Initialization
+ .text._Routing_DefineNewLvl
+                0x080026c8        0x8 ./source/UAV/Routing.o
+ .text._Routing_GetIntermediateID
+                0x080026d0       0x38 ./source/UAV/Routing.o
+ .text._Routing_ConstructBuffer
+                0x08002708       0x5c ./source/UAV/Routing.o
+ .text._Routing_Refresh_Tables
+                0x08002764       0x50 ./source/UAV/Routing.o
+ .text._Routing_WaitResponse
+                0x080027b4       0xb8 ./source/UAV/Routing.o
+ .text._Routing_Refresh_newTable
+                0x0800286c       0x7c ./source/UAV/Routing.o
+ .text.Routing_SendData
+                0x080028e8      0x120 ./source/UAV/Routing.o
+                0x080028e8                Routing_SendData
+ .text.Routing_RecvDataTransferRequest
+                0x08002a08      0x2b8 ./source/UAV/Routing.o
+                0x08002a08                Routing_RecvDataTransferRequest
+ .text.Routing_SendTokenWithTable
+                0x08002cc0       0x10 ./source/UAV/Routing.o
+                0x08002cc0                Routing_SendTokenWithTable
+ .text.Routing_RecvTokenWithTable
+                0x08002cd0       0x30 ./source/UAV/Routing.o
+                0x08002cd0                Routing_RecvTokenWithTable
+ .text.Routing_Initialization
+                0x08002d00       0x7c ./source/UAV/Routing.o
+                0x08002d00                Routing_Initialization
+ .text._SWM1000_ReceivingAutomat
+                0x08002d7c       0xe0 ./source/UAV/SWM1000.o
+ .text.SWM1000_Loop
+                0x08002e5c      0x164 ./source/UAV/SWM1000.o
+                0x08002e5c                SWM1000_Loop
+ .text.SWM1000_Initialization
+                0x08002fc0      0x168 ./source/UAV/SWM1000.o
+                0x08002fc0                SWM1000_Initialization
+ .text._TokenExt_GetTimeSlot
+                0x08003128       0x18 ./source/UAV/TokenExt.o
+ .text._TokenExt_ConstructBuffer
+                0x08003140       0x5c ./source/UAV/TokenExt.o
+ .text.TokenExt_Transfer
+                0x0800319c       0x74 ./source/UAV/TokenExt.o
+                0x0800319c                TokenExt_Transfer
+ .text.TokenExt_Receipt
+                0x08003210       0x98 ./source/UAV/TokenExt.o
+                0x08003210                TokenExt_Receipt
+ .text.TokenExt_ImmediateReceipt
+                0x080032a8       0x54 ./source/UAV/TokenExt.o
+                0x080032a8                TokenExt_ImmediateReceipt
+ .text.TokenExt_isCaptured
+                0x080032fc        0xc ./source/UAV/TokenExt.o
+                0x080032fc                TokenExt_isCaptured
+ .text.TokenExt_Initialization
+                0x08003308       0x14 ./source/UAV/TokenExt.o
+                0x08003308                TokenExt_Initialization
+ .text.Transceiver_Initialization
+                0x0800331c       0x3c ./source/UAV/Transceiver.o
+                0x0800331c                Transceiver_Initialization
+ .text.Transceiver_Transmit
+                0x08003358       0xf0 ./source/UAV/Transceiver.o
+                0x08003358                Transceiver_Transmit
+ .text.Transceiver_Receive
+                0x08003448       0xc8 ./source/UAV/Transceiver.o
+                0x08003448                Transceiver_Receive
+ .text.Transceiver_ReceiverOn
+                0x08003510       0x3c ./source/UAV/Transceiver.o
+                0x08003510                Transceiver_ReceiverOn
+ .text.Transceiver_ReceiverOff
+                0x0800354c       0x14 ./source/UAV/Transceiver.o
+                0x0800354c                Transceiver_ReceiverOff
+ .text.Transceiver_GetReceptionResult
+                0x08003560        0xc ./source/UAV/Transceiver.o
+                0x08003560                Transceiver_GetReceptionResult
+ .text.Transceiver_GetAvailableData
+                0x0800356c       0x3c ./source/UAV/Transceiver.o
+                0x0800356c                Transceiver_GetAvailableData
+ .text.Transceiver_GetLevelOfLastReceived
+                0x080035a8       0x60 ./source/UAV/Transceiver.o
+                0x080035a8                Transceiver_GetLevelOfLastReceived
+ .text._USARTHandler_USART_fcb
+                0x08003608        0xc ./source/UAV/USARTHandler.o
+ .text._USARTHandler_USART_scb
+                0x08003614       0x54 ./source/UAV/USARTHandler.o
+ .text.USARTHandler_Initialization
+                0x08003668       0x40 ./source/UAV/USARTHandler.o
+                0x08003668                USARTHandler_Initialization
+ .text.USARTHandler_Send
+                0x080036a8       0x38 ./source/UAV/USARTHandler.o
+                0x080036a8                USARTHandler_Send
+ .text.USARTHandler_Receive
+                0x080036e0       0x70 ./source/UAV/USARTHandler.o
+                0x080036e0                USARTHandler_Receive
+ .text.USARTHandler_isAvailableToReceive
+                0x08003750       0x40 ./source/UAV/USARTHandler.o
+                0x08003750                USARTHandler_isAvailableToReceive
+ .text.UserPack_ToBytes
+                0x08003790       0x38 ./source/UAV/UserPack.o
+                0x08003790                UserPack_ToBytes
+ .text.UserPack_ToStruct
+                0x080037c8       0x34 ./source/UAV/UserPack.o
+                0x080037c8                UserPack_ToStruct
+ .text.UserPack_SetData
+                0x080037fc       0x18 ./source/UAV/UserPack.o
+                0x080037fc                UserPack_SetData
+ .text.UserPack_Reset
+                0x08003814        0xc ./source/UAV/UserPack.o
+                0x08003814                UserPack_Reset
+ .text.log10    0x08003820      0x118 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+                0x08003820                log10
+ .text.__ieee754_log10
+                0x08003938      0x128 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+                0x08003938                __ieee754_log10
+ .text.matherr  0x08003a60        0x4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+                0x08003a60                matherr
+ .text.nan      0x08003a64        0xc /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+                0x08003a64                nan
+ .text.__ieee754_log
+                0x08003a70      0x404 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+                0x08003a70                __ieee754_log
+ .text          0x08003e74      0x114 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o)
+                0x08003e74                __udivsi3
+                0x08003e74                __aeabi_uidiv
+                0x08003f80                __aeabi_uidivmod
+ .text          0x08003f88        0x4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_dvmd_tls.o)
+                0x08003f88                __aeabi_ldiv0
+                0x08003f88                __aeabi_idiv0
+ .text          0x08003f8c       0x7c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o)
+                0x08003f8c                __aeabi_cdrcmple
+                0x08003f9c                __aeabi_cdcmple
+                0x08003f9c                __aeabi_cdcmpeq
+                0x08003fac                __aeabi_dcmpeq
+                0x08003fb8                __aeabi_dcmplt
+                0x08003fcc                __aeabi_dcmple
+                0x08003fe0                __aeabi_dcmpgt
+                0x08003ff4                __aeabi_dcmpge
+ .text          0x08004008       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfsi.o)
+                0x08004008                __fixunsdfsi
+                0x08004008                __aeabi_d2uiz
+ .text          0x08004044       0x34 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o)
+                0x08004044                __aeabi_d2lz
+                0x08004044                __fixdfdi
+ .text          0x08004078       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfdi.o)
+                0x08004078                __aeabi_d2ulz
+                0x08004078                __fixunsdfdi
+ .text          0x080040b4       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_floatdidf.o)
+                0x080040b4                __floatdidf
+                0x080040b4                __aeabi_l2d
+ .text          0x080040e0      0x658 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o)
+                0x080040e0                __aeabi_dadd
+ .text          0x08004738      0x62c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+                0x08004738                __aeabi_ddiv
+ .text          0x08004d64       0x80 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(eqdf2.o)
+                0x08004d64                __eqdf2
+                0x08004d64                __nedf2
+ .text          0x08004de4       0xc8 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(gedf2.o)
+                0x08004de4                __gtdf2
+                0x08004de4                __gedf2
+ .text          0x08004eac       0xd4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(ledf2.o)
+                0x08004eac                __ltdf2
+                0x08004eac                __ledf2
+ .text          0x08004f80      0x4f4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+                0x08004f80                __aeabi_dmul
+ .text          0x08005474      0x6a8 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(subdf3.o)
+                0x08005474                __aeabi_dsub
+ .text          0x08005b1c       0x40 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(unorddf2.o)
+                0x08005b1c                __aeabi_dcmpun
+ .text          0x08005b5c       0x6c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(fixdfsi.o)
+                0x08005b5c                __aeabi_d2iz
+ .text          0x08005bc8       0x84 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatsidf.o)
+                0x08005bc8                __aeabi_i2d
+ .text          0x08005c4c       0x70 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatunsidf.o)
+                0x08005c4c                __aeabi_ui2d
+ .text          0x08005cbc       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_clzsi2.o)
+                0x08005cbc                __clzsi2
+ .text.__errno  0x08005cf8        0xc /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+                0x08005cf8                __errno
+ .text.memcmp   0x08005d04       0x1e /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+                0x08005d04                memcmp
+ .text.memcpy   0x08005d22       0x12 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+                0x08005d22                memcpy
+ *(.rodata .rodata.* .constdata .constdata.*)
+ .rodata._dwt_enableclocks
+                0x08005d34       0x3c ./source/decadriver/deca_device.o
+ .rodata.fs_pll_cfg
+                0x08005d70       0x18 ./source/decadriver/deca_params_init.o
+                0x08005d70                fs_pll_cfg
+ .rodata.dtune1
+                0x08005d88        0x4 ./source/decadriver/deca_params_init.o
+                0x08005d88                dtune1
+ .rodata.agc_config
+                0x08005d8c        0x8 ./source/decadriver/deca_params_init.o
+                0x08005d8c                agc_config
+ .rodata.sftsh  0x08005d94        0xc ./source/decadriver/deca_params_init.o
+                0x08005d94                sftsh
+ .rodata.fs_pll_tune
+                0x08005da0        0x6 ./source/decadriver/deca_params_init.o
+                0x08005da0                fs_pll_tune
+ *fill*         0x08005da6        0x2 
+ .rodata.chan_idx
+                0x08005da8        0x8 ./source/decadriver/deca_params_init.o
+                0x08005da8                chan_idx
+ .rodata.dwnsSFDlen
+                0x08005db0        0x3 ./source/decadriver/deca_params_init.o
+                0x08005db0                dwnsSFDlen
+ *fill*         0x08005db3        0x1 
+ .rodata.digital_bb_config
+                0x08005db4       0x20 ./source/decadriver/deca_params_init.o
+                0x08005db4                digital_bb_config
+ .rodata.tx_config
+                0x08005dd4       0x18 ./source/decadriver/deca_params_init.o
+                0x08005dd4                tx_config
+ .rodata.lde_replicaCoeff
+                0x08005dec       0x32 ./source/decadriver/deca_params_init.o
+                0x08005dec                lde_replicaCoeff
+ *fill*         0x08005e1e        0x2 
+ .rodata.rx_config
+                0x08005e20        0x2 ./source/decadriver/deca_params_init.o
+                0x08005e20                rx_config
+ *fill*         0x08005e22        0x2 
+ .rodata.final_identifier
+                0x08005e24        0x2 ./source/UAV/Ranging.o
+ *fill*         0x08005e26        0x2 
+ .rodata.resp_identifier
+                0x08005e28        0x2 ./source/UAV/Ranging.o
+ *fill*         0x08005e2a        0x2 
+ .rodata.str1.4
+                0x08005e2c       0x1b ./source/UAV/Routing.o
+ *fill*         0x08005e47        0x1 
+ .rodata.str1.4
+                0x08005e48        0x9 ./source/UAV/SWM1000.o
+ *fill*         0x08005e51        0x3 
+ .rodata        0x08005e54        0xc ./source/UAV/Transceiver.o
+ .rodata.str1.4
+                0x08005e60        0x8 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+                                  0x9 (size before relaxing)
+ .rodata        0x08005e68       0x40 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+ .rodata        0x08005ea8       0x40 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+ *(vtable)
+ *(.eh_frame*)
+ *(.glue_7)
+ .glue_7        0x08005ee8        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x08005ee8        0x0 linker stubs
+
+.vfp11_veneer   0x08005ee8        0x0
+ .vfp11_veneer  0x08005ee8        0x0 linker stubs
+
+.v4_bx          0x08005ee8        0x0
+ .v4_bx         0x08005ee8        0x0 linker stubs
+
+.iplt           0x08005ee8        0x0
+ .iplt          0x08005ee8        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+
+.rel.dyn        0x08005ee8        0x0
+ .rel.iplt      0x08005ee8        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x08005ee8                . = ALIGN (0x4)
+                0x08005ee8                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x08005ee8                __exidx_end = .
+                0x08005ee8                . = ALIGN (0x4)
+                0x08005ee8                _etext = .
+                0x08005ee8                __etext = .
+
+.data_CCMRAM    0x00000000        0x0 load address 0x08005ee8
+ FILL mask 0xff
+ *(.data.CCMRAM .data.CCMRAM.*)
+                0x00000000                . = ALIGN (0x4)
+                0x08005ee8                _sidata = LOADADDR (.data)
+
+.data           0x20000000       0xa0 load address 0x08005ee8
+ FILL mask 0xff
+                0x20000000                _sdata = .
+                0x20000000                __data_start__ = .
+ *(.data_begin .data_begin.*)
+ *(.data .data.*)
+ .data.APBAHBPrescTable
+                0x20000000       0x10 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .data.argv.4290
+                0x20000010        0x8 ./system/src/newlib/_syscalls.o
+ .data.AHBPrescTable
+                0x20000018       0x10 ./system/src/cmsis/system_stm32f0xx.o
+                0x20000018                AHBPrescTable
+ .data.SystemCoreClock
+                0x20000028        0x4 ./system/src/cmsis/system_stm32f0xx.o
+                0x20000028                SystemCoreClock
+ .data.pdw1000local
+                0x2000002c        0x4 ./source/decadriver/deca_device.o
+ .data._Ranging_ResponseTimeOut
+                0x20000030        0x2 ./source/UAV/Ranging.o
+ .data._Ranging_ResponseDelay
+                0x20000032        0x2 ./source/UAV/Ranging.o
+ .data._Ranging_FinalDelay
+                0x20000034        0x2 ./source/UAV/Ranging.o
+ .data._Ranging_FinalTimeOut
+                0x20000036        0x2 ./source/UAV/Ranging.o
+ .data._TokenExt_timeSlotDurationMs
+                0x20000038        0x1 ./source/UAV/TokenExt.o
+ .data._TokenExt_MAX_ID
+                0x20000039        0x1 ./source/UAV/TokenExt.o
+ .data.__fdlib_version
+                0x2000003a        0x1 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_lib_ver.o)
+                0x2000003a                __fdlib_version
+ *fill*         0x2000003b        0x1 ff
+ .data.impure_data
+                0x2000003c       0x60 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+ .data._impure_ptr
+                0x2000009c        0x4 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+                0x2000009c                _impure_ptr
+ *(.data_end .data_end.*)
+                0x200000a0                . = ALIGN (0x4)
+                0x200000a0                _edata = .
+                0x200000a0                __data_end__ = .
+
+.igot.plt       0x200000a0        0x0 load address 0x08005f88
+ .igot.plt      0x200000a0        0x0 ./system/src/stm32f0-stdperiph/stm32f0xx_adc.o
+
+.bss_CCMRAM     0x00000000        0x0
+ *(.bss.CCMRAM .bss.CCMRAM.*)
+
+.bss            0x200000a0      0x6dc
+                0x200000a0                __bss_start__ = .
+                0x200000a0                _sbss = .
+ *(.bss_begin .bss_begin.*)
+ *(.bss .bss.*)
+ .bss.name.4289
+                0x200000a0        0x1 ./system/src/newlib/_syscalls.o
+ *fill*         0x200000a1        0x3 
+ .bss.crc16table
+                0x200000a4      0x200 ./source/mLibs/CheckSum.o
+ .bss.ticks     0x200002a4        0x4 ./source/mLibs/SystemTimer.o
+ .bss.event     0x200002a8        0x1 ./source/mLibs/SystemTimer.o
+ .bss.BaseTimer_Event
+                0x200002a9        0x1 ./source/mLibs/mBaseTimer.o
+ .bss.GeneralTimer_Event
+                0x200002aa        0x1 ./source/mLibs/mGeneralTimer.o
+ *fill*         0x200002ab        0x1 
+ .bss._USART_CallBack
+                0x200002ac        0x8 ./source/mLibs/mUSART_DMA.o
+ .bss._USARTx_RequestedBuffer
+                0x200002b4        0x4 ./source/mLibs/mUSART_DMA.o
+ .bss.USARTx_RXBuffer
+                0x200002b8       0xc4 ./source/mLibs/mUSART_DMA.o
+ .bss._USARTx_RequestedLength
+                0x2000037c        0x2 ./source/mLibs/mUSART_DMA.o
+ .bss._USARTx_mode
+                0x2000037e        0x1 ./source/mLibs/mUSART_DMA.o
+ *fill*         0x2000037f        0x1 
+ .bss.USARTx_TXBuffer
+                0x20000380       0xc4 ./source/mLibs/mUSART_DMA.o
+ .bss.dw1000local
+                0x20000444       0x1c ./source/decadriver/deca_device.o
+ .bss._Debugger_pack
+                0x20000460       0x82 ./source/UAV/Debugger.o
+ .bss._Debugger_it
+                0x200004e2        0x1 ./source/UAV/Debugger.o
+ *fill*         0x200004e3        0x1 
+ .bss._Routing_newTable_Lvls
+                0x200004e4        0xa ./source/UAV/Routing.o
+ .bss._Routing_deviceID
+                0x200004ee        0x1 ./source/UAV/Routing.o
+ *fill*         0x200004ef        0x1 
+ .bss._Routing_newTable_IDs
+                0x200004f0        0xa ./source/UAV/Routing.o
+ *fill*         0x200004fa        0x2 
+ .bss.tx_config
+                0x200004fc       0x1c ./source/UAV/Routing.o
+ .bss._Routing_ACKReceivingTimeOut
+                0x20000518        0x1 ./source/UAV/Routing.o
+ *fill*         0x20000519        0x3 
+ .bss._Routing_buffer
+                0x2000051c       0x8b ./source/UAV/Routing.o
+ *fill*         0x200005a7        0x1 
+ .bss._Routing_oldTable_Lvls
+                0x200005a8        0xa ./source/UAV/Routing.o
+ *fill*         0x200005b2        0x2 
+ .bss._Routing_oldTable_IDs
+                0x200005b4        0xa ./source/UAV/Routing.o
+ .bss.UHRes     0x200005be        0x1 ./source/UAV/SWM1000.o
+ *fill*         0x200005bf        0x1 
+ .bss._Pointer_MACHeader
+                0x200005c0        0xc ./source/UAV/SWM1000.o
+ .bss.ConfigFW  0x200005cc       0x12 ./source/UAV/SWM1000.o
+ .bss._TokenExt_TokenExtIsCaptured
+                0x200005de        0x1 ./source/UAV/TokenExt.o
+ *fill*         0x200005df        0x1 
+ .bss._TokenExt_buffer
+                0x200005e0       0x16 ./source/UAV/TokenExt.o
+ *fill*         0x200005f6        0x2 
+ .bss._USARTHandler_TXbuffer
+                0x200005f8       0x84 ./source/UAV/USARTHandler.o
+ .bss._USARTHandler_CallBackRecvPart
+                0x2000067c        0x1 ./source/UAV/USARTHandler.o
+ .bss._USARTHandler_ReadyToReturnData
+                0x2000067d        0x1 ./source/UAV/USARTHandler.o
+ .bss._USARTHandler_WaitingSecondPart
+                0x2000067e        0x1 ./source/UAV/USARTHandler.o
+ *fill*         0x2000067f        0x1 
+ .bss._USARTHandler_RXbuffer
+                0x20000680       0x84 ./source/UAV/USARTHandler.o
+ *(COMMON)
+ COMMON         0x20000704        0x1 ./source/platform/deca_spi.o
+                0x20000704                dummyVola
+ *fill*         0x20000705        0x3 
+ COMMON         0x20000708        0x4 ./source/decadriver/deca_irqhandler.o
+                0x20000708                decairq_callBackResult
+ COMMON         0x2000070c       0x6a ./source/UAV/Ranging.o
+                0x2000070c                final_msg
+                0x20000728                expected_resp_msg
+                0x20000738                expected_final_msg
+                0x20000754                resp_msg
+                0x20000764                init_msg
+ *fill*         0x20000776        0x2 
+ COMMON         0x20000778        0x2 ./source/UAV/USARTHandler.o
+                0x20000778                crc
+ *(.bss_end .bss_end.*)
+                0x2000077c                . = ALIGN (0x4)
+ *fill*         0x2000077a        0x2 
+                0x2000077c                __bss_end__ = .
+                0x2000077c                _ebss = .
+
+.noinit_CCMRAM
+ *(.noinit.CCMRAM .noinit.CCMRAM.*)
+
+.noinit         0x2000077c        0x0
+                0x2000077c                _noinit = .
+ *(.noinit .noinit.*)
+                0x2000077c                . = ALIGN (0x4)
+                0x2000077c                _end_noinit = .
+                [!provide]                PROVIDE (end, _end_noinit)
+                [!provide]                PROVIDE (_end, _end_noinit)
+                [!provide]                PROVIDE (__end, _end_noinit)
+                [!provide]                PROVIDE (__end__, _end_noinit)
+
+._check_stack   0x2000077c      0x100
+                0x2000087c                . = (. + _Minimum_Stack_Size)
+ *fill*         0x2000077c      0x100 
+
+.b1text
+ *(.b1text)
+ *(.b1rodata)
+ *(.b1rodata.*)
+
+.eb0text
+ *(.eb0text)
+ *(.eb0rodata)
+ *(.eb0rodata.*)
+
+.eb1text
+ *(.eb1text)
+ *(.eb1rodata)
+ *(.eb1rodata.*)
+
+.eb2text
+ *(.eb2text)
+ *(.eb2rodata)
+ *(.eb2rodata.*)
+
+.eb3text
+ *(.eb3text)
+ *(.eb3rodata)
+ *(.eb3rodata.*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x6e
+ *(.comment)
+ .comment       0x00000000       0x6e ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+                                 0x6f (size before relaxing)
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .comment       0x0000006e       0x6f ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .comment       0x0000006e       0x6f ./system/src/newlib/_exit.o
+ .comment       0x0000006e       0x6f ./system/src/newlib/_startup.o
+ .comment       0x0000006e       0x6f ./system/src/newlib/_syscalls.o
+ .comment       0x0000006e       0x6f ./system/src/cortexm/_initialize_hardware.o
+ .comment       0x0000006e       0x6f ./system/src/cortexm/_reset_hardware.o
+ .comment       0x0000006e       0x6f ./system/src/cortexm/exception_handlers.o
+ .comment       0x0000006e       0x6f ./system/src/cmsis/system_stm32f0xx.o
+ .comment       0x0000006e       0x6f ./system/src/cmsis/vectors_stm32f0xx.o
+ .comment       0x0000006e       0x6f ./src/main.o
+ .comment       0x0000006e       0x6f ./source/platform/deca_mutex.o
+ .comment       0x0000006e       0x6f ./source/platform/deca_sleep.o
+ .comment       0x0000006e       0x6f ./source/platform/deca_spi.o
+ .comment       0x0000006e       0x6f ./source/platform/port.o
+ .comment       0x0000006e       0x6f ./source/mLibs/CheckSum.o
+ .comment       0x0000006e       0x6f ./source/mLibs/SystemTimer.o
+ .comment       0x0000006e       0x6f ./source/mLibs/mBaseTimer.o
+ .comment       0x0000006e       0x6f ./source/mLibs/mGeneralTimer.o
+ .comment       0x0000006e       0x6f ./source/mLibs/mUSART_DMA.o
+ .comment       0x0000006e       0x6f ./source/decadriver/deca_device.o
+ .comment       0x0000006e       0x6f ./source/decadriver/deca_irqhandler.o
+ .comment       0x0000006e       0x6f ./source/decadriver/deca_params_init.o
+ .comment       0x0000006e       0x6f ./source/UAV/Debugger.o
+ .comment       0x0000006e       0x6f ./source/UAV/Ranging.o
+ .comment       0x0000006e       0x6f ./source/UAV/Routing.o
+ .comment       0x0000006e       0x6f ./source/UAV/SWM1000.o
+ .comment       0x0000006e       0x6f ./source/UAV/TokenExt.o
+ .comment       0x0000006e       0x6f ./source/UAV/Transceiver.o
+ .comment       0x0000006e       0x6f ./source/UAV/USARTHandler.o
+ .comment       0x0000006e       0x6f ./source/UAV/UserPack.o
+
+.ARM.attributes
+                0x00000000       0x31
+ .ARM.attributes
+                0x00000000       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_dma.o
+ .ARM.attributes
+                0x00000031       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_exti.o
+ .ARM.attributes
+                0x00000062       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_gpio.o
+ .ARM.attributes
+                0x00000093       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_misc.o
+ .ARM.attributes
+                0x000000c4       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_rcc.o
+ .ARM.attributes
+                0x000000f5       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_spi.o
+ .ARM.attributes
+                0x00000126       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_syscfg.o
+ .ARM.attributes
+                0x00000157       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_tim.o
+ .ARM.attributes
+                0x00000188       0x31 ./system/src/stm32f0-stdperiph/stm32f0xx_usart.o
+ .ARM.attributes
+                0x000001b9       0x31 ./system/src/newlib/_exit.o
+ .ARM.attributes
+                0x000001ea       0x31 ./system/src/newlib/_startup.o
+ .ARM.attributes
+                0x0000021b       0x31 ./system/src/newlib/_syscalls.o
+ .ARM.attributes
+                0x0000024c       0x31 ./system/src/cortexm/_initialize_hardware.o
+ .ARM.attributes
+                0x0000027d       0x31 ./system/src/cortexm/_reset_hardware.o
+ .ARM.attributes
+                0x000002ae       0x31 ./system/src/cortexm/exception_handlers.o
+ .ARM.attributes
+                0x000002df       0x31 ./system/src/cmsis/system_stm32f0xx.o
+ .ARM.attributes
+                0x00000310       0x31 ./system/src/cmsis/vectors_stm32f0xx.o
+ .ARM.attributes
+                0x00000341       0x31 ./src/main.o
+ .ARM.attributes
+                0x00000372       0x31 ./source/platform/deca_mutex.o
+ .ARM.attributes
+                0x000003a3       0x31 ./source/platform/deca_sleep.o
+ .ARM.attributes
+                0x000003d4       0x31 ./source/platform/deca_spi.o
+ .ARM.attributes
+                0x00000405       0x31 ./source/platform/port.o
+ .ARM.attributes
+                0x00000436       0x31 ./source/mLibs/CheckSum.o
+ .ARM.attributes
+                0x00000467       0x31 ./source/mLibs/SystemTimer.o
+ .ARM.attributes
+                0x00000498       0x31 ./source/mLibs/mBaseTimer.o
+ .ARM.attributes
+                0x000004c9       0x31 ./source/mLibs/mGeneralTimer.o
+ .ARM.attributes
+                0x000004fa       0x31 ./source/mLibs/mUSART_DMA.o
+ .ARM.attributes
+                0x0000052b       0x31 ./source/decadriver/deca_device.o
+ .ARM.attributes
+                0x0000055c       0x31 ./source/decadriver/deca_irqhandler.o
+ .ARM.attributes
+                0x0000058d       0x31 ./source/decadriver/deca_params_init.o
+ .ARM.attributes
+                0x000005be       0x31 ./source/UAV/Debugger.o
+ .ARM.attributes
+                0x000005ef       0x31 ./source/UAV/Ranging.o
+ .ARM.attributes
+                0x00000620       0x31 ./source/UAV/Routing.o
+ .ARM.attributes
+                0x00000651       0x31 ./source/UAV/SWM1000.o
+ .ARM.attributes
+                0x00000682       0x31 ./source/UAV/TokenExt.o
+ .ARM.attributes
+                0x000006b3       0x31 ./source/UAV/Transceiver.o
+ .ARM.attributes
+                0x000006e4       0x31 ./source/UAV/USARTHandler.o
+ .ARM.attributes
+                0x00000715       0x31 ./source/UAV/UserPack.o
+ .ARM.attributes
+                0x00000746       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+ .ARM.attributes
+                0x00000772       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+ .ARM.attributes
+                0x0000079e       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_lib_ver.o)
+ .ARM.attributes
+                0x000007ca       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+ .ARM.attributes
+                0x000007f6       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+ .ARM.attributes
+                0x00000822       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+ .ARM.attributes
+                0x0000084e       0x1e /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x0000086c       0x1e /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x0000088a       0x1e /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_arm_cmpdf2.o)
+ .ARM.attributes
+                0x000008a8       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfsi.o)
+ .ARM.attributes
+                0x000008d4       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o)
+ .ARM.attributes
+                0x00000900       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfdi.o)
+ .ARM.attributes
+                0x0000092c       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_floatdidf.o)
+ .ARM.attributes
+                0x00000958       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o)
+ .ARM.attributes
+                0x00000984       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+ .ARM.attributes
+                0x000009b0       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(eqdf2.o)
+ .ARM.attributes
+                0x000009dc       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(gedf2.o)
+ .ARM.attributes
+                0x00000a08       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(ledf2.o)
+ .ARM.attributes
+                0x00000a34       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+ .ARM.attributes
+                0x00000a60       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(subdf3.o)
+ .ARM.attributes
+                0x00000a8c       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(unorddf2.o)
+ .ARM.attributes
+                0x00000ab8       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(fixdfsi.o)
+ .ARM.attributes
+                0x00000ae4       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatsidf.o)
+ .ARM.attributes
+                0x00000b10       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatunsidf.o)
+ .ARM.attributes
+                0x00000b3c       0x1e /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_clzsi2.o)
+ .ARM.attributes
+                0x00000b5a       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x00000b86       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x00000bb2       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+ .ARM.attributes
+                0x00000bde       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame    0x00000000      0x474
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x38 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-w_log10.o)
+ .debug_frame   0x00000038       0x38 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log10.o)
+ .debug_frame   0x00000070       0x20 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x00000090       0x20 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-s_nan.o)
+ .debug_frame   0x000000b0       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libm.a(lib_a-e_log.o)
+ .debug_frame   0x000000ec       0x20 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_udivsi3.o)
+ .debug_frame   0x0000010c       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfsi.o)
+ .debug_frame   0x00000138       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixdfdi.o)
+ .debug_frame   0x00000164       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_fixunsdfdi.o)
+ .debug_frame   0x00000190       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(_floatdidf.o)
+ .debug_frame   0x000001bc       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(adddf3.o)
+ .debug_frame   0x000001f8       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(divdf3.o)
+ .debug_frame   0x00000234       0x38 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(eqdf2.o)
+ .debug_frame   0x0000026c       0x38 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(gedf2.o)
+ .debug_frame   0x000002a4       0x38 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(ledf2.o)
+ .debug_frame   0x000002dc       0x3c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(muldf3.o)
+ .debug_frame   0x00000318       0x38 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(subdf3.o)
+ .debug_frame   0x00000350       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(unorddf2.o)
+ .debug_frame   0x0000037c       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(fixdfsi.o)
+ .debug_frame   0x000003a8       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatsidf.o)
+ .debug_frame   0x000003d4       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/libgcc.a(floatunsidf.o)
+ .debug_frame   0x00000400       0x20 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-errno.o)
+ .debug_frame   0x00000420       0x2c /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcmp.o)
+ .debug_frame   0x0000044c       0x28 /opt/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/libc_nano.a(lib_a-memcpy-stub.o)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(UWB_Firmware.elf elf32-littlearm)

@@ -40,6 +40,7 @@ typedef enum {
  *
 */
 typedef struct {
+	uint8_t deviceID;
 	uint8_t ACKReceivingTimeOut;
 	uint8_t transactionSize;
 	uint8_t trustPacks;

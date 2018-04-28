@@ -1,5 +1,6 @@
 
 #include "Transceiver.h"
+#include <math.h>
 
 
 // callbacks result (defines IRQ event)
@@ -150,8 +151,8 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 			}
 		}
 	}	
+
 	_Transceiver_rxoff(); // reset state
-	
 
 	if (cbRes == Transceiver_RXFCG) {
 		// A frame has been received, read it into the buffer
@@ -169,7 +170,7 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 
 
 
-Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
+/*Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
 {	
 	decamutexon();
 	
@@ -191,11 +192,11 @@ Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
 		
 	dwt_setpreambledetecttimeout(0); // reset
 	return cbRes;
-}
+}*/
 	
 
 
-inline void Transceiver_ReceiverOn()
+void Transceiver_ReceiverOn()
 {
 	// Disable current events
 	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
@@ -214,7 +215,7 @@ inline void Transceiver_ReceiverOn()
 
 
 
-inline void Transceiver_ReceiverOff(void)
+void Transceiver_ReceiverOff(void)
 {		
 	_Transceiver_rxoff();
 	//dwt_setsniffmode(0, 0, 0);
@@ -222,7 +223,7 @@ inline void Transceiver_ReceiverOff(void)
 
 
 		
-inline Transceiver_RESULT Transceiver_GetReceptionResult(void)
+Transceiver_RESULT Transceiver_GetReceptionResult(void)
 {
 	return cbRes;
 }
@@ -242,6 +243,16 @@ uint8 Transceiver_GetAvailableData(uint8 *buffer)
 		return (uint8)frame_len;
 	}
 	return 0;
+}
+
+
+
+uint8 Transceiver_GetLevelOfLastReceived(void)
+{
+	uint16 RXPACC = (dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXPACC_MASK) >> RX_FINFO_RXPACC_SHIFT;
+	uint16 CIR_PWR = dwt_read16bitoffsetreg(RX_FQUAL_ID, 6);
+	// real: 24 -min, 74 -max; return relative lvl 0-100
+	return (uint8)(( 20.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) - 40.0 ) * 2.0);
 }
 
 
