@@ -58,7 +58,12 @@ UWB_Firmware.siz \
 
 
 # All Target
-all: UWB_Firmware.elf secondary-outputs
+all:
+	$(MAKE) --no-print-directory pre-build
+	$(MAKE) --no-print-directory main-build
+
+# Main-build Target
+main-build: UWB_Firmware.elf secondary-outputs
 
 # Tool invocations
 UWB_Firmware.elf: $(OBJS) $(USER_OBJS)
@@ -85,8 +90,12 @@ clean:
 	-$(RM) $(CC_DEPS)$(C++_DEPS)$(OBJS)$(C_UPPER_DEPS)$(CXX_DEPS)$(SECONDARY_FLASH)$(SECONDARY_SIZE)$(ASM_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(CPP_DEPS) UWB_Firmware.elf
 	-@echo ' '
 
+pre-build:
+	-make clean
+	-@echo ' '
+
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_SIZE)
 
-.PHONY: all clean dependents
+.PHONY: all clean dependents main-build pre-build
 
 -include ../makefile.targets

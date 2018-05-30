@@ -11,7 +11,7 @@
  * @brief: size of ConfigFW
  *
 */
-#define ConfigFW_SIZE	15
+#define ConfigFW_SIZE	12
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -34,11 +34,6 @@ static struct {
 		uint16_t	RespondingDelay;
 		uint16_t	FinalDelay;
 	} Ranging;
-	struct Routing_Str {
-		uint8_t		TransactionSize;
-		uint8_t		TrustPacks;
-		uint8_t		Repeats;
-	} Routing;
 } ConfigFW;
 
 
@@ -72,10 +67,6 @@ static inline void ConfigFW_FromUserPack(const UserPack *pack)
 	ConfigFW.Ranging.RespondingDelay |= pack->Data[i++] << 8;
 	ConfigFW.Ranging.FinalDelay	= pack->Data[i++];
 	ConfigFW.Ranging.FinalDelay	|= pack->Data[i++] << 8;
-	//
-	ConfigFW.Routing.TransactionSize = pack->Data[i++];
-	ConfigFW.Routing.TrustPacks = pack->Data[i++];
-	ConfigFW.Routing.Repeats = pack->Data[i++];
 }
 
 

@@ -33,9 +33,8 @@
 #define MACFrame_FLAGS_SIZE 					1
 #define MACFrame_HEADER_SIZE					10
 #define MACFrame_FCS_SIZE						2
-#define MACFrame_PAYLOAD_MAX_SIZE				127
-#define MACFrame_SERVICE_INFO_SIZE				(MACFrame_HEADER_SIZE + MACFrame_FCS_SIZE)
-#define MACFrame_FRAME_MAX_SIZE					(MACFrame_SERVICE_INFO_SIZE + MACFrame_PAYLOAD_MAX_SIZE)
+#define MACFrame_FRAME_MAX_SIZE					127
+#define MACFrame_PAYLOAD_MAX_SIZE				(MACFrame_FRAME_MAX_SIZE - MACFrame_HEADER_SIZE - MACFrame_FCS_SIZE)
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: Flags 
@@ -47,9 +46,18 @@
 #define MACFrame_Flags_RNG			0x01
 #define MACFrame_Flags_DATA			0x02
 #define MACFrame_Flags_TOKEN		0x04
-#define MACFrame_Flags_SYN			0x20
-#define MACFrame_Flags_RST			0x40
+#define MACFrame_Flags_RET			0x08
+#define MACFrame_Flags_RST			0x20
+#define MACFrame_Flags_SYN			0x40
 #define MACFrame_Flags_ACK			0x80
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: MACFrame_BROADCAST_ID
+ *
+ * @brief:
+ *
+*/
+#define MACFrame_BROADCAST_ID		0xFFFF
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * Structure typedef: Transceiver_RxConfig

@@ -24,7 +24,8 @@
  *
 */
 typedef enum {
-	Routing_FAIL = -1,
+	Routing_INTERRUPT = -2,
+	Routing_ERROR = -1,
 	Routing_SUCCESS = 0
 } Routing_RESULT;
 
@@ -33,18 +34,13 @@ typedef enum {
  *
  * @brief: Used for results (described below) returned from Routing methods
  *
+ * @param deviceID - todo
  * @param ACKReceivingTimeOut - timeout between for acknowledge after any request
- * @param transactionSize - todo
- * @param trustPacks -
- * @param repeats -
  *
 */
 typedef struct {
 	uint8_t deviceID;
 	uint8_t ACKReceivingTimeOut;
-	uint8_t transactionSize;
-	uint8_t trustPacks;
-	uint8_t repeats;
 } Routing_InitializationStruct;
 
 
@@ -135,6 +131,37 @@ extern void Routing_SendTokenWithTable(MACHeader_Typedef *header);
  * no return value
 */
 extern void Routing_RecvTokenWithTable(MACHeader_Typedef *header, const uint8_t *rx_buffer);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn: Routing_GetReturnedToken
+ *
+ * @brief: Wrapper for TokenExt_GetReturnedToken
+ *
+ * NOTE: Allows to safe old table's data
+ *
+ * input parameters
+ * @param rx_buffer - rx_buffer of Transceiver_RxConfig (e.g. after Transceiver_GetAvailableData)
+ *
+ * return value is TokenExt_RESULT described above
+*/
+extern void Routing_GetReturnedToken(const uint8_t *rx_buffer);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn: Routing_GenerateToken
+ *
+ * @brief: Tries to generate the token
+ *
+ * NOTE:
+ *
+ * input parameters
+ * @param header - header of the frame (ref to MACFrame.h)
+ *
+ * output parameters
+ * @param header - changes DestinationID, Flags and SequenceNumber of header
+ *
+ * no return value
+*/
+extern void Routing_GenerateToken(MACHeader_Typedef *header);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: Routing_Initialization

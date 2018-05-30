@@ -2,7 +2,7 @@
 #define USERPACK_H
 
 
-#include <stdint.h>
+#include "MACFrame.h"
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -19,6 +19,8 @@
  * @brief: offsets in the buffer contained user pack
  *
 */
+#define UserPack_FCOMMAND_OFFSET		0
+#define UserPack_SCOMMAND_OFFSET		1
 #define UserPack_TOTAL_SIZE_OFFSET		2
 #define UserPack_DATA_OFFSET			3
 
@@ -30,8 +32,9 @@
 */
 #define UserPack_SERVICE_INFO_SIZE 		3		// cmd + id + ttlsize
 #define UserPack_FCS_SIZE		 		2		// crc16
-#define UserPack_MAX_DATA_SIZE 			127		// according with IEEE Std 802.15.4-2011
-#define UserPack_MAX_PACK_BYTE			(UserPack_MAX_DATA_SIZE + UserPack_SERVICE_INFO_SIZE + UserPack_FCS_SIZE)
+#define UserPack_DATA_MAX_SIZE 			MACFrame_PAYLOAD_MAX_SIZE
+#define UserPack_PACK_MAX_SIZE			(UserPack_SERVICE_INFO_SIZE + UserPack_DATA_MAX_SIZE + UserPack_FCS_SIZE)
+
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: UserPack_COMMAND
@@ -40,10 +43,13 @@
  *
 */
 typedef enum {
-	UserPack_Cmd_Error = 0,
-	UserPack_Cmd_SetConfig,
+	UserPack_Cmd_Service = 0,
+	UserPack_Cmd_SystemConfig,
 	UserPack_Cmd_Distance,
-	UserPack_Cmd_Data
+	UserPack_Cmd_DataConfig,
+	UserPack_Cmd_Data,
+	UserPack_Cmd_Ack,
+	UserPack_Cmd_End
 } UserPack_FCommand;
 
 typedef union {
@@ -62,7 +68,7 @@ typedef struct {
 	UserPack_FCommand FCmd;
 	UserPack_SCommand SCmd;
 	uint8_t TotalSize;
-	uint8_t Data[UserPack_MAX_DATA_SIZE];
+	uint8_t Data[UserPack_DATA_MAX_SIZE];
 } UserPack;
 
 

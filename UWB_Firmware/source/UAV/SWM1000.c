@@ -1,11 +1,11 @@
 
-#include "_DEBUG.h"
 #include "USARTHandler.h"
 #include "SWM1000.h"
 #include "Routing.h"
 #include "Ranging.h"
 #include "Random.h"
 #include "ConfigFW.h"
+#include "Debugger.h"
 
 
 
@@ -26,7 +26,6 @@ static MACHeader_Typedef _Pointer_MACHeader;
 
 
 static Ranging_RESULT RngRes;
-static TokenExt_RESULT TokRes;
 static USARTHandler_RESULT UHRes;
 
 
@@ -44,7 +43,7 @@ void SWM1000_Loop(void)
 	uint8 receivingState = 0;
 	Transceiver_RxConfig rx_config;
 	rx_config.rx_buffer = buffer;
-	rx_config.rx_buffer_size = UserPack_MAX_DATA_SIZE;
+	rx_config.rx_buffer_size = MACFrame_FRAME_MAX_SIZE;
 	UserPack upack;
 		
 	GeneralTimer_Reset();
@@ -57,7 +56,7 @@ void SWM1000_Loop(void)
 		{	
 			UHRes = USARTHandler_Receive(&upack);
 		}	
-		
+
 		generate = (GeneralTimer_GetState() == GeneralTimer_SET);
 		token_transfer = (TokenExt_isCaptured() == TokenExt_TRUE);
 		transmit = (token_transfer && UHRes == USARTHandler_SUCCESS);
@@ -73,7 +72,7 @@ void SWM1000_Loop(void)
 			if (generate) {	
 				_Pointer_MACHeader.DestinationID = 0xFFFF;
 				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-				TokRes = TokenExt_ImmediateReceipt( &_Pointer_MACHeader );
+				Routing_GenerateToken( &_Pointer_MACHeader );
 				GeneralTimer_Reset();
 			}
 			// if transfer is allowed
@@ -120,24 +119,26 @@ static void _SWM1000_UserCommandHandler(UserPack *upack)
 	uint8 i;
 	switch (upack->FCmd) {
 		// ---------------------------------------------------------------------------------------------------
-		case UserPack_Cmd_Error:
+		case UserPack_Cmd_Service:
 		{
-			// TODO: errors handler
+			// TODO:
 		} break;
 		// ---------------------------------------------------------------------------------------------------
-		case UserPack_Cmd_SetConfig:
+		case UserPack_Cmd_SystemConfig:
 		{
-			// TODO: errors handler
+			// TODO:
 		} break;
 		// ---------------------------------------------------------------------------------------------------
-		case UserPack_Cmd_Distance: 
-		{	
+		case UserPack_Cmd_Distance:
+		{
 			if (upack->SCmd.devID == 0xFF) {
 				for (i = 1; i <= ConfigFW.SW1000.nDevices; ++i) {							
 					if ( (uint8_t)(_Pointer_MACHeader.SourceID) != i ) {
 						_Pointer_MACHeader.DestinationID = i & 0x00FF;
 						_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 						RngRes = Ranging_Initiate(&_Pointer_MACHeader, upack->Data);
+						if (RngRes == Ranging_INTERRUPT)
+							break;
 					}
 				}
 			} else {
@@ -145,14 +146,18 @@ static void _SWM1000_UserCommandHandler(UserPack *upack)
 				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 				RngRes = Ranging_Initiate(&_Pointer_MACHeader, upack->Data);	
 			}
+			//
+			if (RngRes == Ranging_INTERRUPT) {
+				TokenExt_Reset();
+			}
 		} break;
 		// ---------------------------------------------------------------------------------------------------
 		case UserPack_Cmd_Data:
 		{
 			_Pointer_MACHeader.DestinationID = upack->SCmd.devID & 0x00FF;
 			_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-			if ( Routing_SendData(&_Pointer_MACHeader, upack->Data, upack->TotalSize) != Routing_SUCCESS) {
-				// TODO errors handler
+			if ( Routing_SendData(&_Pointer_MACHeader, upack->Data, upack->TotalSize) == Routing_INTERRUPT) {
+				TokenExt_Reset();
 			}
 		} break;
 		// ---------------------------------------------------------------------------------------------------
@@ -188,44 +193,37 @@ static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
 			}
 		} break;						
 		// ---------------------------------------------------------------------------------------------------
-		case MACFrame_Flags_TOKEN:
+		// Try to catch token from another device
+		case (MACFrame_Flags_TOKEN | MACFrame_Flags_SYN):
 		{	
-			_Pointer_MACHeader.DestinationID = 0xFFFF; // everybody should be able to hear this message
+			_Pointer_MACHeader.DestinationID = MACFrame_BROADCAST_ID; // everybody should be able to hear this message
 			_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 			Routing_RecvTokenWithTable(&_Pointer_MACHeader, rx_config->rx_buffer);
 		} break;
 		// ---------------------------------------------------------------------------------------------------
-		case (MACFrame_Flags_TOKEN | MACFrame_Flags_ACK):
-		{				
-			if (TokenExt_isCaptured() == TokenExt_TRUE) {
-				_Pointer_MACHeader.DestinationID = 0xFFFF;
-				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-				TokenExt_ImmediateReceipt(&_Pointer_MACHeader);
-			}
-		} break;
-		// ---------------------------------------------------------------------------------------------------
 		// Data receiving algorithm - establish logical connection and receive / retranslate the data
-		case (MACFrame_Flags_TOKEN | MACFrame_Flags_SYN):
+		case (MACFrame_Flags_DATA | MACFrame_Flags_SYN):
 		{
 			_Pointer_MACHeader.DestinationID = rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET];
 			_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 			uint8_t data_buffer[MACFrame_FRAME_MAX_SIZE], data_buffer_size = MACFrame_FRAME_MAX_SIZE;
 			if ( Routing_RecvDataTransferRequest(
 					&_Pointer_MACHeader, rx_config->rx_buffer, data_buffer, &data_buffer_size )
-					== Routing_SUCCESS && data_buffer_size > 0 )
+						== Routing_SUCCESS && data_buffer_size > 0 )
 			{
 				UserPack upack;
 				upack.FCmd = UserPack_Cmd_Data;
 				upack.SCmd._raw = data_buffer[MACFrame_SOURCE_ADDRESS_OFFSET];
-				upack.TotalSize = data_buffer_size - MACFrame_SERVICE_INFO_SIZE;
+				upack.TotalSize = data_buffer_size - MACFrame_HEADER_SIZE - MACFrame_FCS_SIZE;
 				UserPack_SetData(&upack, &(data_buffer[MACFrame_PAYLOAD_OFFSET]));
 				USARTHandler_Send(&upack);
 			}
 		} break;
 		// ---------------------------------------------------------------------------------------------------
-		case (MACFrame_Flags_TOKEN | MACFrame_Flags_SYN | MACFrame_Flags_ACK):
+		// Try to get the token back
+		case (MACFrame_Flags_TOKEN | MACFrame_Flags_RET):
 		{
-			// todo
+			Routing_GetReturnedToken(rx_config->rx_buffer);
 		} break;
 		// ---------------------------------------------------------------------------------------------------
 		default:
@@ -241,10 +239,9 @@ static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
 void SWM1000_Initialization()
 {
 	UserPack upack;
-	USARTHandler_Initialization();
 
-	// Initialises RCC, TIMS, SPI, EXTI
 	peripherals_init();
+	USARTHandler_Initialization();
 
 	// timer for receiving config
 	GeneralTimer_SetPrescaler(SystemCoreClock / 1000); // ms
@@ -257,7 +254,7 @@ void SWM1000_Initialization()
 			UHRes = USARTHandler_Receive(&upack);
 
 			if (UHRes == USARTHandler_SUCCESS &&
-				upack.FCmd == UserPack_Cmd_SetConfig &&
+				upack.FCmd == UserPack_Cmd_SystemConfig &&
 				upack.TotalSize == ConfigFW_SIZE
 			) {
 				UHRes = USARTHandler_ERROR; // just reset
@@ -300,14 +297,11 @@ void SWM1000_Initialization()
 
 	Routing_InitializationStruct routing_initializationStruct = {
 		ConfigFW.SW1000.DeviceID,
-		ConfigFW.Token.TimeSlotDurationMs * ConfigFW.SW1000.nDevices * 2,
-		ConfigFW.Routing.TransactionSize,
-		ConfigFW.Routing.TrustPacks,
-		ConfigFW.Routing.Repeats
+		ConfigFW.Token.TimeSlotDurationMs * ConfigFW.SW1000.nDevices * 2
 	};
 
 	Ranging_Initialization(ConfigFW.Ranging.RespondingDelay, ConfigFW.Ranging.FinalDelay);
-	TokenExt_Initialization(ConfigFW.SW1000.nDevices, ConfigFW.Token.TimeSlotDurationMs);
+	TokenExt_Initialization(ConfigFW.SW1000.DeviceID, ConfigFW.SW1000.nDevices, ConfigFW.Token.TimeSlotDurationMs);
 	Routing_Initialization(&routing_initializationStruct);
 
 	// timer for generating new token

@@ -133,10 +133,9 @@ int RCC_Configuration(void)
 	
 	RCC_GetClocksFreq(&RCC_ClockFreq);		
 	
-	// при установке BR читается RCC_GetClocksFreq - какое значение читает? часы надо конфигурить до USARTa
-	//RCC_USARTCLKConfig(RCC_USART1CLK_SYSCLK);
+	RCC_USARTCLKConfig(RCC_USART1CLK_PCLK);
 
-	RCC_USARTCLKConfig(RCC_USART1CLK_HSI);
+	//RCC_USARTCLKConfig(RCC_USART1CLK_HSI);
 	
 	// Enable GPIOs clocks
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB, ENABLE);

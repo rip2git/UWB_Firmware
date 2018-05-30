@@ -23,8 +23,8 @@ static void _USARTHandler_USART_fcb(void);
 
 
 uint16_str crc;
-static uint8_t _USARTHandler_RXbuffer[UserPack_MAX_PACK_BYTE];
-static uint8_t _USARTHandler_TXbuffer[UserPack_MAX_PACK_BYTE];
+static uint8_t _USARTHandler_RXbuffer[UserPack_PACK_MAX_SIZE];
+static uint8_t _USARTHandler_TXbuffer[UserPack_PACK_MAX_SIZE];
 
 
 
@@ -98,7 +98,7 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 	
 #endif	
 	
-	if (_USARTHandler_RXbuffer[0] == (uint8_t)UserPack_Cmd_Error)
+	if (_USARTHandler_RXbuffer[0] == (uint8_t)UserPack_Cmd_Service)
 		return USARTHandler_ERROR;
 			
 	crc.d = CheckSum_GetCRC16(_USARTHandler_RXbuffer, it - 2);
@@ -117,7 +117,7 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 static void _USARTHandler_USART_scb(void)
 {
 	if (_USARTHandler_CallBackRecvPart) { // receive first part
-		if (_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET] <= UserPack_MAX_DATA_SIZE) {
+		if (_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET] <= UserPack_PACK_MAX_SIZE) {
 			USART_StartRead(
 				&(_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET + 1]),
 				_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET] + UserPack_FCS_SIZE

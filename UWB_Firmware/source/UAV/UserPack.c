@@ -5,7 +5,7 @@ uint8_t UserPack_ToBytes(const UserPack *pack, uint8_t *buffer)
 {
 	uint8_t i = 0;
 	buffer[i++] = pack->FCmd;
-	if (pack->FCmd != UserPack_Cmd_Error)
+	if (pack->FCmd != UserPack_Cmd_Service)
 		buffer[i++] = pack->SCmd._raw;
 	else
 		buffer[i++] = (uint8_t)pack->SCmd.cmd;
@@ -21,7 +21,7 @@ void UserPack_ToStruct(UserPack *pack, const uint8_t *buffer)
 {
 	uint8_t i = 0;
 	pack->FCmd = buffer[i++];
-	if (pack->FCmd != UserPack_Cmd_Error)
+	if (pack->FCmd != UserPack_Cmd_Service)
 		pack->SCmd._raw = buffer[i++];
 	else
 		pack->SCmd.cmd = (UserPack_FCommand)buffer[i++];

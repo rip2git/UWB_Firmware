@@ -1,6 +1,7 @@
 
 #include "SWM1000.h"
 
+// to debug under gdb need to change ENTRY(_start) to ENTRY(__reset_hardware) in the sections.ld script
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"

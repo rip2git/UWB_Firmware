@@ -8,10 +8,22 @@
 #ifndef DECA_STD_HANDLERS
 
 
+
+/* General expected */
+#define SYS_STATUS_GEN_EXPECT	(SYS_STATUS_TXFRS | SYS_STATUS_RXFCG | SYS_STATUS_RXRFTO | \
+								SYS_STATUS_RXPHE | SYS_STATUS_RXFCE | SYS_STATUS_AFFREJ)
+
+
 #ifdef USE_FASTER_CALLBACKS
 	#include "port.h"
 
 	volatile uint32 decairq_callBackResult;
+
+//	volatile uint32 _currentMask;
+//	#define _cbBuffer_size  100
+//	volatile uint32 _cbBuffer[_cbBuffer_size];
+//	volatile uint32 _cbBuffer_err[_cbBuffer_size];
+//	volatile uint8 _cbBuffer_it = 0, _cbBuffer_err_it = 0;
 
 #else
 
@@ -46,98 +58,187 @@
 
 	
 
+
 void dwt_isr(void)
 {
+#ifdef USE_FASTER_CALLBACKS
+//	uint32 tmp = dwt_read32bitreg(SYS_STATUS_ID);
+//	_currentMask = dwt_read32bitreg(SYS_MASK_ID);
+//	decairq_callBackResult = (tmp & _currentMask)? tmp : (SYS_STATUS_TXFRS | SYS_STATUS_RXFCE);
+//	if ( !(tmp & _currentMask) )
+//		_cbBuffer_err[_cbBuffer_err_it++] = tmp;
+//	_cbBuffer[_cbBuffer_it++] = decairq_callBackResult;
+//	//
+//	if (_cbBuffer_it == _cbBuffer_size)
+//		_cbBuffer_it = 0;
+//	if (_cbBuffer_err_it == _cbBuffer_size)
+//		_cbBuffer_err_it = 0;
+
+	decairq_callBackResult = dwt_read32bitreg(SYS_STATUS_ID);
+	dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_GEN_EXPECT);
+	EXTI->PR = DECAIRQ_EXTI; // reset interrupt
+	return;
+#else
 	uint32 status = dwt_read32bitreg(SYS_STATUS_ID);
 	uint32 mask = dwt_read32bitreg(SYS_MASK_ID);
-	
-#ifdef USE_FASTER_CALLBACKS
-	EXTI->PR = DECAIRQ_EXTI; // reset interrupt
-#else
-    _dw1000_callbacks.status = status;
-#endif	
-	
-    // Handle RX good frame event
-    if ( (mask & SYS_MASK_MRXFCG) && (status & SYS_STATUS_RXFCG) )
-    {
-        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_RX_GOOD); // Clear all receive status bits    
-		
-#ifdef USE_FASTER_CALLBACKS
-		decairq_callBackResult = SYS_STATUS_RXFCG;
-#else		
-        // Call the corresponding callback if present
-        if(_dw1000_callbacks.cbRxOk != NULL) {
-            _dw1000_callbacks.cbRxOk(_dw1000_callbacks.status);
-        }
-#endif		
-		return;
-    }
+	_dw1000_callbacks.status = status;
 
-    // Handle TX confirmation event
-    if ( (mask & SYS_MASK_MTXFRS) && (status & SYS_STATUS_TXFRS) )
-    {
-        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_TX); // Clear TX event bits
-		
-#ifdef USE_FASTER_CALLBACKS
-		decairq_callBackResult = SYS_STATUS_TXFRS;
-#else
-        // Call the corresponding callback if present
-        if(_dw1000_callbacks.cbTxDone != NULL) {
-            _dw1000_callbacks.cbTxDone(_dw1000_callbacks.status);
-        }
-#endif		
+	// Handle RX good frame event
+	if ( (mask & SYS_MASK_MRXFCG) && (status & SYS_STATUS_RXFCG) )
+	{
+		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_RX_GOOD); // Clear all receive status bits
+	
+		// Call the corresponding callback if present
+		if(_dw1000_callbacks.cbRxOk != NULL) {
+			_dw1000_callbacks.cbRxOk(_dw1000_callbacks.status);
+		}
 		return;
-    }
+	}
+
+	// Handle TX confirmation event
+	if ( (mask & SYS_MASK_MTXFRS) && (status & SYS_STATUS_TXFRS) )
+	{
+		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_TX); // Clear TX event bits
+
+		// Call the corresponding callback if present
+		if(_dw1000_callbacks.cbTxDone != NULL) {
+			_dw1000_callbacks.cbTxDone(_dw1000_callbacks.status);
+		}
+		return;
+	}
 	
 	// Handle frame reception timeout events
-    if ( (mask & SYS_MASK_MRXRFTO) && (status & SYS_STATUS_RXRFTO) )
-    {
+	if ( (mask & SYS_MASK_MRXRFTO) && (status & SYS_STATUS_RXRFTO) )
+	{
 		// Clear RX error/timeout events in the DW1000 status register.
-        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXRFTO | SYS_STATUS_ALL_RX_ERR);
+		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXRFTO | SYS_STATUS_ALL_RX_ERR);
 
-#ifdef USE_FASTER_CALLBACKS
-		decairq_callBackResult = SYS_STATUS_RXRFTO;
-#else
-        // Call the corresponding callback if present
-        if(_dw1000_callbacks.cbRxTo != NULL) {
-            _dw1000_callbacks.cbRxTo(_dw1000_callbacks.status);
-        }
-#endif			
+		// Call the corresponding callback if present
+		if(_dw1000_callbacks.cbRxTo != NULL) {
+			_dw1000_callbacks.cbRxTo(_dw1000_callbacks.status);
+		}
 		return;
-    }
+	}
 	
 	// Handle preamble detection
 	if ( (mask & SYS_MASK_MRXPRD) && (status & SYS_STATUS_RXPRD) )
 	{
 		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXPRD);
 
-#ifdef USE_FASTER_CALLBACKS
-		decairq_callBackResult = SYS_STATUS_RXPRD;
-#else		
 		// Call the corresponding callback if present
-        if(_dw1000_callbacks.cbPreDet != NULL) {
-            _dw1000_callbacks.cbPreDet(_dw1000_callbacks.status);
-        }
-#endif			
+		if(_dw1000_callbacks.cbPreDet != NULL) {
+			_dw1000_callbacks.cbPreDet(_dw1000_callbacks.status);
+		}
 		return;
-    }
+	}
 	
 	// Handle preamble timeout
 	if ( (mask & SYS_MASK_MRXPTO) && (status & SYS_STATUS_RXPTO) )
 	{
 		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXPTO);
 
-#ifdef USE_FASTER_CALLBACKS
-		decairq_callBackResult = SYS_STATUS_RXPTO;
-#else		
 		// Call the corresponding callback if present
-        if(_dw1000_callbacks.cbPreTo != NULL) {
-            _dw1000_callbacks.cbPreTo(_dw1000_callbacks.status);
-        }
-#endif			
+		if(_dw1000_callbacks.cbPreTo != NULL) {
+			_dw1000_callbacks.cbPreTo(_dw1000_callbacks.status);
+		}
 		return;
-    }
+	}
+#endif
 }
+
+
+//void dwt_isr(void)
+//{
+//	uint32 status = dwt_read32bitreg(SYS_STATUS_ID);
+//	uint32 mask = dwt_read32bitreg(SYS_MASK_ID);
+//
+//#ifdef USE_FASTER_CALLBACKS
+//	EXTI->PR = DECAIRQ_EXTI; // reset interrupt
+//#else
+//    _dw1000_callbacks.status = status;
+//#endif
+//
+//    // Handle RX good frame event
+//    if ( (mask & SYS_MASK_MRXFCG) && (status & SYS_STATUS_RXFCG) )
+//    {
+//        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_RX_GOOD); // Clear all receive status bits
+//
+//#ifdef USE_FASTER_CALLBACKS
+//		decairq_callBackResult = SYS_STATUS_RXFCG;
+//#else
+//        // Call the corresponding callback if present
+//        if(_dw1000_callbacks.cbRxOk != NULL) {
+//            _dw1000_callbacks.cbRxOk(_dw1000_callbacks.status);
+//        }
+//#endif
+//		return;
+//    }
+//
+//    // Handle TX confirmation event
+//    if ( (mask & SYS_MASK_MTXFRS) && (status & SYS_STATUS_TXFRS) )
+//    {
+//        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_TX); // Clear TX event bits
+//
+//#ifdef USE_FASTER_CALLBACKS
+//		decairq_callBackResult = SYS_STATUS_TXFRS;
+//#else
+//        // Call the corresponding callback if present
+//        if(_dw1000_callbacks.cbTxDone != NULL) {
+//            _dw1000_callbacks.cbTxDone(_dw1000_callbacks.status);
+//        }
+//#endif
+//		return;
+//    }
+//
+//	// Handle frame reception timeout events
+//    if ( (mask & SYS_MASK_MRXRFTO) && (status & SYS_STATUS_RXRFTO) )
+//    {
+//		// Clear RX error/timeout events in the DW1000 status register.
+//        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXRFTO | SYS_STATUS_ALL_RX_ERR);
+//
+//#ifdef USE_FASTER_CALLBACKS
+//		decairq_callBackResult = SYS_STATUS_RXRFTO;
+//#else
+//        // Call the corresponding callback if present
+//        if(_dw1000_callbacks.cbRxTo != NULL) {
+//            _dw1000_callbacks.cbRxTo(_dw1000_callbacks.status);
+//        }
+//#endif
+//		return;
+//    }
+//
+//	// Handle preamble detection
+//	if ( (mask & SYS_MASK_MRXPRD) && (status & SYS_STATUS_RXPRD) )
+//	{
+//		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXPRD);
+//
+//#ifdef USE_FASTER_CALLBACKS
+//		decairq_callBackResult = SYS_STATUS_RXPRD;
+//#else
+//		// Call the corresponding callback if present
+//        if(_dw1000_callbacks.cbPreDet != NULL) {
+//            _dw1000_callbacks.cbPreDet(_dw1000_callbacks.status);
+//        }
+//#endif
+//		return;
+//    }
+//
+//	// Handle preamble timeout
+//	if ( (mask & SYS_MASK_MRXPTO) && (status & SYS_STATUS_RXPTO) )
+//	{
+//		dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXPTO);
+//
+//#ifdef USE_FASTER_CALLBACKS
+//		decairq_callBackResult = SYS_STATUS_RXPTO;
+//#else
+//		// Call the corresponding callback if present
+//        if(_dw1000_callbacks.cbPreTo != NULL) {
+//            _dw1000_callbacks.cbPreTo(_dw1000_callbacks.status);
+//        }
+//#endif
+//		return;
+//    }
+//}
 
 
 

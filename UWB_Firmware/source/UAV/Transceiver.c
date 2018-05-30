@@ -1,4 +1,5 @@
 
+//#include "Debugger.h"
 #include "Transceiver.h"
 #include <math.h>
 
@@ -14,33 +15,6 @@
 
 
 
-void Transceiver_Initialization(void)
-{	
-	dwt_config_t config = {
-		2,               /* Channel number. */
-		DWT_PRF_64M,     /* Pulse repetition frequency. */
-		DWT_PLEN_128,    /* Preamble length. Used in TX only. */
-		DWT_PAC8,        /* Preamble acquisition chunk size. Used in RX only. */
-		9,               /* TX preamble code. Used in TX only. */
-		9,               /* RX preamble code. Used in RX only. */
-		0,               /* 0 to use standard SFD, 1 to use non-standard SFD. */
-		DWT_BR_6M8,      /* Data rate. */
-		DWT_PHRMODE_STD, /* PHY header mode. */
-		(129 + 8 - 8)    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
-	};
-	
-	spi_set_rate_low();
-	do {
-		deca_sleep(500);
-		reset_DW1000();
-	} while ( dwt_initialise(DWT_LOADUCODE) == DWT_ERROR );
-    
-	spi_set_rate_high();    
-    dwt_configure(&config);	
-}
-
-
-
 static inline void _Transceiver_rxoff(void)
 {
 	dwt_receiverautoreenabled(0);
@@ -53,16 +27,19 @@ static inline void _Transceiver_rxoff(void)
 Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 {
 	uint32 frame_len;
+	uint32 currentMASK;
 	uint8 flags = DWT_START_TX_IMMEDIATE; // 0
 	
 	decamutexon();
 	
 	// Disable current events
 	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
-	if (config->rx_aftertx_delay) // Response expected -> Enable transceiver events - receive, rx TO
-		dwt_setinterrupt(SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO, 1);
-	else // Enable transceiver events - sent, receive, rx TO	
-		dwt_setinterrupt(SYS_MASK_MTXFRS, 1);
+	if (config->rx_aftertx_delay) // Response expected -> Enable transceiver events - receive / TO / errors
+		currentMASK = SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO | SYS_MASK_MRXPHE | SYS_MASK_MRXFCE | SYS_MASK_MAFFREJ;
+	else // Enable transceiver events - sent
+		currentMASK = SYS_MASK_MTXFRS;
+
+	dwt_setinterrupt(currentMASK, 1);
 	
 	cbRes = 0;
 	
@@ -90,11 +67,13 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 	}
 	
 	if (config->rx_aftertx_delay) { // Response expected
-		while ( !(cbRes & (Transceiver_RXFCG | Transceiver_RXRFTO)) )
+		while ( !(cbRes & currentMASK) )
 			;			
 
 		_Transceiver_rxoff(); // reset state
 		
+		cbRes = (cbRes & Transceiver_RXE)? Transceiver_RXE : cbRes & currentMASK;
+
 		if (cbRes == Transceiver_RXFCG) {
 			// A frame has been received, read it into the buffer
 			frame_len = dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXFL_MASK_1023;
@@ -107,8 +86,9 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 		}
 	} 
 	else { // Response isn't expected		
-		while ( !(cbRes & Transceiver_TXFRS) )
+		while ( !(cbRes & currentMASK) )
 			;
+		cbRes &= currentMASK;
 	}	
 	
 	return cbRes;
@@ -119,13 +99,14 @@ Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config)
 Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 {
 	uint32 frame_len;
+	uint32 currentMASK = SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO | SYS_MASK_MRXPHE | SYS_MASK_MRXFCE | SYS_MASK_MAFFREJ;
 	
 	decamutexon();
 	
 	// Disable current events
 	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
-	// Enable transceiver events - receive, rx TO
-	dwt_setinterrupt(SYS_MASK_MRXFCG | SYS_MASK_MRXRFTO, 1);
+	// Enable transceiver events - receive / TO / errors
+	dwt_setinterrupt(currentMASK, 1);
 	
 	cbRes = 0;
 	
@@ -142,17 +123,17 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 		dwt_rxenable(DWT_START_RX_IMMEDIATE);
 	}
 		
-	// Waiting message or timeout	
-	while ( !(cbRes & (Transceiver_RXFCG | Transceiver_RXRFTO)) ) {		
-		if (config->rx_interrupt != NULL) { // interrupts the process if needed
-			if (config->rx_interrupt() != 0) {
-				_Transceiver_rxoff();
-				return Transceiver_INTERRUPTED;
-			}
+	// Waiting message / TO / errors
+	while ( !(cbRes & currentMASK) ) {
+		if (config->rx_interrupt != NULL && config->rx_interrupt() != 0) { // interrupts the process if needed
+			_Transceiver_rxoff();
+			return Transceiver_INTERRUPTED;
 		}
 	}	
 
 	_Transceiver_rxoff(); // reset state
+
+	cbRes = (cbRes & Transceiver_RXE)? Transceiver_RXE : cbRes & currentMASK;
 
 	if (cbRes == Transceiver_RXFCG) {
 		// A frame has been received, read it into the buffer
@@ -167,32 +148,6 @@ Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config)
 	
 	return cbRes;
 }
-
-
-
-/*Transceiver_RESULT Transceiver_ListenEnvironment(uint16 timeout)
-{	
-	decamutexon();
-	
-	// Disable current events
-	dwt_setinterrupt(SYS_MASK_MASK_32, 0);
-	// Enable preamble events
-	dwt_setinterrupt(SYS_MASK_MRXPRD | SYS_MASK_MRXPTO, 1);
-	
-	cbRes = 0;
-	
-	decamutexoff();
-	
-	dwt_setpreambledetecttimeout(timeout);
-	dwt_rxenable(DWT_START_RX_IMMEDIATE);
-
-	while ( !(cbRes & (Transceiver_RXPRD | Transceiver_RXPTO)) )
-		;
-	_Transceiver_rxoff(); // reset state
-		
-	dwt_setpreambledetecttimeout(0); // reset
-	return cbRes;
-}*/
 	
 
 
@@ -222,17 +177,18 @@ void Transceiver_ReceiverOff(void)
 }
 
 
+
 		
 Transceiver_RESULT Transceiver_GetReceptionResult(void)
 {
-	return cbRes;
+	return (cbRes & Transceiver_RXFCG);
 }
 	
 	
 	
 uint8 Transceiver_GetAvailableData(uint8 *buffer)
 {
-	if ( cbRes == Transceiver_RXFCG ) {
+	if ( (cbRes & Transceiver_RXFCG) ) {
 		// reset state
 		Transceiver_ReceiverOff();
 		
@@ -251,8 +207,40 @@ uint8 Transceiver_GetLevelOfLastReceived(void)
 {
 	uint16 RXPACC = (dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXPACC_MASK) >> RX_FINFO_RXPACC_SHIFT;
 	uint16 CIR_PWR = dwt_read16bitoffsetreg(RX_FQUAL_ID, 6);
-	// real: 24 -min, 74 -max; return relative lvl 0-100
-	return (uint8)(( 20.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) - 40.0 ) * 2.0);
+	// experemental original info: 24 -min, 45 -max (10.0 * log10(x)))
+	// theoretical: from 0 to 125;
+	// lets return from 0 to 250
+	return (uint8)( 5.0 * 10.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) );
+//	return (uint8)(( 20.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) - 40.0 ) * 2.0);
+}
+
+
+
+void Transceiver_Initialization(void)
+{
+	dwt_config_t config = {
+		2,               /* Channel number. */
+		DWT_PRF_64M,     /* Pulse repetition frequency. */
+		DWT_PLEN_128,    /* Preamble length. Used in TX only. */
+		DWT_PAC8,        /* Preamble acquisition chunk size. Used in RX only. */
+		9,               /* TX preamble code. Used in TX only. */
+		9,               /* RX preamble code. Used in RX only. */
+		0,               /* 0 to use standard SFD, 1 to use non-standard SFD. */
+		DWT_BR_6M8,      /* Data rate. */
+		DWT_PHRMODE_STD, /* PHY header mode. */
+		(129 + 8 - 8)    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
+	};
+
+	spi_set_rate_low();
+	do {
+		deca_sleep(500);
+		reset_DW1000();
+	} while ( dwt_initialise(DWT_LOADUCODE) == DWT_ERROR );
+
+	spi_set_rate_high();
+    dwt_configure(&config);
+
+    dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_CPLOCK | SYS_STATUS_SLP2INIT | SYS_STATUS_CLKPLL_LL);
 }
 
 

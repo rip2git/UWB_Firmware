@@ -22,7 +22,8 @@ typedef enum {
 	Transceiver_RXFCG			= SYS_STATUS_RXFCG,	// Receiver FCS Good (data frame ready)
 	Transceiver_RXRFTO			= SYS_STATUS_RXRFTO,// Receive Frame Wait Timeout
 	Transceiver_RXPRD			= SYS_STATUS_RXPRD,	// Receiver Preamble Detected
-	Transceiver_RXPTO			= SYS_STATUS_RXPTO	// Preamble detection timeout
+	Transceiver_RXPTO			= SYS_STATUS_RXPTO,	// Preamble detection timeout
+	Transceiver_RXE				= (SYS_STATUS_RXFCE | SYS_STATUS_RXPHE | SYS_STATUS_AFFREJ) // FCS | PHY Header Error | Frame Filtering rejection
 } Transceiver_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -177,7 +178,7 @@ extern Transceiver_RESULT Transceiver_GetReceptionResult(void);
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn Transceiver_GetLevelOfLastReceived()
  *
- * @brief: allows to get received signal strength of last received frame (from 0 to 100 cu)
+ * @brief: allows to get received signal strength of last received frame (from 0 to 250 cu)
  *
  * NOTE: 
  *

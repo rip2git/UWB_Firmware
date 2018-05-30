@@ -1,5 +1,5 @@
-#ifndef TokenExt_
-#define TokenExt_
+#ifndef TokenExt_H
+#define TokenExt_H
 
 #include "MACFrame.h"
 
@@ -12,7 +12,8 @@
 */
 typedef enum {
 	TokenExt_FAIL = -1,
-	TokenExt_SUCCESS = 0
+	TokenExt_SUCCESS = 0,
+	TokenExt_SWITCHCOLOR
 } TokenExt_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -27,13 +28,23 @@ typedef enum {
 } TokenExt_BOOL;
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @def: TokenExt_MAX_PAYLOAD_SIZE
+ * @def: TokenExt FIELDS SIZES
  *
  * @brief:
  *
 */
-#define TokenExt_MAX_PAYLOAD_SIZE			10
+#define TokenExt_TOKEN_ID_SIZE				1
+#define TokenExt_SERVICE_INFO				(MACFrame_HEADER_SIZE + TokenExt_TOKEN_ID_SIZE + 2)  // + 2 fcs
+#define TokenExt_PAYLOAD_MAX_SIZE			(MACFrame_PAYLOAD_MAX_SIZE - TokenExt_TOKEN_ID_SIZE)
 
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @def: TokenExt FIELDS OFFSETS
+ *
+ * @brief:
+ *
+*/
+#define TokenExt_TOKEN_ID_OFFSET		MACFrame_PAYLOAD_OFFSET
+#define TokenExt_PAYLOAD_OFFSET			(TokenExt_TOKEN_ID_OFFSET + TokenExt_TOKEN_ID_SIZE)
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: TokenExt_Transfer
@@ -44,8 +55,8 @@ typedef enum {
  *
  * input parameters
  * @param header - header of the frame (ref to MACFrame.h)
- * @param payload -
- * @param payload_size -
+ * @param payload - additional allowed user's bytes
+ * @param payload_size - size of payload
  *
  * output parameters
  * @param header - changes 'sequence number' field, adds own bits to 'flags' field (ref to MACFrame.h)
@@ -63,21 +74,35 @@ extern TokenExt_RESULT TokenExt_Transfer(MACHeader_Typedef *header, const uint8_
  *
  * input parameters
  * @param header - header of the frame (ref to MACFrame.h)
- * @param tokenOwnerID - ID of device that sent the TokenExt
+ * @param rx_buffer - rx_buffer of Transceiver_RxConfig (e.g. after Transceiver_GetAvailableData)
  *
  * output parameters
  * @param header - changes 'flag' and 'sequence number' fields (ref to MACFrame.h)
  *
  * return value is TokenExt_RESULT described above
 */
-extern TokenExt_RESULT TokenExt_Receipt(MACHeader_Typedef *header, uint8_t tokenOwnerID);
+extern TokenExt_RESULT TokenExt_Receipt(MACHeader_Typedef *header, const uint8_t *rx_buffer);
 
 /*! ------------------------------------------------------------------------------------------------------------------
- * @fn: TokenExt_ImmediateReceipt
+ * @fn: TokenExt_GetReturnedToken
  *
- * @brief: Receipt the TokenExt without delay
+ * @brief: Gets the TokenExt from descendent back or rejects it if some errors were occurred
  *
  * NOTE: 
+ *
+ * input parameters
+ * @param rx_buffer - rx_buffer of Transceiver_RxConfig (e.g. after Transceiver_GetAvailableData)
+ *
+ * return value is TokenExt_RESULT described above
+*/
+extern TokenExt_RESULT TokenExt_GetReturnedToken(const uint8_t *rx_buffer);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn: TokenExt_Generate
+ *
+ * @brief: Listen for other devices. If no one is tranceiving then catches the token.
+ *
+ * NOTE:
  *
  * input parameters
  * @param header - header of the frame (ref to MACFrame.h)
@@ -87,7 +112,7 @@ extern TokenExt_RESULT TokenExt_Receipt(MACHeader_Typedef *header, uint8_t token
  *
  * return value is TokenExt_RESULT described above
 */
-extern TokenExt_RESULT TokenExt_ImmediateReceipt(MACHeader_Typedef *header);
+extern TokenExt_RESULT TokenExt_Generate(MACHeader_Typedef *header);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: TokenExt_isCaptured
@@ -105,6 +130,21 @@ extern TokenExt_RESULT TokenExt_ImmediateReceipt(MACHeader_Typedef *header);
 extern TokenExt_BOOL TokenExt_isCaptured();
 
 /*! ------------------------------------------------------------------------------------------------------------------
+ * @fn: TokenExt_Reset
+ *
+ * @brief:
+ *
+ * NOTE:
+ *
+ * input parameters
+ *
+ * output parameters
+ *
+ * no return value
+*/
+extern void TokenExt_Reset();
+
+/*! ------------------------------------------------------------------------------------------------------------------
  * @fn: TokenExt_SetMaxID
  *
  * @brief: Defines internal entities 
@@ -112,7 +152,8 @@ extern TokenExt_BOOL TokenExt_isCaptured();
  * NOTE: 
  *
  * input parameters
- * @param ID - higher ID in the PAN
+ * @param maxID - higher ID in the PAN
+ * @param selfID - this device ID
  * @param timeSlotDurationMs - duration of TokenExt timeslot in ms (the pause between messages of two devices,
  * when these devices try to catch the TokenExt)
  *
@@ -120,6 +161,6 @@ extern TokenExt_BOOL TokenExt_isCaptured();
  *
  * no return value
 */
-extern void TokenExt_Initialization(uint8_t ID, uint8_t timeSlotDurationMs);
+extern void TokenExt_Initialization(uint8_t selfID, uint8_t maxID, uint8_t timeSlotDurationMs);
 
 #endif

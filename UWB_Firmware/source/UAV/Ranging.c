@@ -27,7 +27,7 @@ typedef signed long long int64;
 #define SPEED_OF_LIGHT 299702547
 
 // UWB microsecond (uus) to device time unit (dtu, around 15.65 ps) conversion factor.
-// 1 uus = 512 / 499.2 µs and 1 µs = 499.2 * 128 dtu.
+// 1 uus = 512 / 499.2 ï¿½s and 1 ï¿½s = 499.2 * 128 dtu.
 #define UUS_TO_DWT_TIME 65536
 
 
@@ -182,11 +182,13 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 			
 			if (tr_res == Transceiver_TXFRS) {	
 				header->SequenceNumber++;
-				return DWT_SUCCESS;
+				return Ranging_SUCCESS;
 			}			
-		}		
+		} else {
+			return Ranging_INTERRUPT;
+		}
 	}
-	return DWT_ERROR;
+	return Ranging_ERROR;
 }
 
 
@@ -269,6 +271,8 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 			tof = tof_dtu * DWT_TIME_UNITS;
 			*distance16 = _Ranging_ConvertDistanceToCm(tof * SPEED_OF_LIGHT);
 			return Ranging_SUCCESS;
+		} else {
+			return Ranging_INTERRUPT;
 		}
 	}
 	return Ranging_ERROR;

@@ -21,6 +21,7 @@
  *
 */
 typedef enum {
+	Ranging_INTERRUPT = -2,
 	Ranging_ERROR = -1,
 	Ranging_SUCCESS = 0
 } Ranging_RESULT;
