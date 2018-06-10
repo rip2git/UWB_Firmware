@@ -25,14 +25,14 @@ typedef enum {
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USART_MODE
  *
- * NOTE: USART_WAIT - isn't supported yet
- *
  * @brief: Mode of transmit/receive operation
  *
 */
 typedef enum {
 	USART_NOWAIT = 0x00, // returns from methods after puts up the data to transmitting or request to receiving
-	USART_WAIT = 0x01 // waits while the data isn't received or transmitted
+	//USART_RXWAIT = 0x01, // waits while the data isn't received - isn't supported
+	USART_TXWAIT = 0x02, // waits while the data isn't transmitted
+	//USART_TRXWAIT = 0x03 // waits while the data isn't received or transmitted - isn't supported
 } USART_MODE;
 
 /*! ------------------------------------------------------------------------------------------------------------------

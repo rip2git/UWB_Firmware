@@ -4,11 +4,8 @@
 uint8_t UserPack_ToBytes(const UserPack *pack, uint8_t *buffer)
 {
 	uint8_t i = 0;
-	buffer[i++] = pack->FCmd;
-	if (pack->FCmd != UserPack_Cmd_Service)
-		buffer[i++] = pack->SCmd._raw;
-	else
-		buffer[i++] = (uint8_t)pack->SCmd.cmd;
+	buffer[i++] = pack->FCmd._raw;
+	buffer[i++] = pack->SCmd._raw;
 	buffer[i++] = pack->TotalSize;
 	for (uint8_t j = 0; j < pack->TotalSize; ++j)
 		buffer[i++] = pack->Data[j];
@@ -20,11 +17,8 @@ uint8_t UserPack_ToBytes(const UserPack *pack, uint8_t *buffer)
 void UserPack_ToStruct(UserPack *pack, const uint8_t *buffer)
 {
 	uint8_t i = 0;
-	pack->FCmd = buffer[i++];
-	if (pack->FCmd != UserPack_Cmd_Service)
-		pack->SCmd._raw = buffer[i++];
-	else
-		pack->SCmd.cmd = (UserPack_FCommand)buffer[i++];
+	pack->FCmd._raw = buffer[i++];
+	pack->SCmd._raw = buffer[i++];
 	pack->TotalSize = buffer[i++];
 	for (uint8_t j = 0; j < pack->TotalSize; ++j)
 		pack->Data[j] = buffer[i++];
@@ -43,8 +37,8 @@ void UserPack_SetData(UserPack *pack, const uint8_t *buffer)
 
 void UserPack_Reset(UserPack *pack)
 {
-	pack->FCmd = 0;
-	pack->SCmd.cmd = (UserPack_FCommand)0;
+	pack->FCmd._raw = 0;
+	pack->SCmd._raw = 0;
 	pack->TotalSize = 0;
 }
 

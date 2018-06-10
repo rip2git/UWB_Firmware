@@ -13,7 +13,7 @@
 typedef enum {
 	TokenExt_FAIL = -1,
 	TokenExt_SUCCESS = 0,
-	TokenExt_SWITCHCOLOR
+	TokenExt_NEWCYCLE
 } TokenExt_RESULT;
 
 /*! ------------------------------------------------------------------------------------------------------------------

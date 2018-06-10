@@ -11,7 +11,7 @@
  * @brief: size of ConfigFW
  *
 */
-#define ConfigFW_SIZE	12
+#define ConfigFW_SIZE	14
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -22,6 +22,7 @@
 */
 static struct {
 	struct SW1000_Str {
+		uint8_t		DebugMode;
 		uint16_t 	DeviceID;
 		uint16_t 	PAN_ID;
 		uint8_t		nDevices;
@@ -30,6 +31,9 @@ static struct {
 	struct Token_Str {
 		uint8_t		TimeSlotDurationMs;
 	} Token;
+	struct Routing_Str {
+		uint8_t		MinSignalLevel;
+	} Routing;
 	struct Ranging_Str {
 		uint16_t	RespondingDelay;
 		uint16_t	FinalDelay;
@@ -52,7 +56,8 @@ static struct {
 static inline void ConfigFW_FromUserPack(const UserPack *pack)
 {	
 	uint8_t i = 0;
-	
+	//
+	ConfigFW.SW1000.DebugMode = pack->Data[i++];
 	ConfigFW.SW1000.DeviceID = pack->Data[i++];
 	ConfigFW.SW1000.DeviceID |= pack->Data[i++] << 8;
 	ConfigFW.SW1000.PAN_ID = pack->Data[i++];
@@ -62,6 +67,8 @@ static inline void ConfigFW_FromUserPack(const UserPack *pack)
 	ConfigFW.SW1000.PollingPeriod |= pack->Data[i++] << 8;
 	//
 	ConfigFW.Token.TimeSlotDurationMs = pack->Data[i++];
+	//
+	ConfigFW.Routing.MinSignalLevel = pack->Data[i++];
 	//
 	ConfigFW.Ranging.RespondingDelay = pack->Data[i++];
 	ConfigFW.Ranging.RespondingDelay |= pack->Data[i++] << 8;

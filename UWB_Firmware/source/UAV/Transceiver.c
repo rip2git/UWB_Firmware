@@ -209,9 +209,8 @@ uint8 Transceiver_GetLevelOfLastReceived(void)
 	uint16 CIR_PWR = dwt_read16bitoffsetreg(RX_FQUAL_ID, 6);
 	// experemental original info: 24 -min, 45 -max (10.0 * log10(x)))
 	// theoretical: from 0 to 125;
-	// lets return from 0 to 250
+	// lets return from 0 to ~230
 	return (uint8)( 5.0 * 10.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) );
-//	return (uint8)(( 20.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) - 40.0 ) * 2.0);
 }
 
 
@@ -233,7 +232,7 @@ void Transceiver_Initialization(void)
 
 	spi_set_rate_low();
 	do {
-		deca_sleep(500);
+		deca_sleep(50);
 		reset_DW1000();
 	} while ( dwt_initialise(DWT_LOADUCODE) == DWT_ERROR );
 

@@ -34,7 +34,7 @@ void USARTHandler_Initialization(void)
 	CheckSum_Initialization();
 #ifndef USART_DMA_VERSION	
 #else
-	USART_SetTRXMode(USART_NOWAIT);
+	USART_SetTRXMode(USART_TXWAIT);
 	USART_SetCallBacks(_USARTHandler_USART_scb, _USARTHandler_USART_fcb);
 	
 	_USARTHandler_WaitingSecondPart = USARTHandler_FALSE;
@@ -52,9 +52,8 @@ USARTHandler_RESULT USARTHandler_Send(const UserPack *pack)
 	_USARTHandler_TXbuffer[buf_size++] = crc.b[0];
 	_USARTHandler_TXbuffer[buf_size++] = crc.b[1];
 
-	USART_SendBuffer(_USARTHandler_TXbuffer, buf_size);
-
-	return USARTHandler_SUCCESS;
+	return USART_SendBuffer(_USARTHandler_TXbuffer, buf_size) == USART_SUCCESS?
+			USARTHandler_SUCCESS : USARTHandler_ERROR;
 }
 
 
@@ -92,14 +91,12 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 	}
 	
 #else
-	_USARTHandler_WaitingSecondPart = USARTHandler_FALSE;
+
+	_USARTHandler_ReadyToReturnData = USARTHandler_FALSE; // resets
 		
 	it = UserPack_SERVICE_INFO_SIZE + UserPack_FCS_SIZE + _USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET];
 	
 #endif	
-	
-	if (_USARTHandler_RXbuffer[0] == (uint8_t)UserPack_Cmd_Service)
-		return USARTHandler_ERROR;
 			
 	crc.d = CheckSum_GetCRC16(_USARTHandler_RXbuffer, it - 2);
 	if (crc.b[0] == _USARTHandler_RXbuffer[it - 2] && crc.b[1] == _USARTHandler_RXbuffer[it - 1]) {
@@ -117,17 +114,19 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 static void _USARTHandler_USART_scb(void)
 {
 	if (_USARTHandler_CallBackRecvPart) { // receive first part
-		if (_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET] <= UserPack_PACK_MAX_SIZE) {
+		_USARTHandler_ReadyToReturnData = USARTHandler_FALSE; // new frame: reset if was setted
+		if (_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET] <= UserPack_PACK_MAX_SIZE) {  // next part
 			USART_StartRead(
 				&(_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET + 1]),
 				_USARTHandler_RXbuffer[UserPack_TOTAL_SIZE_OFFSET] + UserPack_FCS_SIZE
 			);
 			_USARTHandler_CallBackRecvPart = !_USARTHandler_CallBackRecvPart;
-		} else {
+		} else { // error
 			_USARTHandler_WaitingSecondPart = USARTHandler_FALSE;
 		}		
 	} else { // receive second part
-		_USARTHandler_ReadyToReturnData = USARTHandler_TRUE;
+		_USARTHandler_WaitingSecondPart = USARTHandler_FALSE; // new listening-cycle
+		_USARTHandler_ReadyToReturnData = USARTHandler_TRUE; // ready to return data
 		_USARTHandler_CallBackRecvPart = !_USARTHandler_CallBackRecvPart;
 	}
 }
@@ -150,10 +149,11 @@ USARTHandler_BOOL USARTHandler_isAvailableToReceive(void)
 	if ( !_USARTHandler_WaitingSecondPart ) {
 		USART_StartRead(_USARTHandler_RXbuffer, UserPack_SERVICE_INFO_SIZE);
 		_USARTHandler_WaitingSecondPart = USARTHandler_TRUE;  // sets to prevent restarts
-		_USARTHandler_ReadyToReturnData = USARTHandler_FALSE;
 	}
-	if (USART_ErrorControl() == USART_FAIL)
+	if (USART_ErrorControl() == USART_FAIL) {
 		_USARTHandler_WaitingSecondPart = USARTHandler_FALSE; // resets
+		_USARTHandler_ReadyToReturnData = USARTHandler_FALSE; // resets
+	}
 	return _USARTHandler_ReadyToReturnData;		
 #endif
 }

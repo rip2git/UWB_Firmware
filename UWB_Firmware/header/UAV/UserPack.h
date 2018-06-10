@@ -32,7 +32,7 @@
 */
 #define UserPack_SERVICE_INFO_SIZE 		3		// cmd + id + ttlsize
 #define UserPack_FCS_SIZE		 		2		// crc16
-#define UserPack_DATA_MAX_SIZE 			MACFrame_PAYLOAD_MAX_SIZE
+#define UserPack_DATA_MAX_SIZE 			MACFrame_PAYLOAD_MAX_SIZE // 115
 #define UserPack_PACK_MAX_SIZE			(UserPack_SERVICE_INFO_SIZE + UserPack_DATA_MAX_SIZE + UserPack_FCS_SIZE)
 
 
@@ -43,19 +43,31 @@
  *
 */
 typedef enum {
-	UserPack_Cmd_Service = 0,
-	UserPack_Cmd_SystemConfig,
-	UserPack_Cmd_Distance,
-	UserPack_Cmd_DataConfig,
-	UserPack_Cmd_Data,
-	UserPack_Cmd_Ack,
-	UserPack_Cmd_End
+	UserPack_Cmd_Service = 0x80,
+	UserPack_Cmd_SystemConfig = 0x81,
+	UserPack_Cmd_Distance = 0x82,
+	UserPack_Cmd_DataConfig = 0x83,
+	UserPack_Cmd_Data = 0x84,
+	UserPack_Cmd_Ack = 0x85,
+	UserPack_Cmd_End = 0x86
+} UserPack_Command;
+
+typedef enum {
+	UserPack_CmdRes_Fail = 0x40,
+	UserPack_CmdRes_Success = 0x41,
+	UserPack_CmdRes_Accepted = 0x42
+} UserPack_CommandRes;
+
+typedef union {
+	uint8_t _raw;
+	UserPack_CommandRes res;
+	UserPack_Command cmd;
 } UserPack_FCommand;
 
 typedef union {
 	uint8_t _raw;
 	uint8_t devID;
-	UserPack_FCommand cmd;
+	UserPack_Command cmd;
 } UserPack_SCommand;
 
 /*! ------------------------------------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@
 
 
 
+#define wdt_init(x)				IWDT_Configuration(x)
 #define rcc_init(x)				RCC_Configuration(x)
 #define rtc_init(x)				RTC_Configuration(x)
 #define interrupt_init(x)		IRQ_Configuration(x)
@@ -124,6 +125,7 @@ int RCC_Configuration(void)
 	
 	RCC_PLLCmd(ENABLE);
 	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+	SystemCoreClock = 40000000;
 	
 	while (RCC_GetSYSCLKSource() != 0x08) // PLL
 		;
@@ -135,12 +137,23 @@ int RCC_Configuration(void)
 	
 	RCC_USARTCLKConfig(RCC_USART1CLK_PCLK);
 
+	RCC_LSICmd(ENABLE);
 	//RCC_USARTCLKConfig(RCC_USART1CLK_HSI);
 	
 	// Enable GPIOs clocks
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB, ENABLE);
 
 	return 0;
+}
+
+
+
+static void IWDT_Configuration()
+{
+	while (RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
+		;
+
+	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
 }
 
 
@@ -311,4 +324,5 @@ void peripherals_init (void)
     spi_init();	
 	base_timer_init();
 	general_timer_init();
+	wdt_init();
 }

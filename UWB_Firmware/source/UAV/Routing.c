@@ -1,10 +1,20 @@
 
 #include "Routing.h"
+#include "Debugger.h"
 #include <string.h>
 
 
 
-#include "Debugger.h"
+/* todo
+ *
+ * Можно сделать передачу маркера на основе информации об уровнях сигнала до соседей: накопление таблицы уровней.
+ * Тогда маркеры будут передаваться за 1 мс до каждого соседа, при этом операция возврата также будет выполнена
+ * за 1 мс. Маркеры можно передавать броадкастом, но включать во фрейм нового владельца маркера и таблицу
+ * маршрутизации. Тогда новые устройства, появившиеся на связи, не смогут присоединиться к графу, но будут
+ * накапливать как маршрутизацию, так и таблицу уровней. Новые устройства будут включены в граф только по инициации
+ * дистанции, когда и будет обновлена таблица уровней ИЛИ ввести дополнителую возможность узнать соседей.
+ *
+ * */
 
 
 
@@ -30,7 +40,7 @@ typedef struct {
 
 /*
  * Positional tables
- * position - id-1 ofrequired device
+ * position - id of required device minus 1
  * id in this position - node through which that id could be reached
  * */
 typedef union {
@@ -60,7 +70,7 @@ static _Routing_ExternalTable _Routing_rxtxTable;
 
 static uint8_t _Routing_deviceID;
 static uint8_t _Routing_ACKReceivingTimeOut;
-static uint8_t _Routing_THRESHHOLD_LVL = 170.0; // todo
+static uint8_t _Routing_THRESHHOLD_LVL;
 //static uint8_t _Routing_transactionSize;
 //static uint8_t _Routing_trustPacks; // todo  + 1; // simplifies the logic
 //static uint8_t _Routing_repeats; // ?????????????????????
@@ -80,6 +90,7 @@ static uint8_t _Routing_FillCommonBuffer(
 		const uint8_t *payload,
 		uint8_t payload_size);
 static Routing_RESULT _Routing_WaitResponse(_Routing_WaitResponseConditions *cond, uint8_t *respSize);
+static void _Routing_PopFromTables(uint8_t deviceID);
 
 static int _Routing_BufferToTable(_Routing_ExternalTable *table, const uint8_t *buffer);
 static int _Routing_ExternalTableToBuffer(const _Routing_ExternalTable *table, uint8_t *buffer);
@@ -99,11 +110,6 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 			_Routing_GetIntermediateID( extremeNodes[1] ),	// next node (intermediate)
 			0												// previous node
 	};
-
-	Debugger_PushSymBack(1);
-	Debugger_PushArrayBack(_Routing_oldTable.hops, Routing_TABLE_SIZE);
-	Debugger_PushArrayBack(_Routing_oldTable.ids, Routing_TABLE_SIZE);
-	Debugger_SendPreparedBuf();
 
 	// intermediate node is available
 	if (neighboringNodes[0] == _Routing_WORST_LVL) {
@@ -134,9 +140,7 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 		result = _Routing_WaitResponse(&cond, 0);
 		if ( result != Routing_SUCCESS ) {
 			Debugger_SendStr("\4\2");
-//			Debugger_PushSymBack(0);
-//			Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
-//			Debugger_SendPreparedBuf();
+			_Routing_PopFromTables( extremeNodes[1] );
 			return result;
 		}
 	} // --------------------------------------------------------------------------------------------------
@@ -168,9 +172,7 @@ Routing_RESULT Routing_SendData(MACHeader_Typedef *header, const uint8_t *payloa
 				result = _Routing_WaitResponse(&cond, 0);
 				if ( result != Routing_SUCCESS ) {
 					Debugger_SendStr("\4\3");
-//					Debugger_PushSymBack(0);
-//					Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
-//					Debugger_SendPreparedBuf();
+					_Routing_PopFromTables( extremeNodes[1] );
 					return result;
 				}
 			} // ------------------------------------------------------------------------------------------
@@ -244,9 +246,7 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 			result = _Routing_WaitResponse(&cond, 0);
 			if ( result != Routing_SUCCESS ) {
 				Debugger_SendStr("\3\2");
-//				Debugger_PushSymBack(0);
-//				Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
-//				Debugger_SendPreparedBuf();
+				_Routing_PopFromTables( extremeNodes[1] );
 				return result;
 			}
 		} // ----------------------------------------------------------------------------------------------
@@ -276,9 +276,7 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 				result = _Routing_WaitResponse(&cond, &respSize);
 				if ( result != Routing_SUCCESS ) {
 					Debugger_SendStr("\3\3");
-//					Debugger_PushSymBack(0);
-//					Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
-//					Debugger_SendPreparedBuf();
+					_Routing_PopFromTables( extremeNodes[1] );
 					return result;
 				}
 			} // ------------------------------------------------------------------------------------------
@@ -310,10 +308,8 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 					cond.routingDst = extremeNodes[0]; // to start node
 					result = _Routing_WaitResponse(&cond, 0);
 					if ( result != Routing_SUCCESS ) {
+						_Routing_PopFromTables( extremeNodes[1] );
 						Debugger_SendStr("\3\4");
-//						Debugger_PushSymBack(0);
-//						Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
-//						Debugger_SendPreparedBuf();
 						return result;
 					}
 				} // --------------------------------------------------------------------------------------
@@ -368,9 +364,6 @@ Routing_RESULT Routing_RecvDataTransferRequest(
 				result = _Routing_WaitResponse(&cond, data_buffer_size);
 				if ( result != Routing_SUCCESS ) {
 					Debugger_SendStr("\3\6");
-//					Debugger_PushSymBack(0);
-//					Debugger_PushArrayBack(tx_config.tx_buffer, tx_config.tx_buffer_size);
-//					Debugger_SendPreparedBuf();
 					return result;
 				}
 				*data_buffer_size = (*data_buffer_size > tmp_data_buffer_size)? tmp_data_buffer_size : *data_buffer_size;
@@ -408,7 +401,6 @@ void Routing_SendTokenWithTable(MACHeader_Typedef *header)
 		if (_Routing_newTable.hops[i] != _Routing_WORST_LVL) {
 			_Routing_rxtxTable.units[i].owner = _Routing_newTable.ids[i];
 			_Routing_rxtxTable.units[i].hop = _Routing_newTable.hops[i];
-
 		} else {
 			_Routing_rxtxTable.units[i].owner = _Routing_oldTable.ids[i];
 			_Routing_rxtxTable.units[i].hop = _Routing_oldTable.hops[i];
@@ -418,15 +410,7 @@ void Routing_SendTokenWithTable(MACHeader_Typedef *header)
 	uint8_t size = _Routing_ExternalTableToBuffer( &_Routing_rxtxTable, _Routing_commonBuffer );
 	TokenExt_RESULT TERes = TokenExt_Transfer( header, _Routing_commonBuffer, size );
 
-	if (TERes == TokenExt_SWITCHCOLOR)
-		_Routing_RefreshInternalTables();
-}
-
-
-
-void Routing_GenerateToken(MACHeader_Typedef *header)
-{
-	if (TokenExt_Generate(header) == TokenExt_SUCCESS)
+	if (TERes == TokenExt_NEWCYCLE)
 		_Routing_RefreshInternalTables();
 }
 
@@ -455,6 +439,14 @@ void Routing_GetReturnedToken(const uint8_t *rx_buffer)
 
 
 
+void Routing_GenerateToken(MACHeader_Typedef *header)
+{
+	if (TokenExt_Generate(header) == TokenExt_SUCCESS)
+		_Routing_RefreshInternalTables();
+}
+
+
+
 void Routing_Initialization(const Routing_InitializationStruct *initializationStruct)
 {
 	for (uint8_t i = 0; i < Routing_TABLE_SIZE; ++i) {
@@ -466,6 +458,7 @@ void Routing_Initialization(const Routing_InitializationStruct *initializationSt
 
 	_Routing_deviceID = initializationStruct->deviceID - 1; // simplifies the logic
 	_Routing_ACKReceivingTimeOut = initializationStruct->ACKReceivingTimeOut;
+	_Routing_THRESHHOLD_LVL = initializationStruct->MinSignalLevel;
 	BaseTimer_SetPrescaler(SystemCoreClock / 1000); // ms
 
 	tx_config.tx_buffer = _Routing_commonBuffer;
@@ -639,4 +632,18 @@ static uint8_t _Routing_FillCommonBuffer(
 	_Routing_commonBuffer[i++] = 0;
 	return i;
 }
+
+
+
+static void _Routing_PopFromTables(uint8_t deviceID)
+{
+	deviceID--;
+	_Routing_oldTable.hops[deviceID] = _Routing_WORST_LVL;
+	_Routing_oldTable.ids[deviceID] = _Routing_WORST_LVL;
+	_Routing_newTable.hops[deviceID] = _Routing_WORST_LVL;
+	_Routing_newTable.ids[deviceID] = _Routing_WORST_LVL;
+}
+
+
+
 

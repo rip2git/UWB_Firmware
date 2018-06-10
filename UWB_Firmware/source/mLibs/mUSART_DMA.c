@@ -55,8 +55,8 @@ static USART_RESULT _USART_SendByDMA(uint16_t size);
 
 USART_RESULT USART_StartRead(uint8_t *buffer, uint16_t length)
 {
-	if (_USARTx_mode) // not supported
-		return USART_FAIL;
+//	if (_USARTx_mode == USART_RXWAIT || _USARTx_mode == USART_TRXWAIT) // not supported
+//		return USART_FAIL;
 
 	_USARTx_RequestedBuffer = buffer;
 	_USARTx_RequestedLength = length;
@@ -112,7 +112,7 @@ static USART_RESULT _USART_SendByDMA(uint16_t size)
 	DMAx_ChTX->CNDTR = size;	
 	DMAx_ChTX->CCR |= DMA_CCR_EN;
 	
-	if ( _USARTx_mode ) {		
+	if ( _USARTx_mode == USART_TXWAIT /*|| _USARTx_mode == USART_TRXWAIT*/ ) {
 		while ( !(DMAx->ISR & (DMAx_ChTX_Success_Fl | DMAx_ChTX_Fail_Fl)) )
 			;		
 		uint32_t fl = (DMAx->ISR & DMAx_ChTX_Success_Fl);
@@ -143,10 +143,7 @@ USART_RESULT USART_SendBuffer(const uint8_t *buffer, uint16_t length)
 
 USART_RESULT USART_SendString(const char *string)
 {	
-	uint16_t i = 0;
-	while (string[i] != '\0') {		
-		i++;
-	}
+	uint16_t i = strlen(string);
 	memcpy((void*)USARTx_TXBuffer, string, i);
 	return _USART_SendByDMA(i);
 }

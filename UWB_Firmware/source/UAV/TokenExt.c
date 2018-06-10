@@ -65,9 +65,8 @@ TokenExt_RESULT TokenExt_Transfer(MACHeader_Typedef *header, const uint8_t *payl
 	tx_config.rx_buffer_size = TokenExt_BUFFER_SIZE;
 
 	TrRes = Transceiver_Transmit( &tx_config );
+	header->SequenceNumber++;
 	if (TrRes == Transceiver_RXFCG) {
-		header->SequenceNumber++;
-
 		if (_TokenExt_commonBuffer[MACFrame_FLAGS_OFFSET] ==
 				(MACFrame_Flags_TOKEN | MACFrame_Flags_SYN | MACFrame_Flags_ACK) &&
 			_TokenExt_commonBuffer[TokenExt_TOKEN_ID_OFFSET] == _TokenExt_currentTokenID.val)
@@ -95,7 +94,7 @@ TokenExt_RESULT TokenExt_Transfer(MACHeader_Typedef *header, const uint8_t *payl
 			_TokenExt_currentTokenID.Color = !_TokenExt_currentTokenID.Color;
 
 			_TokenExt_TokenExtIsCaptured = TokenExt_TRUE;
-			return TokenExt_SWITCHCOLOR;
+			return TokenExt_NEWCYCLE;
 
 		} else { // operation return
 			header->DestinationID = _TokenExt_previousOwnerID;

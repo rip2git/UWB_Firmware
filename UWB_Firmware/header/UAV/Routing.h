@@ -41,6 +41,7 @@ typedef enum {
 typedef struct {
 	uint8_t deviceID;
 	uint8_t ACKReceivingTimeOut;
+	uint8_t MinSignalLevel;
 } Routing_InitializationStruct;
 
 
