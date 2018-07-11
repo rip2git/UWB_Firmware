@@ -1,7 +1,8 @@
-#ifndef mGENERALTIMER_H
-#define mGENERALTIMER_H
+#ifndef mGENERALTIM2_H
+#define mGENERALTIM2_H
 
 #include <stdint.h>
+#include "stm32f0xx.h"
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -21,7 +22,8 @@ typedef enum {
  * @brief: Internal IRQHandler name
  *
 */
-#define GeneralTimer_IRQHandler(x) TIM14_IRQHandler(x)
+#define GeneralTIM2_IRQHandler(x) 	TIM2_IRQHandler(x)
+#define GeneralTIM14_IRQHandler(x) 	TIM14_IRQHandler(x)
 
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -37,7 +39,7 @@ typedef enum {
  *
  * no return value
 */
-extern void GeneralTimer_Initialization(void);
+extern void GeneralTimer_Initialization(TIM_TypeDef *TIM);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_SetPrescaler
@@ -54,7 +56,7 @@ extern void GeneralTimer_Initialization(void);
  *
  * no return value
 */
-extern inline void GeneralTimer_SetPrescaler(uint16_t prescaler);
+extern inline void GeneralTimer_SetPrescaler(TIM_TypeDef *TIM, uint16_t prescaler);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_SetPeriod
@@ -70,7 +72,7 @@ extern inline void GeneralTimer_SetPrescaler(uint16_t prescaler);
  *
  * no return value
 */
-extern inline void GeneralTimer_SetPeriod(uint16_t period);
+extern inline void GeneralTimer_SetPeriod(TIM_TypeDef *TIM, uint16_t period);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_Enable
@@ -85,7 +87,7 @@ extern inline void GeneralTimer_SetPeriod(uint16_t period);
  *
  * no return value
 */
-extern inline void GeneralTimer_Enable(void);
+extern inline void GeneralTimer_Enable(TIM_TypeDef *TIM);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_Disable
@@ -100,7 +102,7 @@ extern inline void GeneralTimer_Enable(void);
  *
  * no return value
 */
-extern inline void GeneralTimer_Disable(void);
+extern inline void GeneralTimer_Disable(TIM_TypeDef *TIM);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_Set
@@ -116,7 +118,7 @@ extern inline void GeneralTimer_Disable(void);
  *
  * no return value
 */
-extern inline void GeneralTimer_Set(uint16_t cnt);
+extern inline void GeneralTimer_Set(TIM_TypeDef *TIM, uint16_t cnt);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_Get
@@ -131,7 +133,7 @@ extern inline void GeneralTimer_Set(uint16_t cnt);
  *
  * return value is the timers ticks
 */
-extern inline uint16_t GeneralTimer_Get(void);
+extern inline uint16_t GeneralTimer_Get(TIM_TypeDef *TIM);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_GetState
@@ -146,7 +148,7 @@ extern inline uint16_t GeneralTimer_Get(void);
  *
  * return value is the state of the event
 */
-extern GeneralTimer_STATE GeneralTimer_GetState(void);
+extern GeneralTimer_STATE GeneralTimer_GetState(TIM_TypeDef *TIM);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: GeneralTimer_Reset
@@ -161,7 +163,7 @@ extern GeneralTimer_STATE GeneralTimer_GetState(void);
  *
  * no return value
 */
-extern void GeneralTimer_Reset(void);
+extern void GeneralTimer_Reset(TIM_TypeDef *TIM);
 
 
 #endif

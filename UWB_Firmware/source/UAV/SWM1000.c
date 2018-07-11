@@ -16,8 +16,31 @@ typedef union {
 
 
 
+typedef enum {
+	_SWM1000_Nothing,
+	_SWM1000_Generate,
+	_SWM1000_Transmit,
+	_SWM1000_Poll,
+	_SWM1000_TokenTransfer
+} _SWM1000_LoopState;
+
+
+
+typedef enum {
+	_SWM1000_TurnOn,
+	_SWM1000_CheckData
+} _SWM1000_ReceivingState;
+
+
+
 #define SWM1000_FRAME_CONTROL			0x8841		// ckeck IEEE Std 802.15.4-2011 for details
 #define SWM1000_FRAME_FILTER_MASK		(DWT_FF_DATA_EN) // ckeck IEEE Std 802.15.4-2011 for details
+
+
+
+#define _Config_Timer 		TIM14
+#define _Generate_Timer 	TIM14
+#define _Poll_Timer 		TIM2
 
 
 
@@ -30,33 +53,38 @@ static USARTHandler_RESULT UHRes;
 
 
 
+static UserPack _Distance_UserPack;
+
+
+
 static inline void _SWM1000_UserCommandHandler();
 static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config);
 static void _SWM1000_PutDistanceInUData(uint8 *payload, uint16_str distance);
 static inline void _SWM1000_Configurate(const UserPack *confpack);
+static UserPack_CommandRes _SWM1000_SendDistance();
+static void _SWM1000_SetDistanceParams(const UserPack *upack);
 
 
 
 void SWM1000_Loop(void)
 {
 	uint8 buffer[MACFrame_FRAME_MAX_SIZE];
-	uint8 generate, transmit, token_transfer; 
-	uint8 receivingState = 0;
+	_SWM1000_LoopState loopState;
+	_SWM1000_ReceivingState recvState = _SWM1000_TurnOn;
 	Transceiver_RxConfig rx_config;
 	rx_config.rx_buffer = buffer;
 	rx_config.rx_buffer_size = MACFrame_FRAME_MAX_SIZE;
 	UserPack upack, retpack;
 		
-	GeneralTimer_Reset();
-	GeneralTimer_Enable();
-	
+	GeneralTimer_Reset(_Generate_Timer);
+	GeneralTimer_Enable(_Generate_Timer);
+
 	while (1) 
 	{
 		IWDG_ReloadCounter();
 
 		// receive data from HL
-		if ( USARTHandler_isAvailableToReceive() == USARTHandler_TRUE ) 
-		{	
+		if ( USARTHandler_isAvailableToReceive() == USARTHandler_TRUE )  {
 			UHRes = USARTHandler_Receive(&upack);
 			retpack.FCmd.res = UserPack_CmdRes_Accepted;
 			retpack.SCmd.cmd = upack.FCmd.cmd;
@@ -64,52 +92,71 @@ void SWM1000_Loop(void)
 			USARTHandler_Send(&retpack);
 		}	
 
-		generate = (GeneralTimer_GetState() == GeneralTimer_SET);
-		token_transfer = (TokenExt_isCaptured() == TokenExt_TRUE);
-		transmit = (token_transfer && UHRes == USARTHandler_SUCCESS);
-		
+		if (TokenExt_isCaptured() == TokenExt_TRUE) {
+			if (UHRes == USARTHandler_SUCCESS)
+				loopState = _SWM1000_Transmit;
+			else if (GeneralTimer_GetState(_Poll_Timer) == GeneralTimer_SET)
+				loopState = _SWM1000_Poll;
+			else
+				loopState = _SWM1000_TokenTransfer;
+		} else if (GeneralTimer_GetState(_Generate_Timer) == GeneralTimer_SET) {
+			loopState = _SWM1000_Generate;
+		} else {
+			loopState = _SWM1000_Nothing;
+		}
+
 		// ***************************************************************************************************
 		// transmission **************************************************************************************
-		if (generate || token_transfer || transmit) {
+		if (loopState != _SWM1000_Nothing) {
 			// reset receiver
-			receivingState = 0;
+			recvState = _SWM1000_TurnOn;
 			Transceiver_ReceiverOff();	
 
-			// generate token in the absence other requests
-			if (generate) {	
-				_Pointer_MACHeader.DestinationID = 0xFFFF;
-				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-				Routing_GenerateToken( &_Pointer_MACHeader );
-				GeneralTimer_Reset();
-			}
-			// if transfer is allowed
-			if (transmit) {
-				UHRes = USARTHandler_ERROR; // just reset
-				_SWM1000_UserCommandHandler(&upack);
-			}
-			// if token is captured
-			else if (token_transfer) {
-				_Pointer_MACHeader.DestinationID = 0xFFFF;
-				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-				Routing_SendTokenWithTable(&_Pointer_MACHeader);
+			switch (loopState) {
+				// generate token in the absence other requests
+				case _SWM1000_Generate: {
+					_Pointer_MACHeader.DestinationID = 0xFFFF;
+					_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
+					Routing_GenerateToken( &_Pointer_MACHeader );
+					GeneralTimer_Reset(_Generate_Timer);
+				} break;
+				// if transfer is allowed
+				case _SWM1000_Transmit: {
+					UHRes = USARTHandler_ERROR; // just reset
+					_SWM1000_UserCommandHandler(&upack);
+				} break;
+				// polling with distance transfer
+				case _SWM1000_Poll: {
+					// reset poll timer inside
+					_SWM1000_SendDistance();
+				} break;
+				// if token is captured
+				case _SWM1000_TokenTransfer: {
+					_Pointer_MACHeader.DestinationID = 0xFFFF;
+					_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
+					Routing_SendTokenWithTable(&_Pointer_MACHeader);
+				} break;
+				default: {
+					// nop
+				} break;
 			}
 		}
 		// ***************************************************************************************************
 		// reception *****************************************************************************************
 		else {
-			switch (receivingState) {
-				case 0: // receiver turn on
+			switch (recvState) {
+				case _SWM1000_TurnOn: // receiver turn on
 				{					
 					Transceiver_ReceiverOn();
-					receivingState = 1; // waiting request
+					recvState = _SWM1000_CheckData; // waiting request
 				} break;
-				case 1: // get data if it is available
+				case _SWM1000_CheckData: // get data if it is available
 				{
 					if ( Transceiver_GetReceptionResult() == Transceiver_RXFCG ) {
 						rx_config.rx_buffer_size = Transceiver_GetAvailableData(rx_config.rx_buffer); // read
 						_SWM1000_ReceivingAutomat( &rx_config ); // respond
-						receivingState = 0; // reset
-						GeneralTimer_Reset();
+						recvState = _SWM1000_TurnOn; // reset
+						GeneralTimer_Reset(_Generate_Timer);
 					}
 				} break;
 			}
@@ -123,7 +170,6 @@ void SWM1000_Loop(void)
 
 static void _SWM1000_UserCommandHandler(UserPack *upack)
 {
-	uint8 i;
 	UserPack_CommandRes result = UserPack_CmdRes_Fail;
 
 	switch (upack->FCmd.cmd) {
@@ -140,26 +186,8 @@ static void _SWM1000_UserCommandHandler(UserPack *upack)
 		// ---------------------------------------------------------------------------------------------------
 		case UserPack_Cmd_Distance:
 		{
-			if (upack->SCmd.devID == 0xFF) {
-				for (i = 1; i <= ConfigFW.SW1000.nDevices; ++i) {							
-					if ( (uint8_t)(_Pointer_MACHeader.SourceID) != i ) {
-						_Pointer_MACHeader.DestinationID = i & 0x00FF;
-						_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-						RngRes = Ranging_Initiate(&_Pointer_MACHeader, upack->Data);
-						if (RngRes == Ranging_INTERRUPT)
-							break;
-					}
-				}
-			} else {
-				_Pointer_MACHeader.DestinationID = upack->SCmd.devID & 0x00FF;
-				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-				RngRes = Ranging_Initiate(&_Pointer_MACHeader, upack->Data);	
-			}
-			//
-			if (RngRes == Ranging_INTERRUPT) {
-				TokenExt_Reset();
-			}
-			result = UserPack_CmdRes_Success;
+			_SWM1000_SetDistanceParams(upack);
+			result = _SWM1000_SendDistance();
 		} break;
 		// ---------------------------------------------------------------------------------------------------
 		case UserPack_Cmd_Data:
@@ -260,15 +288,15 @@ void SWM1000_Initialization()
 	USARTHandler_Initialization();
 
 	// timer for receiving config
-	GeneralTimer_SetPrescaler(SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(SWM1000_ConfigRecvTimeOut);
-	GeneralTimer_Set(1); // first of all - send notification to driver
-	GeneralTimer_Enable();
+	GeneralTimer_SetPrescaler(_Config_Timer, SystemCoreClock / 1000); // ms
+	GeneralTimer_SetPeriod(_Config_Timer, SWM1000_ConfigRecvTimeOut);
+	GeneralTimer_Set(_Config_Timer, 1); // first of all - send notification to driver
+	GeneralTimer_Enable(_Config_Timer);
 
 	UserPack upack;
 	do { // config from high level
-		if (GeneralTimer_GetState() == GeneralTimer_SET) {
-			GeneralTimer_Reset();
+		if (GeneralTimer_GetState(_Config_Timer) == GeneralTimer_SET) {
+			GeneralTimer_Reset(_Config_Timer);
 			upack.FCmd.cmd = UserPack_Cmd_SystemConfig;
 			upack.SCmd._raw = 0;
 			upack.TotalSize = 0;
@@ -300,8 +328,11 @@ void SWM1000_Initialization()
 	_SWM1000_Configurate( &upack ); // data saved
 
 	// timer for generating new token
-	GeneralTimer_SetPrescaler(SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(ConfigFW.SW1000.PollingPeriod * 2);
+	GeneralTimer_SetPrescaler(_Generate_Timer, SystemCoreClock / 1000); // ms
+	GeneralTimer_SetPeriod(_Generate_Timer, ConfigFW.SW1000.PollingPeriod * 2);
+	// timer for polling
+	GeneralTimer_SetPrescaler(_Poll_Timer, SystemCoreClock / 1000); // ms
+	GeneralTimer_SetPeriod(_Poll_Timer, ConfigFW.SW1000.PollingPeriod);
 
 	// watchdog settings - once at the power on
 	IWDG_SetPrescaler(IWDG_Prescaler_32); // 1.25 kHz
@@ -309,8 +340,10 @@ void SWM1000_Initialization()
 	IWDG_ReloadCounter();
 	IWDG_Enable();
 
-	GeneralTimer_Reset();
-	GeneralTimer_Enable();
+	GeneralTimer_Reset(_Generate_Timer);
+	GeneralTimer_Enable(_Generate_Timer);
+	GeneralTimer_Reset(_Poll_Timer);
+	GeneralTimer_Enable(_Poll_Timer);
 }
 
 
@@ -341,6 +374,46 @@ static inline void _SWM1000_Configurate(const UserPack *confpack)
 	TokenExt_Initialization(ConfigFW.SW1000.DeviceID, ConfigFW.SW1000.nDevices, ConfigFW.Token.TimeSlotDurationMs);
 	Routing_Initialization(&routing_initializationStruct);
 	Debugger_SetMode(ConfigFW.SW1000.DebugMode);
+}
+
+
+
+static void _SWM1000_SetDistanceParams(const UserPack *upack)
+{
+	_Distance_UserPack = *upack;
+}
+
+
+
+static UserPack_CommandRes _SWM1000_SendDistance()
+{
+	GeneralTimer_Reset(_Poll_Timer);
+
+	uint8 i;
+	UserPack_CommandRes result = UserPack_CmdRes_Fail;
+
+	if (_Distance_UserPack.SCmd.devID == 0xFF) {
+		for (i = 1; i <= ConfigFW.SW1000.nDevices; ++i) {
+			if ( (uint8_t)(_Pointer_MACHeader.SourceID) != i ) {
+				_Pointer_MACHeader.DestinationID = i & 0x00FF;
+				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
+				RngRes = Ranging_Initiate(&_Pointer_MACHeader, _Distance_UserPack.Data);
+				if (RngRes == Ranging_INTERRUPT)
+					break;
+			}
+		}
+	} else {
+		_Pointer_MACHeader.DestinationID = _Distance_UserPack.SCmd.devID & 0x00FF;
+		_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
+		RngRes = Ranging_Initiate(&_Pointer_MACHeader, _Distance_UserPack.Data);
+	}
+	//
+	if (RngRes == Ranging_INTERRUPT) {
+		TokenExt_Reset();
+	}
+	result = UserPack_CmdRes_Success;
+
+	return result;
 }
 
 

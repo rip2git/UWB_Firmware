@@ -11,7 +11,7 @@
 #define spi_init(x)				SPI_Configuration(x)
 #define systick_init(x)			SystemTimer_Initialization(x)
 #define base_timer_init(x)		BaseTimer_Initialization(x)
-#define general_timer_init(x)	GeneralTimer_Initialization(x)
+#define general_timer_init(x)	GeneralTimer_init(x)
 
 
 
@@ -266,6 +266,14 @@ int SPI_Configuration(void)
 	GPIO_SetBits(SPIx_CS_GPIO, SPIx_CS);
 
     return 0;
+}
+
+
+
+void GeneralTimer_init()
+{
+	GeneralTimer_Initialization(TIM2);
+	GeneralTimer_Initialization(TIM14);
 }
 
 

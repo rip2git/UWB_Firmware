@@ -1,36 +1,50 @@
-#include "mGeneralTimer.h"
+#include <mGeneralTimer.h>
 #include "stm32f0xx.h"
 
 
-#define mTIMx		TIM14
-#define mTIMx_CLK	RCC_APB1Periph_TIM14
-#define mTIMx_IRQ	TIM14_IRQn
+
+static volatile uint8_t GeneralTIM2_Event = 0;
+static volatile uint8_t GeneralTIM14_Event = 0;
 
 
 
-static volatile uint8_t GeneralTimer_Event = 0;
-
-
-
-void GeneralTimer_IRQHandler(void)
+void GeneralTIM2_IRQHandler(void)
 {
-	if ( mTIMx->SR & TIM_IT_Update )
+	if ( TIM2->SR & TIM_IT_Update )
 	{
-		mTIMx->SR = (uint16_t)~TIM_IT_Update;
-		GeneralTimer_Event++;		
+		TIM2->SR = (uint16_t)~TIM_IT_Update;
+		GeneralTIM2_Event++;
 	}
 }
 
 
 
-void GeneralTimer_Initialization(void)
+void GeneralTIM14_IRQHandler(void)
+{
+	if ( TIM14->SR & TIM_IT_Update )
+	{
+		TIM14->SR = (uint16_t)~TIM_IT_Update;
+		GeneralTIM14_Event++;
+	}
+}
+
+
+
+void GeneralTimer_Initialization(TIM_TypeDef *TIM)
 {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
+
+	if (TIM == TIM2) {
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+		NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+	} else if (TIM == TIM14) {
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM14, ENABLE);
+		NVIC_InitStructure.NVIC_IRQChannel = TIM14_IRQn;
+	} else {
+		return;
+	}
 	
-	RCC_APB1PeriphClockCmd(mTIMx_CLK, ENABLE);	
-	
-	NVIC_InitStructure.NVIC_IRQChannel = mTIMx_IRQ;
 	NVIC_InitStructure.NVIC_IRQChannelPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
@@ -38,66 +52,81 @@ void GeneralTimer_Initialization(void)
 	TIM_TimeBaseStructInit( &TIM_TimeBaseStructure );
 	TIM_TimeBaseStructure.TIM_Prescaler = SystemCoreClock / 1000;
 	TIM_TimeBaseStructure.TIM_Period = 500;	
-	TIM_TimeBaseInit(mTIMx, &TIM_TimeBaseStructure);	
+	TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 	
-	TIM_ITConfig(mTIMx, TIM_IT_Update, ENABLE);	// by overrun
+	TIM_ITConfig(TIM, TIM_IT_Update, ENABLE);	// by overrun
 	
-	GeneralTimer_Disable();
+	GeneralTimer_Disable(TIM);
 }
 
 
 
-GeneralTimer_STATE GeneralTimer_GetState(void)
+GeneralTimer_STATE GeneralTimer_GetState(TIM_TypeDef *TIM)
 {
-	return (GeneralTimer_Event == 0)? GeneralTimer_RESET : GeneralTimer_SET;
-		
+	GeneralTimer_STATE res;
+	if (TIM == TIM2) {
+		res = (GeneralTIM2_Event == 0)? GeneralTimer_RESET : GeneralTimer_SET;
+	} else if (TIM == TIM14) {
+		res = (GeneralTIM14_Event == 0)? GeneralTimer_RESET : GeneralTimer_SET;
+	} else {
+		res = GeneralTimer_RESET;
+	}
+	return res;
 }
 
 
 
-inline void GeneralTimer_SetPrescaler(uint16_t prescaler)
+inline void GeneralTimer_SetPrescaler(TIM_TypeDef *TIM, uint16_t prescaler)
 {
-	mTIMx->PSC = prescaler - 1; 
-  	mTIMx->EGR = TIM_PSCReloadMode_Immediate;
+	TIM->PSC = prescaler - 1;
+  	TIM->EGR = TIM_PSCReloadMode_Immediate;
 }
 
 
 
-inline void GeneralTimer_SetPeriod(uint16_t period)
+inline void GeneralTimer_SetPeriod(TIM_TypeDef *TIM, uint16_t period)
 {
-	mTIMx->ARR = period;
+	TIM->ARR = period;
 }
 
 
 
-inline void GeneralTimer_Enable(void)
+inline void GeneralTimer_Enable(TIM_TypeDef *TIM)
 {
-	mTIMx->CR1 |= (uint16_t)TIM_CR1_CEN;
+	TIM->CR1 |= (uint16_t)TIM_CR1_CEN;
 }
 
 
 
-inline void GeneralTimer_Disable(void)
+inline void GeneralTimer_Disable(TIM_TypeDef *TIM)
 {
-	mTIMx->CR1 &= (uint16_t)~TIM_CR1_CEN;
-}
-
-
-void GeneralTimer_Reset(void)
-{
-	GeneralTimer_Event = 0;
-	mTIMx->CNT = 0;
+	TIM->CR1 &= (uint16_t)~TIM_CR1_CEN;
 }
 
 
 
-inline void GeneralTimer_Set(uint16_t cnt)
+void GeneralTimer_Reset(TIM_TypeDef *TIM)
 {
-	mTIMx->CNT = cnt;
+	if (TIM == TIM2) {
+		GeneralTIM2_Event = 0;
+	} else if (TIM == TIM14) {
+		GeneralTIM14_Event = 0;
+	} else {
+		return;
+	}
+	TIM->CNT = 0;
 }
 
 
-inline uint16_t GeneralTimer_Get(void)
+
+inline void GeneralTimer_Set(TIM_TypeDef *TIM, uint16_t cnt)
 {
-	return mTIMx->CNT;
+	TIM->CNT = cnt;
+}
+
+
+
+inline uint16_t GeneralTimer_Get(TIM_TypeDef *TIM)
+{
+	return TIM->CNT;
 }
