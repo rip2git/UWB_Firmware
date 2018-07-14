@@ -54,7 +54,7 @@ BaseTimer_STATE BaseTimer_GetState(void)
 
 
 
-inline void BaseTimer_SetPrescaler(uint16_t prescaler)
+void BaseTimer_SetPrescaler(uint16_t prescaler)
 {
 	mTIMx->PSC = prescaler - 1; 
   	mTIMx->EGR = TIM_PSCReloadMode_Immediate;
@@ -62,21 +62,21 @@ inline void BaseTimer_SetPrescaler(uint16_t prescaler)
 
 
 
-inline void BaseTimer_SetPeriod(uint16_t period)
+void BaseTimer_SetPeriod(uint16_t period)
 {
 	mTIMx->ARR = period;
 }
 
 
 
-inline void BaseTimer_Enable(void)
+void BaseTimer_Enable(void)
 {
 	mTIMx->CR1 |= (uint16_t)TIM_CR1_CEN;
 }
 
 
 
-inline void BaseTimer_Disable(void)
+void BaseTimer_Disable(void)
 {
 	mTIMx->CR1 &= (uint16_t)~TIM_CR1_CEN;
 }
@@ -90,13 +90,13 @@ void BaseTimer_Reset(void)
 
 
 
-inline void BaseTimer_Set(uint16_t cnt)
+void BaseTimer_Set(uint16_t cnt)
 {
 	mTIMx->CNT = cnt;
 }
 
 
-inline uint16_t BaseTimer_Get(void)
+uint16_t BaseTimer_Get(void)
 {
 	return mTIMx->CNT;
 }

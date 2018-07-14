@@ -132,7 +132,7 @@ extern USART_RESULT USART_StartRead(uint8_t *buffer, uint16_t length);
  *
  * no return value
 */
-extern inline void USART_ForceReadEnd(void);
+extern void USART_ForceReadEnd(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: USART_ErrorControl
@@ -147,7 +147,7 @@ extern inline void USART_ForceReadEnd(void);
  *
  * return value is result of operation (described above)
 */
-extern inline USART_RESULT USART_ErrorControl(void);
+extern USART_RESULT USART_ErrorControl(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: USART_SendByte

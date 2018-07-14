@@ -1,4 +1,4 @@
-#include <mGeneralTimer.h>
+#include "mGeneralTimer.h"
 #include "stm32f0xx.h"
 
 
@@ -76,7 +76,7 @@ GeneralTimer_STATE GeneralTimer_GetState(TIM_TypeDef *TIM)
 
 
 
-inline void GeneralTimer_SetPrescaler(TIM_TypeDef *TIM, uint16_t prescaler)
+void GeneralTimer_SetPrescaler(TIM_TypeDef *TIM, uint16_t prescaler)
 {
 	TIM->PSC = prescaler - 1;
   	TIM->EGR = TIM_PSCReloadMode_Immediate;
@@ -84,21 +84,21 @@ inline void GeneralTimer_SetPrescaler(TIM_TypeDef *TIM, uint16_t prescaler)
 
 
 
-inline void GeneralTimer_SetPeriod(TIM_TypeDef *TIM, uint16_t period)
+void GeneralTimer_SetPeriod(TIM_TypeDef *TIM, uint16_t period)
 {
 	TIM->ARR = period;
 }
 
 
 
-inline void GeneralTimer_Enable(TIM_TypeDef *TIM)
+void GeneralTimer_Enable(TIM_TypeDef *TIM)
 {
 	TIM->CR1 |= (uint16_t)TIM_CR1_CEN;
 }
 
 
 
-inline void GeneralTimer_Disable(TIM_TypeDef *TIM)
+void GeneralTimer_Disable(TIM_TypeDef *TIM)
 {
 	TIM->CR1 &= (uint16_t)~TIM_CR1_CEN;
 }
@@ -119,14 +119,27 @@ void GeneralTimer_Reset(TIM_TypeDef *TIM)
 
 
 
-inline void GeneralTimer_Set(TIM_TypeDef *TIM, uint16_t cnt)
+void GeneralTimer_Set(TIM_TypeDef *TIM, uint16_t cnt)
 {
 	TIM->CNT = cnt;
 }
 
 
 
-inline uint16_t GeneralTimer_Get(TIM_TypeDef *TIM)
+void GeneralTimer_SetEvent(TIM_TypeDef *TIM)
+{
+	if (TIM == TIM2) {
+		GeneralTIM2_Event = 1;
+	} else if (TIM == TIM14) {
+		GeneralTIM14_Event = 1;
+	} else {
+		return;
+	}
+}
+
+
+
+uint16_t GeneralTimer_Get(TIM_TypeDef *TIM)
 {
 	return TIM->CNT;
 }

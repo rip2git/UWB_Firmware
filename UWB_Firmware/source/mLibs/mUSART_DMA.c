@@ -68,14 +68,14 @@ USART_RESULT USART_StartRead(uint8_t *buffer, uint16_t length)
 
 
 
-inline void USART_ForceReadEnd(void)
+void USART_ForceReadEnd(void)
 {
 	DMAx_ChRX->CCR &= ~DMA_CCR_EN;
 }
 
 
 
-inline USART_RESULT USART_ErrorControl(void)
+USART_RESULT USART_ErrorControl(void)
 {
 	if (USARTx->ISR & USARTx_ERROR_FLAGS) {
 		DMAx_ChRX->CCR &= ~DMA_CCR_EN;

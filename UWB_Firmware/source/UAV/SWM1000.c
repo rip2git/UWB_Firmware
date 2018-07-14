@@ -6,6 +6,7 @@
 #include "Random.h"
 #include "ConfigFW.h"
 #include "Debugger.h"
+#include <string.h>
 
 
 
@@ -33,12 +34,13 @@ typedef enum {
 
 
 
-#define SWM1000_FRAME_CONTROL			0x8841		// ckeck IEEE Std 802.15.4-2011 for details
-#define SWM1000_FRAME_FILTER_MASK		(DWT_FF_DATA_EN) // ckeck IEEE Std 802.15.4-2011 for details
+#define _SWM1000_FRAME_CONTROL			0x8841		// ckeck IEEE Std 802.15.4-2011 for details
+#define _SWM1000_FRAME_FILTER_MASK		(DWT_FF_DATA_EN) // ckeck IEEE Std 802.15.4-2011 for details
 
 
 
 #define _Config_Timer 		TIM14
+#define _ConfigTO_Timer		TIM2
 #define _Generate_Timer 	TIM14
 #define _Poll_Timer 		TIM2
 
@@ -60,8 +62,10 @@ static UserPack _Distance_UserPack;
 static inline void _SWM1000_UserCommandHandler();
 static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config);
 static void _SWM1000_PutDistanceInUData(uint8 *payload, uint16_str distance);
-static inline void _SWM1000_Configurate(const UserPack *confpack);
+static inline void _SWM1000_Configurate();
+static inline void _SWM1000_SetDefaultConfiguration();
 static UserPack_CommandRes _SWM1000_SendDistance();
+static void _SWM1000_SetDefaultDistanceParams();
 static void _SWM1000_SetDistanceParams(const UserPack *upack);
 
 
@@ -127,6 +131,7 @@ void SWM1000_Loop(void)
 				} break;
 				// polling with distance transfer
 				case _SWM1000_Poll: {
+					_SWM1000_SetDefaultDistanceParams();
 					// reset poll timer inside
 					_SWM1000_SendDistance();
 				} break;
@@ -289,9 +294,15 @@ void SWM1000_Initialization()
 
 	// timer for receiving config
 	GeneralTimer_SetPrescaler(_Config_Timer, SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(_Config_Timer, SWM1000_ConfigRecvTimeOut);
-	GeneralTimer_Set(_Config_Timer, 1); // first of all - send notification to driver
+	GeneralTimer_SetPeriod(_Config_Timer, SWM1000_ConfigRequestDelay);
+	GeneralTimer_SetEvent(_Config_Timer); // first of all - send notification to driver
 	GeneralTimer_Enable(_Config_Timer);
+
+	// timeout timer for receiving config
+	GeneralTimer_SetPrescaler(_ConfigTO_Timer, SystemCoreClock / 1000); // ms
+	GeneralTimer_SetPeriod(_ConfigTO_Timer, SWM1000_ConfigRecvTimeOut);
+	GeneralTimer_Reset(_ConfigTO_Timer);
+	GeneralTimer_Enable(_ConfigTO_Timer);
 
 	UserPack upack;
 	do { // config from high level
@@ -323,9 +334,19 @@ void SWM1000_Initialization()
 				break;
 			}
 		}
-	} while (1);
+	} while (GeneralTimer_GetState(_ConfigTO_Timer) != GeneralTimer_SET);
 
-	_SWM1000_Configurate( &upack ); // data saved
+	if (GeneralTimer_GetState(_ConfigTO_Timer) == GeneralTimer_SET) {
+		_SWM1000_SetDefaultConfiguration();
+	} else {
+		ConfigFW_FromUserPack( &upack ); // data saved
+	}
+	_SWM1000_Configurate();
+
+	GeneralTimer_Disable(_ConfigTO_Timer);
+	GeneralTimer_Reset(_ConfigTO_Timer);
+	GeneralTimer_Disable(_Config_Timer);
+	GeneralTimer_Reset(_Config_Timer);
 
 	// timer for generating new token
 	GeneralTimer_SetPrescaler(_Generate_Timer, SystemCoreClock / 1000); // ms
@@ -338,7 +359,9 @@ void SWM1000_Initialization()
 	IWDG_SetPrescaler(IWDG_Prescaler_32); // 1.25 kHz
 	IWDG_SetReload(ConfigFW.SW1000.PollingPeriod & 0x0FFF);
 	IWDG_ReloadCounter();
+#ifndef DEBUG
 	IWDG_Enable();
+#endif
 
 	GeneralTimer_Reset(_Generate_Timer);
 	GeneralTimer_Enable(_Generate_Timer);
@@ -348,11 +371,9 @@ void SWM1000_Initialization()
 
 
 
-static inline void _SWM1000_Configurate(const UserPack *confpack)
+static inline void _SWM1000_Configurate()
 {
-	ConfigFW_FromUserPack(confpack);
-
-	_Pointer_MACHeader.FrameControl = SWM1000_FRAME_CONTROL;
+	_Pointer_MACHeader.FrameControl = _SWM1000_FRAME_CONTROL;
 	_Pointer_MACHeader.SequenceNumber = 0;
 	_Pointer_MACHeader.PAN_ID = ConfigFW.SW1000.PAN_ID;
 	_Pointer_MACHeader.SourceID = ConfigFW.SW1000.DeviceID & 0x00FF;
@@ -362,7 +383,7 @@ static inline void _SWM1000_Configurate(const UserPack *confpack)
 	// Initialises network params
 	dwt_setpanid(_Pointer_MACHeader.PAN_ID);
 	dwt_setaddress16(_Pointer_MACHeader.SourceID);
-	dwt_enableframefilter(SWM1000_FRAME_FILTER_MASK);
+	dwt_enableframefilter(_SWM1000_FRAME_FILTER_MASK);
 
 	Routing_InitializationStruct routing_initializationStruct = {
 		ConfigFW.SW1000.DeviceID,
@@ -378,9 +399,19 @@ static inline void _SWM1000_Configurate(const UserPack *confpack)
 
 
 
-static void _SWM1000_SetDistanceParams(const UserPack *upack)
+static inline void _SWM1000_SetDefaultConfiguration()
 {
-	_Distance_UserPack = *upack;
+	uint8_t devID = 10;
+
+	ConfigFW.Ranging.FinalDelay = 480;
+	ConfigFW.Ranging.RespondingDelay = 500;
+	ConfigFW.Routing.MinSignalLevel = 170;
+	ConfigFW.SW1000.DebugMode = 0;
+	ConfigFW.SW1000.DeviceID = devID;
+	ConfigFW.SW1000.PAN_ID = 6896;
+	ConfigFW.SW1000.PollingPeriod = 500;
+	ConfigFW.SW1000.nDevices = 10;
+	ConfigFW.Token.TimeSlotDurationMs = 1;
 }
 
 
@@ -414,6 +445,23 @@ static UserPack_CommandRes _SWM1000_SendDistance()
 	result = UserPack_CmdRes_Success;
 
 	return result;
+}
+
+
+
+static void _SWM1000_SetDefaultDistanceParams()
+{
+	_Distance_UserPack.FCmd.cmd = UserPack_Cmd_Distance;
+	_Distance_UserPack.SCmd.devID = 0xFF;
+	_Distance_UserPack.TotalSize = Ranging_PAYLOAD_SIZE;
+	memset(_Distance_UserPack.Data, '0', Ranging_PAYLOAD_SIZE);
+}
+
+
+
+static void _SWM1000_SetDistanceParams(const UserPack *upack)
+{
+	_Distance_UserPack = *upack;
 }
 
 

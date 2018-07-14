@@ -2,7 +2,8 @@
 #define SWM1000_H_
 
 
-#define SWM1000_ConfigRecvTimeOut 	2000
+#define SWM1000_ConfigRequestDelay 	2000
+#define SWM1000_ConfigRecvTimeOut 	60000
 
 
 

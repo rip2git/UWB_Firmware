@@ -614,7 +614,7 @@ void dwt_setdelayedtrxtime(uint32 starttime) ;
  *
  * no return value
  */
-extern inline void dwt_readtxtimestamp(uint8 * timestamp);
+extern void dwt_readtxtimestamp(uint8 * timestamp);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_readtxtimestamphi32()
@@ -654,7 +654,7 @@ uint32 dwt_readtxtimestamplo32(void);
  *
  * no return value
  */
-extern inline void dwt_readrxtimestamp(uint8 * timestamp);
+extern void dwt_readrxtimestamp(uint8 * timestamp);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_readrxtimestamphi32()
@@ -1272,7 +1272,7 @@ void dwt_softreset(void) ;
  *
  * no return value
  */
-extern inline void dwt_readrxdata(uint8 *buffer, uint16 length, uint16 rxBufferOffset);
+extern void dwt_readrxdata(uint8 *buffer, uint16 length, uint16 rxBufferOffset);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_readaccdata()
@@ -1848,7 +1848,7 @@ void decamutexoff(void) ;
  *
  * no return value
  */
-extern inline void deca_sleep(unsigned int time_ms);
+extern void deca_sleep(unsigned int time_ms);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_receiverautoreenabled()

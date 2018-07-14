@@ -15,7 +15,7 @@
 #include "deca_sleep.h"
 #include "port.h"
 
-inline void deca_sleep(unsigned int time_ms)
+void deca_sleep(unsigned int time_ms)
 {
 	SystemTimer_Sleep(time_ms);
 }

@@ -54,7 +54,7 @@ extern void BaseTimer_Initialization(void);
  *
  * no return value
 */
-extern inline void BaseTimer_SetPrescaler(uint16_t prescaler);
+extern void BaseTimer_SetPrescaler(uint16_t prescaler);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: BaseTimer_SetPeriod
@@ -70,7 +70,7 @@ extern inline void BaseTimer_SetPrescaler(uint16_t prescaler);
  *
  * no return value
 */
-extern inline void BaseTimer_SetPeriod(uint16_t period);
+extern void BaseTimer_SetPeriod(uint16_t period);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: BaseTimer_Enable
@@ -85,7 +85,7 @@ extern inline void BaseTimer_SetPeriod(uint16_t period);
  *
  * no return value
 */
-extern inline void BaseTimer_Enable(void);
+extern void BaseTimer_Enable(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: BaseTimer_Disable
@@ -100,7 +100,7 @@ extern inline void BaseTimer_Enable(void);
  *
  * no return value
 */
-extern inline void BaseTimer_Disable(void);
+extern void BaseTimer_Disable(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: BaseTimer_Set
@@ -116,7 +116,7 @@ extern inline void BaseTimer_Disable(void);
  *
  * no return value
 */
-extern inline void BaseTimer_Set(uint16_t cnt);
+extern void BaseTimer_Set(uint16_t cnt);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: BaseTimer_Get
@@ -131,7 +131,7 @@ extern inline void BaseTimer_Set(uint16_t cnt);
  *
  * return value is the timers ticks
 */
-extern inline uint16_t BaseTimer_Get(void);
+extern uint16_t BaseTimer_Get(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: BaseTimer_GetState

@@ -54,7 +54,7 @@ typedef enum {
 
 typedef enum {
 	UserPack_CmdRes_Fail = 0x40,
-	UserPack_CmdRes_Success = 0x41,
+	UserPack_CmdRes_Success = 0x41, //65
 	UserPack_CmdRes_Accepted = 0x42
 } UserPack_CommandRes;
 
