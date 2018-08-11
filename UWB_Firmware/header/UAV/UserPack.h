@@ -49,7 +49,8 @@ typedef enum {
 	UserPack_Cmd_DataConfig = 0x83,
 	UserPack_Cmd_Data = 0x84,
 	UserPack_Cmd_Ack = 0x85,
-	UserPack_Cmd_End = 0x86
+	UserPack_Cmd_End = 0x86,
+	UserPack_Cmd_Status = 0x87
 } UserPack_Command;
 
 typedef enum {

@@ -5,26 +5,23 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/mLibs/CheckSum.c \
+../source/mLibs/EventTimer.c \
 ../source/mLibs/Random.c \
 ../source/mLibs/SystemTimer.c \
-../source/mLibs/mBaseTimer.c \
-../source/mLibs/mGeneralTimer.c \
 ../source/mLibs/mUSART_DMA.c 
 
 OBJS += \
 ./source/mLibs/CheckSum.o \
+./source/mLibs/EventTimer.o \
 ./source/mLibs/Random.o \
 ./source/mLibs/SystemTimer.o \
-./source/mLibs/mBaseTimer.o \
-./source/mLibs/mGeneralTimer.o \
 ./source/mLibs/mUSART_DMA.o 
 
 C_DEPS += \
 ./source/mLibs/CheckSum.d \
+./source/mLibs/EventTimer.d \
 ./source/mLibs/Random.d \
 ./source/mLibs/SystemTimer.d \
-./source/mLibs/mBaseTimer.d \
-./source/mLibs/mGeneralTimer.d \
 ./source/mLibs/mUSART_DMA.d 
 
 

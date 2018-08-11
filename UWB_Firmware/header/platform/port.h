@@ -5,8 +5,7 @@
 #include "stm32f0xx.h"	
 	
 #include "SystemTimer.h"
-#include "mBaseTimer.h"
-#include "mGeneralTimer.h"
+#include "EventTimer.h"
   
 	  
 /* Define our wanted value of CLOCKS_PER_SEC so that we have a 10 millisecond

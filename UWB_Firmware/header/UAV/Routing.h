@@ -18,6 +18,14 @@
 #define Routing_TABLE_SIZE		10
 
 /*! ------------------------------------------------------------------------------------------------------------------
+ * @def: Routing_TIM_16bit
+ *
+ * @brief: 16-bit timer for internal use
+ *
+ * */
+#define Routing_TIM_16bit		TIM6
+
+/*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: Routing_RESULT
  *
  * @brief: Used for results (described below) returned from Routing methods

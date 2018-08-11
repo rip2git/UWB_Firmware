@@ -10,8 +10,7 @@
 #define interrupt_init(x)		IRQ_Configuration(x)
 #define spi_init(x)				SPI_Configuration(x)
 #define systick_init(x)			SystemTimer_Initialization(x)
-#define base_timer_init(x)		BaseTimer_Initialization(x)
-#define general_timer_init(x)	GeneralTimer_init(x)
+#define event_timer_init(x)		EventTimer_init(x)
 
 
 
@@ -270,10 +269,11 @@ int SPI_Configuration(void)
 
 
 
-void GeneralTimer_init()
+void EventTimer_init()
 {
-	GeneralTimer_Initialization(TIM2);
-	GeneralTimer_Initialization(TIM14);
+	EventTimer_Initialization(TIM2, 1);
+	EventTimer_Initialization(TIM6, 1);
+	EventTimer_Initialization(TIM14, 1);
 }
 
 
@@ -330,7 +330,6 @@ void peripherals_init (void)
 	interrupt_init();
 	systick_init();
     spi_init();	
-	base_timer_init();
-	general_timer_init();
+    event_timer_init();
 	wdt_init();
 }

@@ -59,7 +59,8 @@ static UserPack _Distance_UserPack;
 
 
 
-static inline void _SWM1000_UserCommandHandler();
+static inline void _SWM1000_ServiceCommandHandler(UserPack *upack);
+static inline void _SWM1000_UserCommandHandler(UserPack *upack);
 static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config);
 static void _SWM1000_PutDistanceInUData(uint8 *payload, uint16_str distance);
 static inline void _SWM1000_Configurate();
@@ -80,8 +81,8 @@ void SWM1000_Loop(void)
 	rx_config.rx_buffer_size = MACFrame_FRAME_MAX_SIZE;
 	UserPack upack, retpack;
 		
-	GeneralTimer_Reset(_Generate_Timer);
-	GeneralTimer_Enable(_Generate_Timer);
+	EventTimer_Reset(_Generate_Timer);
+	EventTimer_Enable(_Generate_Timer);
 
 	while (1) 
 	{
@@ -90,20 +91,26 @@ void SWM1000_Loop(void)
 		// receive data from HL
 		if ( USARTHandler_isAvailableToReceive() == USARTHandler_TRUE )  {
 			UHRes = USARTHandler_Receive(&upack);
-			retpack.FCmd.res = UserPack_CmdRes_Accepted;
+			retpack.FCmd.res = (UHRes == USARTHandler_SUCCESS)?
+					UserPack_CmdRes_Accepted : UserPack_CmdRes_Fail;
 			retpack.SCmd.cmd = upack.FCmd.cmd;
 			retpack.TotalSize = 0;
 			USARTHandler_Send(&retpack);
+
+			if (upack.FCmd.cmd == UserPack_Cmd_Service) {
+				_SWM1000_ServiceCommandHandler(&upack);
+				UHRes = USARTHandler_ERROR; // just reset
+			}
 		}	
 
 		if (TokenExt_isCaptured() == TokenExt_TRUE) {
 			if (UHRes == USARTHandler_SUCCESS)
 				loopState = _SWM1000_Transmit;
-			else if (GeneralTimer_GetState(_Poll_Timer) == GeneralTimer_SET)
+			else if (EventTimer_GetState(_Poll_Timer) == EventTimer_SET)
 				loopState = _SWM1000_Poll;
 			else
 				loopState = _SWM1000_TokenTransfer;
-		} else if (GeneralTimer_GetState(_Generate_Timer) == GeneralTimer_SET) {
+		} else if (EventTimer_GetState(_Generate_Timer) == EventTimer_SET) {
 			loopState = _SWM1000_Generate;
 		} else {
 			loopState = _SWM1000_Nothing;
@@ -119,24 +126,30 @@ void SWM1000_Loop(void)
 			switch (loopState) {
 				// generate token in the absence other requests
 				case _SWM1000_Generate: {
+					Debugger_SendStr("\5\1");
 					_Pointer_MACHeader.DestinationID = 0xFFFF;
 					_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 					Routing_GenerateToken( &_Pointer_MACHeader );
-					GeneralTimer_Reset(_Generate_Timer);
+					EventTimer_Reset(_Generate_Timer);
 				} break;
 				// if transfer is allowed
 				case _SWM1000_Transmit: {
+					Debugger_SendStr("\5\2");
+					EventTimer_Reset(_Poll_Timer);
 					UHRes = USARTHandler_ERROR; // just reset
 					_SWM1000_UserCommandHandler(&upack);
 				} break;
 				// polling with distance transfer
 				case _SWM1000_Poll: {
-					_SWM1000_SetDefaultDistanceParams();
+					Debugger_SendStr("\5\3");
+					EventTimer_Reset(_Poll_Timer);
+					_Distance_UserPack.SCmd.devID = 0xFF;
 					// reset poll timer inside
 					_SWM1000_SendDistance();
 				} break;
 				// if token is captured
 				case _SWM1000_TokenTransfer: {
+					Debugger_SendStr("\5\4");
 					_Pointer_MACHeader.DestinationID = 0xFFFF;
 					_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
 					Routing_SendTokenWithTable(&_Pointer_MACHeader);
@@ -151,7 +164,8 @@ void SWM1000_Loop(void)
 		else {
 			switch (recvState) {
 				case _SWM1000_TurnOn: // receiver turn on
-				{					
+				{
+					Debugger_SendStr("\5\5");
 					Transceiver_ReceiverOn();
 					recvState = _SWM1000_CheckData; // waiting request
 				} break;
@@ -161,7 +175,7 @@ void SWM1000_Loop(void)
 						rx_config.rx_buffer_size = Transceiver_GetAvailableData(rx_config.rx_buffer); // read
 						_SWM1000_ReceivingAutomat( &rx_config ); // respond
 						recvState = _SWM1000_TurnOn; // reset
-						GeneralTimer_Reset(_Generate_Timer);
+						EventTimer_Reset(_Generate_Timer);
 					}
 				} break;
 			}
@@ -175,24 +189,15 @@ void SWM1000_Loop(void)
 
 static void _SWM1000_UserCommandHandler(UserPack *upack)
 {
-	UserPack_CommandRes result = UserPack_CmdRes_Fail;
+	UserPack _upack;
+	_upack.FCmd.res = UserPack_CmdRes_Fail;
 
 	switch (upack->FCmd.cmd) {
-		// ---------------------------------------------------------------------------------------------------
-		case UserPack_Cmd_Service:
-		{ // nop
-		} break;
-		// ---------------------------------------------------------------------------------------------------
-		case UserPack_Cmd_SystemConfig:
-		{
-			result = UserPack_CmdRes_Success;
-			_SWM1000_Configurate(upack);
-		} break;
 		// ---------------------------------------------------------------------------------------------------
 		case UserPack_Cmd_Distance:
 		{
 			_SWM1000_SetDistanceParams(upack);
-			result = _SWM1000_SendDistance();
+			_upack.FCmd.res = _SWM1000_SendDistance();
 		} break;
 		// ---------------------------------------------------------------------------------------------------
 		case UserPack_Cmd_Data:
@@ -203,20 +208,45 @@ static void _SWM1000_UserCommandHandler(UserPack *upack)
 			if ( RouRes == Routing_INTERRUPT ) {
 				TokenExt_Reset();
 			}
-			result = (RouRes == Routing_SUCCESS)? UserPack_CmdRes_Success : UserPack_CmdRes_Fail;
+			_upack.FCmd.res = (RouRes == Routing_SUCCESS)?
+					UserPack_CmdRes_Success : UserPack_CmdRes_Fail;
 		} break;
 		// ---------------------------------------------------------------------------------------------------
 		default:
 		{ // nop
 		} break;
 		// ---------------------------------------------------------------------------------------------------
-		
-	} // switch (upack->Command)
+	}
 
-	UserPack _upack;
-	_upack.FCmd.res = result;
 	_upack.SCmd.cmd = upack->FCmd.cmd;
 	_upack.TotalSize = 0;
+	USARTHandler_Send(&_upack);
+}
+
+
+
+static inline void _SWM1000_ServiceCommandHandler(UserPack *upack)
+{
+	UserPack _upack;
+
+	switch (upack->SCmd.cmd) {
+		// ---------------------------------------------------------------------------------------------------
+		case UserPack_Cmd_SystemConfig:
+		{
+			ConfigFW_FromUserPack(upack);
+			_SWM1000_Configurate();
+			_upack.FCmd.res = UserPack_CmdRes_Success;
+			_upack.SCmd.cmd = UserPack_Cmd_SystemConfig;
+			_upack.TotalSize = 0;
+		} break;
+		// ---------------------------------------------------------------------------------------------------
+		default:
+		{
+			return;
+		} break;
+		// ---------------------------------------------------------------------------------------------------
+	}
+
 	USARTHandler_Send(&_upack);
 }
 
@@ -241,6 +271,10 @@ static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
 				upack.TotalSize = Ranging_PAYLOAD_SIZE + 2; // + 2 for distance
 				UserPack_SetData(&upack, &(rx_config->rx_buffer[MACFrame_PAYLOAD_OFFSET]));
 				USARTHandler_Send(&upack);
+				/*uint8_t it = sprintf(rx_config->rx_buffer, "%d-->%d\r\n",
+						rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET],
+						distance.d);
+				USART_SendBuffer(rx_config->rx_buffer, it);*/
 			}
 		} break;						
 		// ---------------------------------------------------------------------------------------------------
@@ -287,27 +321,59 @@ static void _SWM1000_ReceivingAutomat(Transceiver_RxConfig *rx_config)
 
 
 
+static UserPack_CommandRes _SWM1000_SendDistance()
+{
+	uint8 i;
+	UserPack_CommandRes result = UserPack_CmdRes_Fail;
+
+	if (_Distance_UserPack.SCmd.devID == 0xFF) {
+		for (i = 1; i <= ConfigFW.SW1000.nDevices; ++i) {
+			if ( (uint8_t)(_Pointer_MACHeader.SourceID) != i ) {
+				_Pointer_MACHeader.DestinationID = i & 0x00FF;
+				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
+				RngRes = Ranging_Initiate(&_Pointer_MACHeader, _Distance_UserPack.Data);
+				if (RngRes == Ranging_INTERRUPT)
+					break;
+			}
+		}
+	} else {
+		_Pointer_MACHeader.DestinationID = _Distance_UserPack.SCmd.devID & 0x00FF;
+		_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
+		RngRes = Ranging_Initiate(&_Pointer_MACHeader, _Distance_UserPack.Data);
+	}
+	//
+	if (RngRes == Ranging_INTERRUPT) {
+		TokenExt_Reset();
+	}
+	result = UserPack_CmdRes_Success;
+
+	return result;
+}
+
+
+
 void SWM1000_Initialization()
 {
 	peripherals_init();
 	USARTHandler_Initialization();
 
+	/*
 	// timer for receiving config
-	GeneralTimer_SetPrescaler(_Config_Timer, SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(_Config_Timer, SWM1000_ConfigRequestDelay);
-	GeneralTimer_SetEvent(_Config_Timer); // first of all - send notification to driver
-	GeneralTimer_Enable(_Config_Timer);
+	EventTimer_SetPrescaler(_Config_Timer, SystemCoreClock / 1000); // ms
+	EventTimer_SetPeriod(_Config_Timer, SWM1000_ConfigRequestDelay);
+	EventTimer_SetEvent(_Config_Timer); // first of all - send notification to driver
+	EventTimer_Enable(_Config_Timer);
 
 	// timeout timer for receiving config
-	GeneralTimer_SetPrescaler(_ConfigTO_Timer, SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(_ConfigTO_Timer, SWM1000_ConfigRecvTimeOut);
-	GeneralTimer_Reset(_ConfigTO_Timer);
-	GeneralTimer_Enable(_ConfigTO_Timer);
+	EventTimer_SetPrescaler(_ConfigTO_Timer, SystemCoreClock / 1000); // ms
+	EventTimer_SetPeriod(_ConfigTO_Timer, SWM1000_ConfigRecvTimeOut);
+	EventTimer_Reset(_ConfigTO_Timer);
+	EventTimer_Enable(_ConfigTO_Timer);
 
 	UserPack upack;
 	do { // config from high level
-		if (GeneralTimer_GetState(_Config_Timer) == GeneralTimer_SET) {
-			GeneralTimer_Reset(_Config_Timer);
+		if (EventTimer_GetState(_Config_Timer) == EventTimer_SET) {
+			EventTimer_Reset(_Config_Timer);
 			upack.FCmd.cmd = UserPack_Cmd_SystemConfig;
 			upack.SCmd._raw = 0;
 			upack.TotalSize = 0;
@@ -334,39 +400,49 @@ void SWM1000_Initialization()
 				break;
 			}
 		}
-	} while (GeneralTimer_GetState(_ConfigTO_Timer) != GeneralTimer_SET);
+	} while (EventTimer_GetState(_ConfigTO_Timer) != EventTimer_SET);
 
-	if (GeneralTimer_GetState(_ConfigTO_Timer) == GeneralTimer_SET) {
+	if (EventTimer_GetState(_ConfigTO_Timer) == EventTimer_SET) {
 		_SWM1000_SetDefaultConfiguration();
 	} else {
 		ConfigFW_FromUserPack( &upack ); // data saved
 	}
+	_SWM1000_Configurate();*/
+
+	UserPack upack;
+	upack.FCmd.cmd = UserPack_Cmd_SystemConfig;
+	upack.SCmd.devID = 0;
+	upack.TotalSize = 0;
+	USARTHandler_Send(&upack);
+	_SWM1000_SetDefaultConfiguration();
 	_SWM1000_Configurate();
 
-	GeneralTimer_Disable(_ConfigTO_Timer);
-	GeneralTimer_Reset(_ConfigTO_Timer);
-	GeneralTimer_Disable(_Config_Timer);
-	GeneralTimer_Reset(_Config_Timer);
+	EventTimer_Disable(_ConfigTO_Timer);
+	EventTimer_Reset(_ConfigTO_Timer);
+	EventTimer_Disable(_Config_Timer);
+	EventTimer_Reset(_Config_Timer);
 
 	// timer for generating new token
-	GeneralTimer_SetPrescaler(_Generate_Timer, SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(_Generate_Timer, ConfigFW.SW1000.PollingPeriod * 2);
+	EventTimer_SetPrescaler(_Generate_Timer, SystemCoreClock / 1000); // ms
+	EventTimer_SetPeriod(_Generate_Timer, ConfigFW.SW1000.PollingPeriod * 2);
 	// timer for polling
-	GeneralTimer_SetPrescaler(_Poll_Timer, SystemCoreClock / 1000); // ms
-	GeneralTimer_SetPeriod(_Poll_Timer, ConfigFW.SW1000.PollingPeriod);
+	EventTimer_SetPrescaler(_Poll_Timer, SystemCoreClock / 1000); // ms
+	EventTimer_SetPeriod(_Poll_Timer, ConfigFW.SW1000.PollingPeriod);
 
 	// watchdog settings - once at the power on
 	IWDG_SetPrescaler(IWDG_Prescaler_32); // 1.25 kHz
-	IWDG_SetReload(ConfigFW.SW1000.PollingPeriod & 0x0FFF);
+	IWDG_SetReload((ConfigFW.SW1000.PollingPeriod - 100) & 0x0FFF);
 	IWDG_ReloadCounter();
 #ifndef DEBUG
 	IWDG_Enable();
 #endif
 
-	GeneralTimer_Reset(_Generate_Timer);
-	GeneralTimer_Enable(_Generate_Timer);
-	GeneralTimer_Reset(_Poll_Timer);
-	GeneralTimer_Enable(_Poll_Timer);
+	EventTimer_Reset(_Generate_Timer);
+	EventTimer_Enable(_Generate_Timer);
+	EventTimer_Reset(_Poll_Timer);
+	EventTimer_Enable(_Poll_Timer);
+
+	_SWM1000_SetDefaultDistanceParams();
 }
 
 
@@ -401,7 +477,7 @@ static inline void _SWM1000_Configurate()
 
 static inline void _SWM1000_SetDefaultConfiguration()
 {
-	uint8_t devID = 10;
+	uint8_t devID = 3;
 
 	ConfigFW.Ranging.FinalDelay = 480;
 	ConfigFW.Ranging.RespondingDelay = 500;
@@ -412,39 +488,6 @@ static inline void _SWM1000_SetDefaultConfiguration()
 	ConfigFW.SW1000.PollingPeriod = 500;
 	ConfigFW.SW1000.nDevices = 10;
 	ConfigFW.Token.TimeSlotDurationMs = 1;
-}
-
-
-
-static UserPack_CommandRes _SWM1000_SendDistance()
-{
-	GeneralTimer_Reset(_Poll_Timer);
-
-	uint8 i;
-	UserPack_CommandRes result = UserPack_CmdRes_Fail;
-
-	if (_Distance_UserPack.SCmd.devID == 0xFF) {
-		for (i = 1; i <= ConfigFW.SW1000.nDevices; ++i) {
-			if ( (uint8_t)(_Pointer_MACHeader.SourceID) != i ) {
-				_Pointer_MACHeader.DestinationID = i & 0x00FF;
-				_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-				RngRes = Ranging_Initiate(&_Pointer_MACHeader, _Distance_UserPack.Data);
-				if (RngRes == Ranging_INTERRUPT)
-					break;
-			}
-		}
-	} else {
-		_Pointer_MACHeader.DestinationID = _Distance_UserPack.SCmd.devID & 0x00FF;
-		_Pointer_MACHeader.Flags = MACFrame_Flags_NOP;
-		RngRes = Ranging_Initiate(&_Pointer_MACHeader, _Distance_UserPack.Data);
-	}
-	//
-	if (RngRes == Ranging_INTERRUPT) {
-		TokenExt_Reset();
-	}
-	result = UserPack_CmdRes_Success;
-
-	return result;
 }
 
 

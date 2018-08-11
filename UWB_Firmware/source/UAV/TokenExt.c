@@ -200,16 +200,16 @@ TokenExt_RESULT TokenExt_Generate(MACHeader_Typedef *header)
 
 	header->Flags = (MACFrame_Flags_SYN | MACFrame_Flags_ACK);
 
-	rx_config.rx_buffer = _TokenExt_commonBuffer;
-	rx_config.rx_buffer_size = TokenExt_BUFFER_SIZE;
-	rx_config.rx_timeout = _TokenExt_timeSlotDurationMs * 2 * 1000;
-	rx_config.rx_delay = 0;
-	rx_config.rx_interrupt = 0;
-
-	TrRes = Transceiver_Receive( &rx_config );
-	if (TrRes == Transceiver_RXFCG) {
-		return TokenExt_FAIL;
-	}
+//	rx_config.rx_buffer = _TokenExt_commonBuffer;
+//	rx_config.rx_buffer_size = TokenExt_BUFFER_SIZE;
+//	rx_config.rx_timeout = _TokenExt_timeSlotDurationMs * 2 * 1000;
+//	rx_config.rx_delay = 0;
+//	rx_config.rx_interrupt = 0;
+//
+//	TrRes = Transceiver_Receive( &rx_config );
+//	if (TrRes == Transceiver_RXFCG) {
+//		return TokenExt_FAIL;
+//	}
 
 	_TokenExt_previousOwnerID = _TokenExt_selfID;
 	_TokenExt_currentTokenID.RootID = (uint8_t)header->SourceID;

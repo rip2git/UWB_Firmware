@@ -459,7 +459,7 @@ void Routing_Initialization(const Routing_InitializationStruct *initializationSt
 	_Routing_deviceID = initializationStruct->deviceID - 1; // simplifies the logic
 	_Routing_ACKReceivingTimeOut = initializationStruct->ACKReceivingTimeOut;
 	_Routing_THRESHHOLD_LVL = initializationStruct->MinSignalLevel;
-	BaseTimer_SetPrescaler(SystemCoreClock / 1000); // ms
+	EventTimer_SetPrescaler(Routing_TIM_16bit, SystemCoreClock / 1000); // ms
 
 	tx_config.tx_buffer = _Routing_commonBuffer;
 	tx_config.tx_delay = 0;
@@ -540,12 +540,12 @@ static Routing_RESULT _Routing_WaitResponse(_Routing_WaitResponseConditions *con
 {
 	Transceiver_RESULT trRes;
 	uint8_t receivingState = 0;
-	BaseTimer_Reset();
-	BaseTimer_SetPeriod(_Routing_ACKReceivingTimeOut);
-	BaseTimer_Enable();
+	EventTimer_Reset(Routing_TIM_16bit);
+	EventTimer_SetPeriod(Routing_TIM_16bit, _Routing_ACKReceivingTimeOut);
+	EventTimer_Enable(Routing_TIM_16bit);
 	while (1) {
-		if (BaseTimer_GetState() == BaseTimer_SET) {
-			BaseTimer_Disable();
+		if (EventTimer_GetState(Routing_TIM_16bit) == EventTimer_SET) {
+			EventTimer_Disable(Routing_TIM_16bit);
 			return Routing_ERROR;
 		}
 
@@ -571,7 +571,7 @@ static Routing_RESULT _Routing_WaitResponse(_Routing_WaitResponseConditions *con
 						(_Routing_commonBuffer[_Routing_SOURCE_OFFSET] == cond->routingSrc &&
 						_Routing_commonBuffer[_Routing_DESTINATION_OFFSET] == cond->routingDst))
 					) {
-						BaseTimer_Disable();
+						EventTimer_Disable(Routing_TIM_16bit);
 						return Routing_SUCCESS;
 					} else {
 						receivingState = 0; // reset

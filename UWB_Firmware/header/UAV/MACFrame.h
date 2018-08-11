@@ -42,14 +42,16 @@
  * @brief: Defines of bits of the 'Flags' field of MAC header
  *
 */
-#define MACFrame_Flags_NOP			0x00
-#define MACFrame_Flags_RNG			0x01
-#define MACFrame_Flags_DATA			0x02
-#define MACFrame_Flags_TOKEN		0x04
-#define MACFrame_Flags_RET			0x08
-#define MACFrame_Flags_RST			0x20
-#define MACFrame_Flags_SYN			0x40
-#define MACFrame_Flags_ACK			0x80
+typedef enum {
+	MACFrame_Flags_NOP = 0x00,
+	MACFrame_Flags_RNG = 0x01,
+	MACFrame_Flags_DATA = 0x02,
+	MACFrame_Flags_TOKEN = 0x04,
+	MACFrame_Flags_RET = 0x08,
+	MACFrame_Flags_RST = 0x20,
+	MACFrame_Flags_SYN = 0x40,
+	MACFrame_Flags_ACK = 0x80
+} MACFrame_Flags;
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: MACFrame_BROADCAST_ID
@@ -73,7 +75,7 @@ typedef struct {
 	uint16_t 	PAN_ID;
 	uint16_t	DestinationID;
 	uint16_t	SourceID;
-	uint8_t		Flags;
+	MACFrame_Flags	Flags;
 } MACHeader_Typedef;
 
 
