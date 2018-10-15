@@ -12,7 +12,7 @@
  * @brief: Payload size in the first ds-twr algorithm' message
  *
 */
-#define Ranging_PAYLOAD_SIZE	6
+#define Ranging_PAYLOAD_SIZE	12
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: Ranging_RESULT
@@ -35,14 +35,12 @@ typedef enum {
  * NOTE: 
  *
  * input parameters
- * @param responseDelay - expected time between first and second message
- * @param finalDelay - expected time between second and third (last) message
  *
  * output parameters
  *
  * no return value
 */
-extern void Ranging_Initialization(uint16_t responseDelay, uint16_t finalDelay);
+extern void Ranging_Initialization();
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: Ranging_GetDistance
@@ -60,7 +58,7 @@ extern void Ranging_Initialization(uint16_t responseDelay, uint16_t finalDelay);
  * 
  * return value is Ranging_RESULT described above
 */
-extern Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance16);
+extern Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, const uint8_t *payload, uint16_t *distance16);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: Ranging_Initiate
@@ -76,10 +74,12 @@ extern Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *d
  * 
  * output parameters
  * @param header - changes 'flag' and 'sequence number' fields (ref to MACFrame.h)
+ * @param rxBuffer - buffer for receiving data from responder
+ * @param distance16 - distance to target
  * 
  * return value is Ranging_RESULT described above
 */
-extern Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payload);
+extern Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payload, uint8_t *rxBuffer, uint16_t *distance16);
 
 
 #endif

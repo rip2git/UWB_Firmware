@@ -59,7 +59,7 @@ extern USARTHandler_BOOL USARTHandler_isAvailableToReceive(void);
  *
  * @brief: Initializes internal entities required for working
  *
- * NOTE: 
+ * NOTE: starts read
  *
  * input parameters
  *

@@ -2,8 +2,17 @@
 #define SWM1000_H_
 
 
-#define SWM1000_ConfigRequestDelay 	2000
-#define SWM1000_ConfigRecvTimeOut 	60000
+
+// def to console
+//#define SWM1000_ASCII_SYM
+// def for enabling filtering
+//#define SWM1000_FILTERING
+
+#define SWM1000_PAN_SIZE			65535
+
+#define SWM1000_TIMESLOT_DURATION	1
+#define SWM1000_TIMESLOT_MAX_DUR	30
+#define SWM1000_PANID				0x1111
 
 
 

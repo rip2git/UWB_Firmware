@@ -36,11 +36,11 @@ typedef signed long long int64;
 // init->resp:  rx timeout
 #define RESP_RX_TIMEOUT_UUS 				750 	//2700
 // resp->init:  tx delay
-#define INIT_RX_TO_RESP_TX_DELAY_UUS 		500 	//500	//570	 //750 	//2600		(before resp)  <---
+#define INIT_RX_TO_RESP_TX_DELAY_UUS 		600	//500 	//500	//570	 //750 	//2600		(before resp)  <---
 // resp->init:  rx after tx
 #define RESP_TX_TO_FINAL_RX_DELAY_UUS		150 	//500
 // init->resp:  tx delay
-#define RESP_RX_TO_FINAL_TX_DELAY_UUS 		530 	//530	//600	 //800 	//3100		(before final) <---
+#define RESP_RX_TO_FINAL_TX_DELAY_UUS 		600	//530 	//530	//600	 //800 	//3100		(before final) <---
 // resp->init:  rx timeout
 #define FINAL_RX_TIMEOUT_UUS 				800 	//3300
 // 
@@ -58,11 +58,18 @@ static const uint8 final_identifier[FINAL_IDENTIFIER_SIZE] = {0x55, 0xAA};
 
 
 
+#define FRAME4_IDENTIFIER_SIZE			2
+static const uint8 frame4_identifier[FRAME4_IDENTIFIER_SIZE] = {0x11, 0xBB};
+
+
+
 // Expected times between messages (default settings)
 static uint16_t _Ranging_ResponseDelay = INIT_RX_TO_RESP_TX_DELAY_UUS;
 static uint16_t _Ranging_FinalDelay = RESP_RX_TO_FINAL_TX_DELAY_UUS;
+static uint16_t _Ranging_Frame4Delay = RESP_TX_TO_FINAL_RX_DELAY_UUS;
 static uint16_t _Ranging_ResponseTimeOut = INIT_RX_TO_RESP_TX_DELAY_UUS * TIMINGS_MULTIPLIER;
 static uint16_t _Ranging_FinalTimeOut = RESP_RX_TO_FINAL_TX_DELAY_UUS * TIMINGS_MULTIPLIER;
+static uint16_t _Ranging_Frame4TimeOut = RESP_RX_TO_FINAL_TX_DELAY_UUS * TIMINGS_MULTIPLIER;
 
 
 
@@ -72,6 +79,8 @@ static uint16_t _Ranging_FinalTimeOut = RESP_RX_TO_FINAL_TX_DELAY_UUS * TIMINGS_
 #define FINAL_MSG_RESP_TS_OFFSET 		(FINAL_MSG_INIT_TS_OFFSET + FINAL_MSG_TS_LEN)
 #define FINAL_MSG_FINAL_TS_OFFSET 		(FINAL_MSG_RESP_TS_OFFSET + FINAL_MSG_TS_LEN)
 #define FINAL_MSG_ALL_TS_SIZE			(FINAL_MSG_TS_LEN * 3)
+#define FRAME4_DISTANCE_SIZE			2
+#define FRAME4_DISTANCE_OFFSET			12
 
 			
 			
@@ -84,33 +93,41 @@ static inline uint16_t _Ranging_ConvertDistanceToCm(double distance);
 			
 
 static void _Ranging_SetInitMsg(
-	MACHeader_Typedef *header,
+	const MACHeader_Typedef *header,
 	uint8 *msg, 
 	const uint8 *payload
 );
 static void _Ranging_SetRespMsg(
-	MACHeader_Typedef *header,
-	uint8 *msg
+		const MACHeader_Typedef *header,
+	uint8 *msg,
+	const uint8 *payload
 );
 static void _Ranging_SetFinalMsg(
-	MACHeader_Typedef *header,
+		const MACHeader_Typedef *header,
 	uint8 *msg, 
 	uint64 init_ts, 
 	uint64 resp_ts, 
 	uint64 final_ts
 );
+static void _Ranging_SetFrame4(
+		const MACHeader_Typedef *header,
+	uint8 *msg,
+	uint16 distance
+);
 
 
 
-uint8 init_msg[ MACFrame_HEADER_SIZE + Ranging_PAYLOAD_SIZE + MACFrame_FCS_SIZE ]; // 18
-uint8 resp_msg[ MACFrame_HEADER_SIZE + RESP_IDENTIFIER_SIZE + MACFrame_FCS_SIZE ]; // 14
+uint8 init_msg[ MACFrame_HEADER_SIZE + Ranging_PAYLOAD_SIZE + MACFrame_FCS_SIZE ]; // 24
+uint8 resp_msg[ MACFrame_HEADER_SIZE + RESP_IDENTIFIER_SIZE + Ranging_PAYLOAD_SIZE + MACFrame_FCS_SIZE ]; // 26
 uint8 expected_resp_msg[ sizeof(resp_msg) ];
 uint8 final_msg[ MACFrame_HEADER_SIZE + FINAL_IDENTIFIER_SIZE + FINAL_MSG_ALL_TS_SIZE + MACFrame_FCS_SIZE ]; // 26
 uint8 expected_final_msg[ sizeof(final_msg) ];
+uint8 frame4_msg[ MACFrame_HEADER_SIZE + FRAME4_IDENTIFIER_SIZE + FRAME4_DISTANCE_SIZE + MACFrame_FCS_SIZE ]; // 16
+uint8 expected_frame4_msg[ sizeof(frame4_msg) ];
 
 
 
-Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payload)
+Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payload, uint8_t *rxBuffer, uint16_t *distance16)
 {
 	Transceiver_RESULT tr_res;
 	Transceiver_TxConfig tx_config;		
@@ -143,14 +160,18 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 		
 		_Ranging_SetRespMsg( 
 			&tmp_header,			
-			expected_resp_msg
+			expected_resp_msg,
+			0
 		);
 		
-		if ( memcmp(tx_config.rx_buffer, expected_resp_msg, sizeof(resp_msg) - MACFrame_FCS_SIZE) == 0 ) {
+		if ( memcmp(resp_msg, expected_resp_msg, MACFrame_HEADER_SIZE + RESP_IDENTIFIER_SIZE) == 0 ) {
 			// Time-stamps of frames transmission/reception, expressed in device time units.
 			// As they are 40-bit wide, we need to define a 64-bit int type to handle them.
 			uint64 init_tx_ts, resp_rx_ts, final_tx_ts;
 			uint32 final_tx_time;
+
+			// set returned payload
+			memcpy(rxBuffer, resp_msg + MACFrame_HEADER_SIZE + RESP_IDENTIFIER_SIZE, Ranging_PAYLOAD_SIZE);
 
 			// Retrieve poll transmission and response reception timestamp.
 			init_tx_ts = _Ranging_GetTxTs64();
@@ -173,17 +194,28 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 			tx_config.tx_buffer = final_msg;
 			tx_config.tx_buffer_size = sizeof(final_msg);
 			tx_config.tx_delay = final_tx_time;
-			tx_config.rx_aftertx_delay = 0;			
-			tx_config.rx_buffer = NULL;
-			tx_config.rx_buffer_size = 0;
-			tx_config.rx_timeout = 0;
+			tx_config.ranging = 0;
+			tx_config.rx_aftertx_delay = _Ranging_Frame4Delay;
+			tx_config.rx_buffer = frame4_msg;
+			tx_config.rx_buffer_size = sizeof(frame4_msg);
+			tx_config.rx_timeout = _Ranging_Frame4TimeOut;
 			
-			tr_res = Transceiver_Transmit( &tx_config );			
+			tr_res = Transceiver_Transmit( &tx_config );
 			
-			if (tr_res == Transceiver_TXFRS) {	
+			if (tr_res == Transceiver_RXFCG) {
 				header->SequenceNumber++;
-				return Ranging_SUCCESS;
-			}			
+
+				tmp_header.SequenceNumber++;
+				_Ranging_SetFrame4(
+						&tmp_header,
+						expected_frame4_msg,
+						0);
+
+				if ( memcmp(frame4_msg, expected_frame4_msg, MACFrame_HEADER_SIZE + FRAME4_IDENTIFIER_SIZE) == 0 ) {
+					*distance16 = frame4_msg[FRAME4_DISTANCE_OFFSET] + (frame4_msg[FRAME4_DISTANCE_OFFSET+1] << 8);
+					return Ranging_SUCCESS;
+				}
+			}
 		} else {
 			return Ranging_INTERRUPT;
 		}
@@ -193,7 +225,7 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 
 
 
-Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance16)
+Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, const uint8_t *payload, uint16_t *distance16)
 {	
 	uint64 init_rx_ts;
 	uint32 resp_tx_time;	
@@ -209,10 +241,10 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 	// Set send time for response. See NOTE 9 below.
 	resp_tx_time = (init_rx_ts + (_Ranging_ResponseDelay * UUS_TO_DWT_TIME)) >> 8;
 	
-	_Ranging_SetRespMsg(header, expected_resp_msg);
+	_Ranging_SetRespMsg(header, resp_msg, payload);
 	
-	tx_config.tx_buffer = expected_resp_msg;
-	tx_config.tx_buffer_size = sizeof(expected_resp_msg);
+	tx_config.tx_buffer = resp_msg;
+	tx_config.tx_buffer_size = sizeof(resp_msg);
 	tx_config.tx_delay = resp_tx_time;
 	tx_config.ranging = 1;
 	tx_config.rx_aftertx_delay = RESP_TX_TO_FINAL_RX_DELAY_UUS;
@@ -235,13 +267,7 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 		
 		_Ranging_SetFinalMsg(&tmp_header, expected_final_msg, 0, 0, 0);
 		
-		if ( 
-			memcmp(
-				tx_config.rx_buffer, 
-				expected_final_msg, 
-				sizeof(expected_final_msg) - (FINAL_MSG_ALL_TS_SIZE + MACFrame_FCS_SIZE)
-			) == 0 
-		) {
+		if ( memcmp(tx_config.rx_buffer, expected_final_msg, MACFrame_HEADER_SIZE + FINAL_IDENTIFIER_SIZE) == 0 ) {
 			uint32 init_tx_ts, resp_rx_ts, final_tx_ts;
 			uint32 init_rx_ts_32, resp_tx_ts_32, final_rx_ts_32;
 			uint64 resp_tx_ts, final_rx_ts;
@@ -270,6 +296,25 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 
 			tof = tof_dtu * DWT_TIME_UNITS;
 			*distance16 = _Ranging_ConvertDistanceToCm(tof * SPEED_OF_LIGHT);
+
+			// Send frame with distance to initiator
+			_Ranging_SetFrame4(header, frame4_msg, *distance16);
+
+			tx_config.tx_buffer = frame4_msg;
+			tx_config.tx_buffer_size = sizeof(frame4_msg);
+			tx_config.tx_delay = 0;
+			tx_config.ranging = 0;
+			tx_config.rx_aftertx_delay = 0;
+			tx_config.rx_buffer = 0;
+			tx_config.rx_buffer_size = 0;
+			tx_config.rx_timeout = 0;
+
+			tr_res = Transceiver_Transmit( &tx_config );
+
+			if (tr_res == Transceiver_TXFRS) {
+				header->SequenceNumber++;
+			}
+
 			return Ranging_SUCCESS;
 		} else {
 			return Ranging_INTERRUPT;
@@ -280,12 +325,10 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, uint16_t *distance
 
 
 
-void Ranging_Initialization(uint16_t responseDelay, uint16_t finalDelay) 
+void Ranging_Initialization()
 {
 	dwt_setrxantennadelay(RX_ANT_DELAY);
     dwt_settxantennadelay(TX_ANT_DELAY);
-	_Ranging_ResponseDelay = responseDelay;
-	_Ranging_FinalDelay = finalDelay;
 	_Ranging_ResponseTimeOut = (uint16_t)(_Ranging_ResponseDelay * TIMINGS_MULTIPLIER);
 	_Ranging_FinalTimeOut = (uint16_t)(_Ranging_FinalDelay * TIMINGS_MULTIPLIER);
 }
@@ -293,7 +336,7 @@ void Ranging_Initialization(uint16_t responseDelay, uint16_t finalDelay)
 
 
 static void _Ranging_SetInitMsg(
-	MACHeader_Typedef *header, 
+	const MACHeader_Typedef *header,
 	uint8 *msg, 
 	const uint8 *payload
 )
@@ -321,8 +364,9 @@ static void _Ranging_SetInitMsg(
 
 
 static void _Ranging_SetRespMsg(
-	MACHeader_Typedef *header,
-	uint8 *msg
+	const MACHeader_Typedef *header,
+	uint8 *msg,
+	const uint8 *payload
 )
 {
 	uint8 i = 0;
@@ -336,10 +380,18 @@ static void _Ranging_SetRespMsg(
 	msg[i++] = (uint8)(header->DestinationID >> 8);
 	msg[i++] = (uint8)(header->SourceID);
 	msg[i++] = (uint8)(header->SourceID >> 8);
-	msg[i++] = (uint8)(header->Flags);	
-	// payload
+	msg[i++] = (uint8)(header->Flags);
+	// identifier
 	for (uint8 j = 0; j < RESP_IDENTIFIER_SIZE; ++j)
 		msg[i++] = resp_identifier[j];
+	// payload
+	if (payload) {
+		for (uint8 j = 0; j < Ranging_PAYLOAD_SIZE; ++j) {
+			msg[i++] = payload[j];
+		}
+	} else {
+		i += Ranging_PAYLOAD_SIZE;
+	}
 	// FCS
 	msg[i++] = 0;
 	msg[i++] = 0;
@@ -348,7 +400,7 @@ static void _Ranging_SetRespMsg(
 
 
 static void _Ranging_SetFinalMsg(
-	MACHeader_Typedef *header,
+	const MACHeader_Typedef *header,
 	uint8 *msg, 
 	uint64 init_ts, 
 	uint64 resp_ts, 
@@ -380,6 +432,38 @@ static void _Ranging_SetFinalMsg(
 	// FCS
 	msg[MACFrame_HEADER_SIZE + FINAL_IDENTIFIER_SIZE + FINAL_MSG_ALL_TS_SIZE] = 0;
 	msg[MACFrame_HEADER_SIZE + FINAL_IDENTIFIER_SIZE + FINAL_MSG_ALL_TS_SIZE + 1] = 0;
+}
+
+
+
+static void _Ranging_SetFrame4(
+	const MACHeader_Typedef *header,
+	uint8 *msg,
+	uint16 distance
+)
+{
+	uint8 i = 0;
+	uint8 j;
+	// header
+	msg[i++] = (uint8)(header->FrameControl);
+	msg[i++] = (uint8)(header->FrameControl >> 8);
+	msg[i++] = (uint8)(header->SequenceNumber);
+	msg[i++] = (uint8)(header->PAN_ID);
+	msg[i++] = (uint8)(header->PAN_ID >> 8);
+	msg[i++] = (uint8)(header->DestinationID);
+	msg[i++] = (uint8)(header->DestinationID >> 8);
+	msg[i++] = (uint8)(header->SourceID);
+	msg[i++] = (uint8)(header->SourceID >> 8);
+	msg[i++] = (uint8)(header->Flags);
+	// payload
+	for (j = 0; j < FRAME4_IDENTIFIER_SIZE; ++j) {
+		msg[i++] = frame4_identifier[j];
+	}
+	msg[i++] = (uint8)(distance);
+	msg[i++] = (uint8)(distance >> 8);
+	// FCS
+	msg[MACFrame_HEADER_SIZE + FRAME4_IDENTIFIER_SIZE + FRAME4_DISTANCE_SIZE] = 0;
+	msg[MACFrame_HEADER_SIZE + FRAME4_IDENTIFIER_SIZE + FRAME4_DISTANCE_SIZE + 1] = 0;
 }
 
 

@@ -71,5 +71,6 @@ void Random_Initialization(void)
 
 unsigned long Random_GetNumber(unsigned long min, unsigned long max)
 {
-	return (rand() % max) + min;
+	unsigned long tmp = rand();
+	return (tmp % max) + min;
 }

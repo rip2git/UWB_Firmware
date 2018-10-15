@@ -11,7 +11,7 @@
 #define USARTx_PinSource_RX 	GPIO_PinSource10        //GPIO_PinSource3  
 #define USARTx_CLK				RCC_APB2Periph_USART1   //RCC_APB1Periph_USART2
 #define USARTx_GPIO_CLK			RCC_AHBPeriph_GPIOA
-#define USARTx_BaudRate			2000000 //2000000 //(115200)
+#define USARTx_BaudRate			115200
 
 #define DMAx					DMA1
 #define DMAx_ChTX				DMA1_Channel4
@@ -94,7 +94,8 @@ void USART_IRQHandler(void)
 	// RECEIVE COMPLETE
 	if (DMAx->ISR & DMAx_ChRX_Success_Fl) {
 		DMAx->IFCR = DMAx_ChRX_FLAG_MASK;
-		memcpy((void*)_USARTx_RequestedBuffer, &(USARTx_RXBuffer[0]), _USARTx_RequestedLength);
+		if (_USARTx_RequestedBuffer)
+			memcpy((void*)_USARTx_RequestedBuffer, &(USARTx_RXBuffer[0]), _USARTx_RequestedLength);
 		_USART_CallBack.RX_Success_CallBack();		
 	}
 	// ERROR OCCURRE

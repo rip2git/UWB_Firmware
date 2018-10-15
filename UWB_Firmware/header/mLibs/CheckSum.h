@@ -10,8 +10,8 @@
  * @brief: Defines that check sum whould be used 
  *
 */
-//#define CRC8
-#define CRC16
+#define CRC8
+//#define CRC16
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: uint16_str

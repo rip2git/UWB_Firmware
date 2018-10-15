@@ -15,11 +15,38 @@
 
 
 
+#define SYS_STATUS_ALL_CHECKED_FLAGS 	(SYS_STATUS_ALL_RX_GOOD | SYS_STATUS_ALL_RX_ERR | SYS_STATUS_ALL_RX_TO)
+
+
+
 static inline void _Transceiver_rxoff(void)
 {
 	dwt_receiverautoreenabled(0);
 	dwt_forcetrxoff();
     dwt_rxreset();
+}
+
+
+
+int Transceiver_CheckReceivingFlags()
+{
+	uint32_t f = dwt_read32bitreg(SYS_STATUS_ID);
+	dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_CHECKED_FLAGS);
+	return f & (SYS_STATUS_ALL_CHECKED_FLAGS);
+}
+
+
+
+void Transceiver_WriteTxData(uint8_t *data, uint8_t size)
+{
+	dwt_writetxdata(size, data, 0);
+}
+
+
+
+void Transceiver_SendPreparedData()
+{
+	dwt_starttx(DWT_START_TX_IMMEDIATE);
 }
 
 

@@ -4,34 +4,22 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../source/UAV/Debugger.c \
 ../source/UAV/Ranging.c \
-../source/UAV/Routing.c \
 ../source/UAV/SWM1000.c \
-../source/UAV/TokenExt.c \
 ../source/UAV/Transceiver.c \
-../source/UAV/USARTHandler.c \
-../source/UAV/UserPack.c 
+../source/UAV/USARTHandler.c 
 
 OBJS += \
-./source/UAV/Debugger.o \
 ./source/UAV/Ranging.o \
-./source/UAV/Routing.o \
 ./source/UAV/SWM1000.o \
-./source/UAV/TokenExt.o \
 ./source/UAV/Transceiver.o \
-./source/UAV/USARTHandler.o \
-./source/UAV/UserPack.o 
+./source/UAV/USARTHandler.o 
 
 C_DEPS += \
-./source/UAV/Debugger.d \
 ./source/UAV/Ranging.d \
-./source/UAV/Routing.d \
 ./source/UAV/SWM1000.d \
-./source/UAV/TokenExt.d \
 ./source/UAV/Transceiver.d \
-./source/UAV/USARTHandler.d \
-./source/UAV/UserPack.d 
+./source/UAV/USARTHandler.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

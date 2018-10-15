@@ -272,8 +272,8 @@ int SPI_Configuration(void)
 void EventTimer_init()
 {
 	EventTimer_Initialization(TIM2, 1);
-	EventTimer_Initialization(TIM6, 1);
-	EventTimer_Initialization(TIM14, 1);
+//	EventTimer_Initialization(TIM6, 1);
+//	EventTimer_Initialization(TIM14, 1);
 }
 
 

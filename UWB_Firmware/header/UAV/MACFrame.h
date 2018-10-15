@@ -71,12 +71,11 @@ typedef enum {
 */
 typedef struct {
 	uint16_t 	FrameControl;
-	uint8_t 	SequenceNumber;
 	uint16_t 	PAN_ID;
 	uint16_t	DestinationID;
 	uint16_t	SourceID;
+	uint8_t 	SequenceNumber;
 	MACFrame_Flags	Flags;
 } MACHeader_Typedef;
-
 
 #endif

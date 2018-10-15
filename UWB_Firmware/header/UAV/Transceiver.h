@@ -131,6 +131,53 @@ extern Transceiver_RESULT Transceiver_Transmit(Transceiver_TxConfig *config);
 extern Transceiver_RESULT Transceiver_Receive(Transceiver_RxConfig *config);
 
 /*! ------------------------------------------------------------------------------------------------------------------
+ * @fn Transceiver_CheckReceivingFlags()
+ *
+ * @brief: checking all receiving flags
+ *
+ * NOTE: clears corresponding flags
+ *
+ * input parameters
+ *
+ * output parameters
+ *
+ * return
+ * 		* 1 - frames was detected
+ * 		* 0 - all clear
+*/
+extern int Transceiver_CheckReceivingFlags(void);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn Transceiver_WriteTxData()
+ *
+ * @brief: write the data to deca register
+ *
+ * NOTE:
+ *
+ * input parameters
+ * @param data
+ * @param size
+ *
+ * output parameters
+ *
+ * no returned value
+*/
+extern void Transceiver_WriteTxData(uint8_t *data, uint8_t size);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn Transceiver_SendPreparedData()
+ *
+ * @brief:
+ *
+ * input parameters
+ *
+ * output parameters
+ *
+ * no returned value
+*/
+extern void Transceiver_SendPreparedData(void);
+
+/*! ------------------------------------------------------------------------------------------------------------------
  * @fn Transceiver_ReceiverOn()
  *
  * @brief: 
