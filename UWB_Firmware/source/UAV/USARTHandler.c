@@ -46,7 +46,7 @@ USARTHandler_RESULT USARTHandler_Send(const UserPack *pack)
 		return USARTHandler_ERROR;
 
 	memcpy(_USARTHandler_TXbuffer, pack, UserPack_PACK_SIZE);
-	_USARTHandler_TXbuffer[ UserPack_PACK_SIZE ] = CheckSum_GetCRC8(_USARTHandler_RXbuffer, UserPack_PACK_SIZE);
+	_USARTHandler_TXbuffer[ UserPack_PACK_SIZE ] = CheckSum_GetCRC8(_USARTHandler_TXbuffer, UserPack_PACK_SIZE);
 
 	return USART_SendBuffer(_USARTHandler_TXbuffer, TX_BUFFER_SIZE) == USART_SUCCESS?
 			USARTHandler_SUCCESS : USARTHandler_ERROR;
