@@ -5,7 +5,6 @@
 
 
 static USARTHandler_BOOL _USARTHandler_isReadyToReturnData;
-static USARTHandler_BOOL _USARTHandler_isReceiverOn;
 
 
 
@@ -16,6 +15,7 @@ static void _USARTHandler_USART_fcb(void);
 
 static uint8_t _USARTHandler_RXbuffer[UserPack_PACK_SIZE-2+1]; // -2 dist +1 crc
 static uint8_t _USARTHandler_TXbuffer[UserPack_PACK_SIZE+1]; // +1 crc
+static uint8_t _USARTHandler_UserRXbuffer[sizeof(_USARTHandler_RXbuffer)];
 
 
 
@@ -34,7 +34,6 @@ void USARTHandler_Initialization(void)
 	
 	_USARTHandler_isReadyToReturnData = USARTHandler_FALSE;
 
-	_USARTHandler_isReceiverOn = USARTHandler_TRUE;
 	USART_StartRead(_USARTHandler_RXbuffer, RX_BUFFER_SIZE);
 }
 
@@ -74,15 +73,14 @@ USARTHandler_RESULT USARTHandler_Receive(UserPack *pack)
 
 static void _USARTHandler_USART_scb(void)
 {
-	_USARTHandler_isReceiverOn = USARTHandler_FALSE;
 	_USARTHandler_isReadyToReturnData = USARTHandler_TRUE;
+	USART_StartRead(_USARTHandler_RXbuffer, RX_BUFFER_SIZE);
 }
 
 
 
 static void _USARTHandler_USART_fcb(void)
 {
-	_USARTHandler_isReceiverOn = USARTHandler_TRUE;
 	USART_StartRead(_USARTHandler_RXbuffer, RX_BUFFER_SIZE);
 }
 
@@ -90,15 +88,9 @@ static void _USARTHandler_USART_fcb(void)
 
 USARTHandler_BOOL USARTHandler_isAvailableToReceive(void)
 {
-	if (
-			_USARTHandler_isReceiverOn != USARTHandler_TRUE &&
-			_USARTHandler_isReadyToReturnData != USARTHandler_TRUE
-	) {
-		USART_StartRead(_USARTHandler_RXbuffer, RX_BUFFER_SIZE);
-	}
 	if (USART_ErrorControl() == USART_FAIL) {
-		_USARTHandler_isReceiverOn = USARTHandler_FALSE;
 		_USARTHandler_isReadyToReturnData = USARTHandler_FALSE;
+		USART_StartRead(_USARTHandler_RXbuffer, RX_BUFFER_SIZE);
 	}
 	return _USARTHandler_isReadyToReturnData;
 }

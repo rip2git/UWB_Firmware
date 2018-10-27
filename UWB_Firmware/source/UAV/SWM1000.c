@@ -334,7 +334,7 @@ void SWM1000_Initialization()
 
 	// watchdog settings - once at the power on
 	IWDG_SetPrescaler(IWDG_Prescaler_32); // 1.25 kHz
-	IWDG_SetReload(100 & 0x0FFF);
+	IWDG_SetReload(10 & 0x0FFF);
 	IWDG_ReloadCounter();
 #ifndef DEBUG
 	IWDG_Enable();
