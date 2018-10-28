@@ -40,8 +40,8 @@ typedef struct {
 
 
 
-static uint8_t USARTx_TXBuffer[USARTx_BUFFER_SIZE];
-static uint8_t USARTx_RXBuffer[USARTx_BUFFER_SIZE];
+static uint8_t USARTx_TXBuffer[USARTx_TX_BUFFER_SIZE];
+static uint8_t USARTx_RXBuffer[USARTx_RX_BUFFER_SIZE];
 static uint16_t _USARTx_RequestedLength;
 static uint8_t *_USARTx_RequestedBuffer;
 static USART_MODE _USARTx_mode;
@@ -75,9 +75,11 @@ void USART_ForceReadEnd(void)
 
 
 
+volatile uint32_t reg;
 USART_RESULT USART_ErrorControl(void)
 {
-	if (USARTx->ISR & USARTx_ERROR_FLAGS) {
+	reg = USARTx->ISR;
+	if (reg & USARTx_ERROR_FLAGS) {
 		DMAx_ChRX->CCR &= ~DMA_CCR_EN;
 		USARTx->ICR = USARTx_ERROR_FLAGS;
 		return USART_FAIL;
@@ -237,6 +239,13 @@ void USART_Initialization(void)
 void USART_SetTRXMode(USART_MODE mode) 
 {
 	_USARTx_mode = mode;
+}
+
+
+
+uint8_t *USART_GetRxBuffer(void)
+{
+	return USARTx_RXBuffer;
 }
 
 

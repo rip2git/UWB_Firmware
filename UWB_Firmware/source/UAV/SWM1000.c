@@ -22,6 +22,10 @@ static uint16_t timeslot;
 
 
 
+static uint8 UWBbuffer[MACFrame_FRAME_MAX_SIZE];
+
+
+
 static void _SWM1000_Receiving(const Transceiver_RxConfig *rx_config);
 static void _SWM1000_SendDistance(uint16_t destID);
 static void _SWM1000_SetDefaultDistancePack(void);
@@ -35,20 +39,23 @@ static void _SWM1000_CpyMainHeaderToBuffer(uint8_t *buf);
 void SWM1000_Loop(void)
 {
 	int MainState;
-	uint8 buffer[MACFrame_FRAME_MAX_SIZE];
 	Transceiver_RxConfig rx_config;
 
 	MainState = 1;
-	rx_config.rx_buffer = buffer;
+	rx_config.rx_buffer = UWBbuffer;
 	rx_config.rx_buffer_size = MACFrame_FRAME_MAX_SIZE;
 	_SWM1000_SetupTimerNewTimeSlot(); // first slot
+
+	int loopCnt = 0;
 
 	while (1)
 	{
 		IWDG_ReloadCounter();
 
 		// receive data from HL
-		if ( USARTHandler_isAvailableToReceive() == USARTHandler_TRUE )  {
+		loopCnt++;
+		if (loopCnt > 7) {
+			loopCnt = 0;
 			USARTHandler_Receive(&_Distance_UserPack);
 		}
 

@@ -5,6 +5,9 @@
 #include "UserPack.h"
 
 
+#define USARTHANDLER_FLAG_VAL	0xAA
+
+
 /*! ------------------------------------------------------------------------------------------------------------------
  * @def: USART_DMA_VERSION
  *
@@ -36,23 +39,6 @@ typedef enum {
 	USARTHandler_FALSE = 0,
 	USARTHandler_TRUE = (!USARTHandler_FALSE)
 } USARTHandler_BOOL;
-
-
-/*! ------------------------------------------------------------------------------------------------------------------
- * @fn: USARTHandler_isAvailableToReceive
- *
- * @brief: Allows to check there is data from USART, returns USARTHandler_TRUE if it is
- *
- * NOTE: if DMA is using (@def USART_DMA_VERSION) then it is need to receive the data (by @fn USARTHandler_Receive) 
- * before calling this method again, otherwise the data may be lost
- *
- * input parameters
- *
- * output parameters
- *
- * return value is USARTHandler_BOOL described above
-*/
-extern USARTHandler_BOOL USARTHandler_isAvailableToReceive(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn: USARTHandler_Initialization
@@ -97,9 +83,9 @@ extern USARTHandler_RESULT USARTHandler_Send(const UserPack *pack);
  * output parameters
  * @param pack - user pack (ref UserPack.h)
  *
- * return value is USARTHandler_RESULT described above
+ * return value is USARTHandler_BOOL described above
 */
-extern USARTHandler_RESULT USARTHandler_Receive(UserPack *pack);
+extern USARTHandler_BOOL USARTHandler_Receive(UserPack *pack);
 
 
 #endif

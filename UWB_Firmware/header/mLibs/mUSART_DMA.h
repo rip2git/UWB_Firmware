@@ -9,7 +9,8 @@
  * @brief: Size of internal two system buffers
  *
 */
-#define USARTx_BUFFER_SIZE	196
+#define USARTx_RX_BUFFER_SIZE	64
+#define USARTx_TX_BUFFER_SIZE	48
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @typedef: USART_RESULT
@@ -197,6 +198,21 @@ extern USART_RESULT USART_SendBuffer(const uint8_t *buffer, uint16_t length);
  * return value is result of operation (described above)
 */
 extern USART_RESULT USART_SendString(const char *string);
+
+/*! ------------------------------------------------------------------------------------------------------------------
+ * @fn: USART_GetRxBuffer
+ *
+ * @brief:
+ *
+ * NOTE:
+ *
+ * input parameters
+ *
+ * output parameters
+ *
+ * return pointer to rx buffer
+*/
+extern uint8_t *USART_GetRxBuffer(void);
 
 
 #endif
