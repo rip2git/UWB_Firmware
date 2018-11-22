@@ -17,7 +17,8 @@
 
 static MACHeader_Typedef _Main_MACHeader;
 static UserPack _Distance_UserPack;
-static uint16_t InitiatorID;
+static uint16_t InitiatorID, prevInitiatorID;
+static uint8_t isInitiatorDenied;
 static uint16_t timeslot;
 
 
@@ -277,6 +278,12 @@ static uint8_t _SWM1000_SendConnectReqFrame()
 
 static void _SWM1000_ConnectWithInitiator(Transceiver_RxConfig *rx_config)
 {
+	// without 2 connection with the same initiator in a row
+	if (prevInitiatorID == InitiatorID && isInitiatorDenied) {
+		isInitiatorDenied = 0; // next - isn't denied
+		return;
+	}
+
 	Transceiver_RESULT tr_res;
 	Transceiver_TxConfig tx_config;
 	uint8_t buffer[ sizeof(MACHeader_Typedef) + 2 ];
@@ -304,6 +311,8 @@ static void _SWM1000_ConnectWithInitiator(Transceiver_RxConfig *rx_config)
 		_SWM1000_Receiving(rx_config);
 	}
 
+	prevInitiatorID = InitiatorID;
+	isInitiatorDenied = 1;
 	// reset
 	InitiatorID = 0;
 }
