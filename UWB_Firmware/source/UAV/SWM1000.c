@@ -15,6 +15,13 @@
 
 
 
+typedef union {
+	float f;
+	uint32_t u;
+} float_u32_t;
+
+
+
 static MACHeader_Typedef _Main_MACHeader;
 static UserPack _Distance_UserPack;
 static uint16_t InitiatorID, prevInitiatorID;
@@ -105,6 +112,7 @@ static void _SWM1000_Receiving(const Transceiver_RxConfig *rx_config)
 	switch (flag)
 	{
 		// rng init frame was received ***********************************************************************************
+		case MACFrame_Flags_RNG | MACFrame_Flags_DATA:
 		case MACFrame_Flags_RNG:
 		{
 #ifndef SWM1000_FILTERING
@@ -112,6 +120,16 @@ static void _SWM1000_Receiving(const Transceiver_RxConfig *rx_config)
 				uint16_t destID = (rx_config->rx_buffer[MACFrame_DESTINATION_ADDRESS_OFFSET] |
 								(rx_config->rx_buffer[MACFrame_DESTINATION_ADDRESS_OFFSET+1] << 8));
 				if (destID != _Distance_UserPack.id) {
+					if (flag == (MACFrame_Flags_RNG | MACFrame_Flags_DATA)) {
+						UserPack upack;
+						upack.id = (uint16_t)
+								(rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET] |
+								(rx_config->rx_buffer[MACFrame_SOURCE_ADDRESS_OFFSET+1] << 8)); // low byte first
+						upack.distance = 0xFFFF;
+						upack.rxLevel = Transceiver_GetLevelOfLastReceived();
+						memcpy(upack.payload, rx_config->rx_buffer+MACFrame_PAYLOAD_OFFSET, UserPack_PAYLOAD_SIZE);
+						USARTHandler_Send(&upack);
+					}
 					_SWM1000_SetupTimerNewTimeSlot();
 					return;
 				}
@@ -130,6 +148,8 @@ static void _SWM1000_Receiving(const Transceiver_RxConfig *rx_config)
 				UserPack upack;
 				upack.id = _Main_MACHeader.DestinationID;
 				upack.distance = distance;
+				float_u32_t fu32 = {.u = 0xFFFFFFFF};
+				upack.rxLevel = fu32.f;
 				memcpy(upack.payload, rx_config->rx_buffer+MACFrame_PAYLOAD_OFFSET, UserPack_PAYLOAD_SIZE);
 				USARTHandler_Send(&upack);
 #else
@@ -226,6 +246,8 @@ static void _SWM1000_SendDistance(uint16_t destID)
 			UserPack upack;
 			upack.id = _Main_MACHeader.DestinationID;
 			upack.distance = distance;
+			float_u32_t fu32 = {.u = 0xFFFFFFFF};
+			upack.rxLevel = fu32.f;
 			memcpy(upack.payload, rxbuf, UserPack_PAYLOAD_SIZE);
 			USARTHandler_Send(&upack);
 #else
@@ -281,6 +303,7 @@ static void _SWM1000_ConnectWithInitiator(Transceiver_RxConfig *rx_config)
 	// without 2 connection with the same initiator in a row
 	if (prevInitiatorID == InitiatorID && isInitiatorDenied) {
 		isInitiatorDenied = 0; // next - isn't denied
+		InitiatorID = 0;
 		return;
 	}
 

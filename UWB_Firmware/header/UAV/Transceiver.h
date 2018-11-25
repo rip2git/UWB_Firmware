@@ -235,7 +235,7 @@ extern Transceiver_RESULT Transceiver_GetReceptionResult(void);
  *
  * return received signal strength
 */
-extern uint8 Transceiver_GetLevelOfLastReceived(void);
+extern float Transceiver_GetLevelOfLastReceived(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn Transceiver_GetAvailableData()

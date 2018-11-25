@@ -132,7 +132,7 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 	Transceiver_RESULT tr_res;
 	Transceiver_TxConfig tx_config;		
 	
-	header->Flags = MACFrame_Flags_RNG;
+	header->Flags = MACFrame_Flags_RNG | MACFrame_Flags_DATA;
 	
 	_Ranging_SetInitMsg(header, init_msg, payload); 
 	
@@ -146,7 +146,7 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 	tx_config.rx_buffer_size = sizeof(resp_msg);	
 	
 	tr_res = Transceiver_Transmit( &tx_config );	
-	
+
 	if (tr_res == Transceiver_RXFCG) {	
 		MACHeader_Typedef tmp_header;
 		header->SequenceNumber++;
@@ -183,6 +183,8 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 			// Final TX timestamp is the transmission time we programmed plus the TX antenna delay.
 			final_tx_ts = (((uint64)(final_tx_time & 0xFFFFFFFEUL)) << 8) + TX_ANT_DELAY;
 			
+			header->Flags = MACFrame_Flags_RNG;
+
 			_Ranging_SetFinalMsg( 
 				header,
 				final_msg, 
@@ -206,6 +208,7 @@ Ranging_RESULT Ranging_Initiate(MACHeader_Typedef *header, const uint8_t *payloa
 				header->SequenceNumber++;
 
 				tmp_header.SequenceNumber++;
+				tmp_header.Flags = MACFrame_Flags_RNG;
 				_Ranging_SetFrame4(
 						&tmp_header,
 						expected_frame4_msg,
@@ -232,8 +235,8 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, const uint8_t *pay
 	
 	Transceiver_RESULT tr_res;
 	Transceiver_TxConfig tx_config;
-	
-	header->Flags = MACFrame_Flags_RNG;
+
+	header->Flags = MACFrame_Flags_RNG | MACFrame_Flags_DATA;
 
 	// Retrieve poll reception timestamp.
 	init_rx_ts = _Ranging_GetRxTs64();
@@ -253,7 +256,9 @@ Ranging_RESULT Ranging_GetDistance(MACHeader_Typedef *header, const uint8_t *pay
 	tx_config.rx_timeout = _Ranging_FinalTimeOut;
 	
 	tr_res = Transceiver_Transmit( &tx_config );
-	
+
+	header->Flags = MACFrame_Flags_RNG;
+
 	if (tr_res == Transceiver_RXFCG) {		
 		MACHeader_Typedef tmp_header;
 		header->SequenceNumber++;

@@ -11,11 +11,11 @@ static void _USARTHandler_USART_cb(void);
 
 static uint8_t *pRxUSARTBuf;
 static uint8_t _USARTHandler_TXbuffer[UserPack_PACK_SIZE+4+1]; // +flag +1 crc
-static uint8_t _USARTHandler_RXbuffer[USARTx_RX_BUFFER_SIZE]; // +flag +1 crc
+static uint8_t _USARTHandler_RXbuffer[USARTx_RX_BUFFER_SIZE];
 
 
 
-static const uint8_t RX_BUFFER_CRC_OFFSET = UserPack_PACK_SIZE+4-2; // +flag -2 dist
+static const uint8_t RX_BUFFER_CRC_OFFSET = UserPack_PACK_SIZE+4-2-4; // +flag -2 dist, -4 level
 static const uint8_t TX_BUFFER_SIZE = sizeof(_USARTHandler_TXbuffer);
 static const uint8_t TX_BUFFER_CRC_OFFSET = sizeof(_USARTHandler_TXbuffer)-1;
 
@@ -71,8 +71,9 @@ USARTHandler_BOOL USARTHandler_Receive(UserPack *pack)
 						memset(pRxUSARTBuf, 0, USARTx_RX_BUFFER_SIZE);
 						USART_ForceReadEnd();
 						USART_StartRead(0, USARTx_RX_BUFFER_SIZE);
-						memcpy(pack, it+4, UserPack_PACK_SIZE-2); // -2 dist
+						memcpy(pack, it+4, UserPack_PACK_SIZE-2-4); // -2 dist, -4 level
 						pack->distance = 0;
+						pack->rxLevel = 0.0f;
 						return USARTHandler_SUCCESS;
 					} else {
 						i += 3;

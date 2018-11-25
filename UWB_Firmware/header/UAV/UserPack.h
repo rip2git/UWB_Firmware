@@ -26,12 +26,14 @@ typedef struct {
 	uint16_t id;
 	uint8_t payload[UserPack_PAYLOAD_SIZE];
 	uint16_t distance;
+	float rxLevel;
 } UserPack;
 #pragma pack(pop)
 
 
 #define UserPack_PAYLOAD_OFFSET			2
 #define UserPack_DISTANCE_OFFSET		14
+#define UserPack_RXLEVEL_OFFSET			16
 #define UserPack_PACK_SIZE				sizeof(UserPack)
 
 

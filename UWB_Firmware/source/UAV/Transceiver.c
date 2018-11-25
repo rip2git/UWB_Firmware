@@ -230,14 +230,23 @@ uint8 Transceiver_GetAvailableData(uint8 *buffer)
 
 
 
-uint8 Transceiver_GetLevelOfLastReceived(void)
+float Transceiver_GetLevelOfLastReceived(void)
 {
+	/*
+	 * rx level = 10 * log_10(C * 2^17 / N^2) - A
+	 * 		C = CIR_PWR
+	 * 		N = RXPACC
+	 * 		A = const = 121.74
+	*/
 	uint16 RXPACC = (dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXPACC_MASK) >> RX_FINFO_RXPACC_SHIFT;
 	uint16 CIR_PWR = dwt_read16bitoffsetreg(RX_FQUAL_ID, 6);
+	const float A = 121.74f;
+	return 10.0f * (float)log10( (double)(CIR_PWR * (1 << 17)) / (double)(RXPACC * RXPACC) ) - A;
+
 	// experemental original info: 24 -min, 45 -max (10.0 * log10(x)))
 	// theoretical: from 0 to 125;
 	// lets return from 0 to ~230
-	return (uint8)( 5.0 * 10.0 * log10( (double)(CIR_PWR * 1 << 17) / (double)(RXPACC * RXPACC) ) );
+	//return (uint8)( 5.0 * 10.0 * log10( (double)(CIR_PWR * (1 << 17)) / (double)(RXPACC * RXPACC) ) );
 }
 
 
